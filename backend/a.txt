@@ -1,0 +1,15 @@
+SYSTEM HIERARCHY
+
+SUPER ADMIN
+│
+├── HR
+│   │
+│   └── EMPLOYEE
+│       ├── Employee 1
+│       ├── Employee 2
+│       └── Employee N
+│
+└── CLIENT
+    ├── Client 1
+    ├── Client 2
+    └── Client N
