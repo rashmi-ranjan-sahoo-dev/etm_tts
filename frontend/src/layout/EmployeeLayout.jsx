@@ -2,8 +2,9 @@
 import React, { useState } from "react";
 import Navbar from "../components/Employee/Navbar/Navbar";
 import Sidebar from "../components/Employee/Sidebar/Sidebar";
+import { Outlet } from "react-router-dom";
 
-const EmployeeLayout = ({ children }) => {
+const EmployeeLayout = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
 
   const toggleSidebar = () => {
@@ -26,7 +27,7 @@ const EmployeeLayout = ({ children }) => {
         <Navbar toggleSidebar={toggleSidebar} />
 
         <main className="p-4">
-          {children}
+          <Outlet />
         </main>
       </div>
     </div>

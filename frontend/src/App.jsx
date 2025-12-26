@@ -1,27 +1,32 @@
-import React from 'react'
-
-import Employee from './pages/Employee/Employee'
-import EmployeeTask from './pages/Employee/EmployeeTask'
-import ClientPayment from './pages/Employee/Accounts/Client/ClientPayment'
-import Expense from './pages/Employee/Accounts/OtherExpenses/Expense'
+import { BrowserRouter,Routes, Route, Navigate } from 'react-router-dom'
+import EmployeeLayout from './layout/EmployeeLayout'
+import MyLeaves from './pages/Employee/MyLeaves/MyLeaves'
+import Dashboard from './pages/Employee/Dashboard'
+import Tasks from './pages/Employee/ProjectManagerTasks/Tasks'
+import MyTask from './pages/Employee/EmployeeTask.jsx'
+import Settings from './pages/Employee/Settings.jsx'
 
 const App = () => {
   return (
-    <div>
-      {/* <Navbar/>
-      <Sidebar/>
-       <Dashboard/> 
-       <MyLeaves/> 
-      <MyTasks/>
-      <EmployeeLayout/>
+ <BrowserRouter>
+      <Routes>
 
-      <Dashboard/>
-      <Employee/>
-       <EmployeeTask/>
-       <ClientPayment/>
-      <Expense/> */}
-      
-    </div>
+        {/* 🔹 Redirect root */}
+        <Route path="/" element={<Navigate to="/employee" replace />} />
+
+        <Route path="/employee" element={<EmployeeLayout />}>
+          {/* Default page */}
+          <Route index element={<Dashboard />} />
+
+          {/* Child routes */}
+          <Route path="dashboard" element={<Dashboard />} />
+          <Route path="myLeaves" element={<MyLeaves />} />
+          <Route path="ProjectManagerTasks" element={<Tasks />} />
+          <Route path="myTasks" element={<MyTask />} />
+          <Route path="settings" element={<Settings />} />
+        </Route>
+      </Routes>
+    </BrowserRouter>
   )
 }
 
