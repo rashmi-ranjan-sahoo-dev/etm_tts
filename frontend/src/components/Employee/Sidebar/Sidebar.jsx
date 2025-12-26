@@ -1,31 +1,17 @@
 
-
-import React from "react";
-import {
-  LayoutDashboard,
-  CalendarCheck,
-  FileText,
-  Users,
-  Layers,
-  CheckSquare,
-  Settings,
-  MessageSquare,
-  X
-} from "lucide-react";
-
+import {LayoutDashboard,FileText,CheckSquare,Settings,MessageSquare,X} from "lucide-react";
+import { Link } from "react-router-dom";
 import ttsimg from "../../../assets/Sidebar-Image/ttsLogo.png";
 import employee from "../../../assets/Sidebar-Image/employee.jpg";
 
 const Sidebar = ({ isSidebarOpen, setIsSidebarOpen }) => {
   const menuItems = [
-    { name: "Dashboard", icon: LayoutDashboard },
-    { name: "Attendance", icon: CalendarCheck },
-    { name: "My Leaves", icon: FileText },
-    { name: "My Team", icon: Users },
-    { name: "My Projects", icon: Layers },
-    { name: "My Tasks", icon: CheckSquare },
-    { name: "Settings", icon: Settings },
-    { name: "Chat", icon: MessageSquare },
+    { name: "Dashboard", icon: LayoutDashboard, to: "/employee/dashboard" },
+    { name: "My Leaves", icon: FileText, to: "/employee/myLeaves" },
+    { name: "My Tasks", icon: CheckSquare, to: "/employee/myTasks" },
+    { name: "Tasks", icon: CheckSquare, to: "/employee/ProjectManagerTasks" },
+    { name: "Settings", icon: Settings, to: "/employee/settings" },
+    { name: "Acounts", icon: MessageSquare, to: "/employee/accounts" },
   ];
 
   return (
@@ -48,9 +34,9 @@ const Sidebar = ({ isSidebarOpen, setIsSidebarOpen }) => {
         {/* Header */}
         <div className="flex items-center justify-between">
           <img src={ttsimg} alt="Logo" className="h-20" />
-          <button onClick={() => setIsSidebarOpen(false)}>
+          {/* <button onClick={() => setIsSidebarOpen(false)}>
             <X />
-          </button>
+          </button> */}
         </div>
 
         {/* Profile */}
@@ -67,13 +53,14 @@ const Sidebar = ({ isSidebarOpen, setIsSidebarOpen }) => {
         {/* Menu */}
         <div className="px-4 space-y-2">
           {menuItems.map((item, index) => (
-            <button
+            <Link
               key={index}
+              to={item.to}
               className="flex items-center gap-3 w-full px-4 py-3 rounded-lg hover:bg-blue-50"
             >
               <item.icon size={18} />
               <span>{item.name}</span>
-            </button>
+            </Link>
           ))}
         </div>
       </aside>

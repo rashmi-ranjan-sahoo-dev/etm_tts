@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Plus, Pencil, Trash2, Search } from "lucide-react";
 import TaskModal from "./TaskModal";
 
-const MyTasks = () => {
+const Tasks = () => {
   const [selectedIds, setSelectedIds] = useState([]);
   const [Tasks, setTasks] = useState([
     {
@@ -239,4 +239,4 @@ const MyTasks = () => {
   );
 };
 
-export default MyTasks;
+export default Tasks;
