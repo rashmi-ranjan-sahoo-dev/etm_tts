@@ -1,18 +1,19 @@
 import React from 'react'
-import Navbar from './components/Employee/Navbar/Navbar'
-import Sidebar from './components/Employee/Sidebar/Sidebar'
-import Dashboard from './pages/Employee/Dashboard'
-import MyLeaves from './pages/Employee/My Leaves/MyLeaves'
-import MyTasks from './pages/Employee/My Tasks/MyTasks'
+
+import Employee from './pages/Employee/Employee'
 
 const App = () => {
   return (
     <div>
-      <Navbar/>
+      {/* <Navbar/> */}
       {/* <Sidebar/>
        <Dashboard/> 
       <MyLeaves/>  */}
-      <MyTasks/>
+      {/* <MyTasks/> */}
+      {/* <EmployeeLayout/> */}
+
+      {/* <Dashboard/> */}
+      <Employee/>
     </div>
   )
 }

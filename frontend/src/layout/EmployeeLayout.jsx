@@ -1,7 +1,9 @@
+
 import React, { useState } from "react";
 import Navbar from "../components/Employee/Navbar/Navbar";
 import Sidebar from "../components/Employee/Sidebar/Sidebar";
-const EmployeeLayout = () => {
+
+const EmployeeLayout = ({ children }) => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
 
   const toggleSidebar = () => {
@@ -9,11 +11,23 @@ const EmployeeLayout = () => {
   };
 
   return (
-    <div className="flex min-h-screen bg-gray-100">
-      <Sidebar isSidebarOpen={isSidebarOpen} />
+    <div className="min-h-screen bg-gray-100 overflow-hidden">
+      <Sidebar
+        isSidebarOpen={isSidebarOpen}
+        setIsSidebarOpen={setIsSidebarOpen}
+      />
 
-      <div className="flex-1">
+      <div
+        className={`
+          transition-all duration-300 ease-in-out
+          ${isSidebarOpen ? "ml-64" : "ml-0"}
+        `}
+      >
         <Navbar toggleSidebar={toggleSidebar} />
+
+        <main className="p-4">
+          {children}
+        </main>
       </div>
     </div>
   );

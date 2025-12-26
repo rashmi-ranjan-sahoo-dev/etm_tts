@@ -134,8 +134,8 @@ const MyTasks = () => {
               <th className="p-3 border-b min-w-[140px] text-left">
                 Employee_ID
               </th>
-              <th className="p-3 border-b min-w-[140px] text-left">Project</th>
-              <th className="p-3 border-b min-w-[140px] text-left">Client</th>
+              <th className="p-3 border-b min-w-35 text-left">Project</th>
+              <th className="p-3 border-b min-w-35 text-left">Client</th>
               <th className="p-3 border-b min-w-[100px] text-left">Status</th>
               <th className="p-3 border-b min-w-[100px] text-left">Priority</th>
               <th className="p-3 border-b min-w-[120px] text-left">

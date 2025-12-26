@@ -27,7 +27,7 @@ const TaskModal = ({ close, save, editData }) => {
 
   return (
     <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
-      <div className="bg-white w-[600px] rounded-lg p-8 relative">
+      <div className="bg-white w-150 rounded-lg p-8 relative">
         <div className="flex justify-between items-center mb-6">
           <h3 className="text-lg font-semibold">{editData ? editData.TaskNumber : "New Task"}</h3>
           <X className="cursor-pointer" onClick={close} />
