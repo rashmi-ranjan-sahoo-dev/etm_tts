@@ -34,9 +34,9 @@ const Sidebar = ({ isSidebarOpen, setIsSidebarOpen }) => {
         {/* Header */}
         <div className="flex items-center justify-between">
           <img src={ttsimg} alt="Logo" className="h-20" />
-          {/* <button onClick={() => setIsSidebarOpen(false)}>
+          <button className="visible sm:hidden" onClick={() => setIsSidebarOpen(false)}>
             <X />
-          </button> */}
+          </button>
         </div>
 
         {/* Profile */}
