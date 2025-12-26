@@ -14,7 +14,7 @@ import {
   Legend,
 } from "recharts";
 
-import { Ticket,CheckCircle, Briefcase,Umbrella} from "lucide-react";
+import { Ticket, CheckCircle, Briefcase, Umbrella } from "lucide-react";
 import { useState, useEffect } from "react";
 
 const stats = [
@@ -77,17 +77,16 @@ const chartData = {
     { label: "Feb", work: 148, break: 28 },
     { label: "Mar", work: 170, break: 30 },
     { label: "Apr", work: 155, break: 34 },
-    { label: "Jan", work: 160, break: 32 },
-    { label: "Feb", work: 148, break: 28 },
-    { label: "Mar", work: 170, break: 30 },
-    { label: "Apr", work: 155, break: 34 },
-    { label: "Jan", work: 160, break: 32 },
-    { label: "Feb", work: 148, break: 28 },
-    { label: "Mar", work: 170, break: 30 },
-    { label: "Apr", work: 155, break: 34 },
+    { label: "May", work: 160, break: 32 },
+    { label: "Jun", work: 148, break: 28 },
+    { label: "July", work: 170, break: 30 },
+    { label: "Aug", work: 155, break: 34 },
+    { label: "Sep", work: 160, break: 32 },
+    { label: "Oct", work: 148, break: 28 },
+    { label: "Nov", work: 170, break: 30 },
+    { label: "Dec", work: 155, break: 34 },
   ],
 };
-
 
 // const pieData = [
 //   { name: "Project 1", value: 40, color: "#f59e0b" },
@@ -99,23 +98,18 @@ const radialData = [
   { name: "Project 1", value: 40, fill: "#f59e0b" },
   { name: "Project 2", value: 32, fill: "#6366f1" },
   { name: "Project 3", value: 28, fill: "#10b981" },
-];
-
+]
 
 const Dashboard = () => {
+  const [view, setView] = useState("week");
+  useEffect(() => {
+    localStorage.setItem("hours_view", view);
+  }, [view]);
 
-const [view, setView] = useState("week");
+  const totalProgress = Math.round(
+    radialData.reduce((sum, item) => sum + item.value, 0) / radialData.length
+  );
 
-useEffect(() => {
-  localStorage.setItem("hours_view", view);
-}, [view]);
-
-    const totalProgress = Math.round(
-  radialData.reduce((sum, item) => sum + item.value, 0) /
-    radialData.length
-);
-
-    
   return (
     <div className="space-y-6">
       {/* Page Title */}
@@ -145,43 +139,41 @@ useEffect(() => {
 
       {/* Charts Section */}
       <div className="grid grid-cols-1 xl:grid-cols-3 gap-4">
+        {/* Weekly / Monthly / Daily Working Hours */}
+        <div className="xl:col-span-2 bg-white rounded-xl p-4 shadow-sm">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4 gap-3">
+            <h2 className="font-semibold">Working Hours</h2>
 
-       {/* Weekly / Monthly / Daily Working Hours */}
-      <div className="xl:col-span-2 bg-white rounded-xl p-4 shadow-sm">
-  <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4 gap-3">
-    <h2 className="font-semibold">Working Hours</h2>
-
-    {/* Toggle Buttons */}
-    <div className="flex bg-gray-100 rounded-lg p-1 w-fit">
-      {["day", "week", "month"].map((type) => (
-        <button
-          key={type}
-          onClick={() => setView(type)}
-          className={`px-3 py-1 text-sm rounded-md transition
+            {/* Toggle Buttons */}
+            <div className="flex bg-gray-100 rounded-lg p-1 w-fit">
+              {["day", "week", "month"].map((type) => (
+                <button
+                  key={type}
+                  onClick={() => setView(type)}
+                  className={`px-3 py-1 text-sm rounded-md transition
             ${
               view === type
                 ? "bg-white shadow text-blue-600"
                 : "text-gray-600 hover:text-blue-600"
             }`}
-        >
-          {type.charAt(0).toUpperCase() + type.slice(1)}
-        </button>
-      ))}
-    </div>
-  </div>
+                >
+                  {type.charAt(0).toUpperCase() + type.slice(1)}
+                </button>
+              ))}
+            </div>
+          </div>
 
-  <ResponsiveContainer width="100%" height={300}>
-    <BarChart data={chartData[view]}>
-      <CartesianGrid strokeDasharray="3 3" />
-      <XAxis dataKey="label" />
-      <YAxis />
-      <Tooltip />
-      <Bar dataKey="work" stackId="a" fill="#6366f1" />
-      <Bar dataKey="break" stackId="a" fill="#d1d5db" />
-    </BarChart>
-  </ResponsiveContainer>
-      </div>
-
+          <ResponsiveContainer width="100%" height={300}>
+            <BarChart data={chartData[view]}>
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey="label" />
+              <YAxis />
+              <Tooltip />
+              <Bar dataKey="work" stackId="a" fill="#6366f1" />
+              <Bar dataKey="break" stackId="a" fill="#d1d5db" />
+            </BarChart>
+          </ResponsiveContainer>
+        </div>
 
         {/* Running Project Review */}
         {/* <div className="bg-white rounded-xl p-4 shadow-sm flex flex-col items-center">
@@ -224,49 +216,50 @@ useEffect(() => {
         </div> */}
 
         {/* Running Project Review */}
-<div className="bg-white rounded-xl p-4 shadow-sm flex flex-col">
-  <h2 className="font-semibold mb-4 text-center">
-    Running Project Review
-  </h2>
+        <div className="bg-white rounded-xl p-4 shadow-sm flex flex-col">
+          <h2 className="font-semibold mb-4 text-center">
+            Running Project Review
+          </h2>
 
-  <div className="w-full h-[260px]">
-    <ResponsiveContainer width="100%" height="100%">
-      <RadialBarChart
-        cx="40%"
-        cy="50%"
-        innerRadius="55%"
-        outerRadius="90%"
-        barSize={12}
-        data={radialData}
-      >
-        <RadialBar
-          dataKey="value"
-          cornerRadius={10}
-          label={{ position: "insideStart", fill: "#fff" }}
-        />
-        <Legend
-          iconSize={10}
-          layout="vertical"
-          verticalAlign="middle"
-          wrapperStyle={{
-            top: "50%",
-            right: 0,
-            transform: "translate(0, -50%)",
-            lineHeight: "24px",
-          }}
-        />
-        <Tooltip />
-      </RadialBarChart>
-    </ResponsiveContainer>
-  </div>
+          <div className="w-full h-[260px]">
+            <ResponsiveContainer width="100%" height="100%">
+              <RadialBarChart
+                cx="40%"
+                cy="50%"
+                innerRadius="55%"
+                outerRadius="90%"
+                barSize={12}
+                data={radialData}
+              >
+                <RadialBar
+                  dataKey="value"
+                  cornerRadius={10}
+                  label={{ position: "insideStart", fill: "#fff" }}
+                />
+                <Legend
+                  iconSize={10}
+                  layout="vertical"
+                  verticalAlign="middle"
+                  wrapperStyle={{
+                    top: "50%",
+                    right: 0,
+                    transform: "translate(0, -50%)",
+                    lineHeight: "24px",
+                  }}
+                />
+                <Tooltip />
+              </RadialBarChart>
+            </ResponsiveContainer>
+          </div>
 
-  <p className="text-xl font-bold mt-2 text-center">Total {totalProgress}%</p>
+          <p className="text-xl font-bold mt-2 text-center">
+            Total {totalProgress}%
+          </p>
 
-  <button className="mx-auto mt-4 px-4 py-1 border rounded-full text-sm text-blue-600">
-    More Details
-  </button>
-</div>
-
+          <button className="mx-auto mt-4 px-4 py-1 border rounded-full text-sm text-blue-600">
+            More Details
+          </button>
+        </div>
       </div>
     </div>
   );
