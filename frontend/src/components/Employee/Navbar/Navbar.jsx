@@ -1,81 +1,28 @@
-// import React from 'react'
-// import ttsLogo from "../../../assets/Navbar-Image/ttsLogo.png";
-// import { Menu ,Bell, Maximize} from "lucide-react";
-// import admin from "../../../assets/Navbar-Image/admin.jpg";
-
-// const Navbar = () => {
-//   return (
-
-//     <header className="h-16 bg-white flex items-center justify-between px-6 shadow-sm">
-
-//       {/* Left */}
-//       <div className="flex items-center gap-4 pl-8">
-//         <img src={ttsLogo} alt="Kuber" className="h-16 w-25" />
-//         {/* <span className="font-semibold text-lg">ETM</span> */}
-//         <div className='pl-10'><Menu className="cursor-pointer text-gray-600" onClick={toggleSidebar} />
-//         </div>
-//       </div>
-
-//       {/* Right */}
-//       <div className="flex items-center gap-6">
-//         <Maximize className="cursor-pointer text-gray-600" />
-//         <Bell className="cursor-pointer text-gray-600" />
-
-//         <div className="flex items-center gap-2">
-//         <span className="text-sm font-medium ">Ella Jones</span>
-//           <img
-//             src={admin}
-//             className="w-8 h-8 rounded-full"
-//             alt="user"
-//           />
-          
-//         </div>
-//       </div>
-//     </header>
-//   );
-// };
-
-// export default Navbar
-
-
 
 
 import React from "react";
-import ttsLogo from "../../../assets/Navbar-Image/ttsLogo.png";
-import { Menu, Bell, Maximize } from "lucide-react";
-import admin from "../../../assets/Navbar-Image/admin.jpg";
+import { Menu } from "lucide-react";
 
 const Navbar = ({ toggleSidebar }) => {
   return (
-    <header className="h-16 bg-white flex items-center justify-between px-6 shadow-sm">
-
-      {/* Left */}
-      <div className="flex items-center gap-4 pl-8">
-        <img src={ttsLogo} alt="Kuber" className="h-16 w-25" />
-
-        {/* Menu Icon */}
-        <Menu
-          className="cursor-pointer text-gray-600"
+    <header className="sticky top-0 z-99 bg-white shadow-sm">
+      <div className="flex items-center gap-4 px-4 py-3">
+        <button
           onClick={toggleSidebar}
-        />
-      </div>
+          className="p-2 rounded-md hover:bg-gray-100"
+        >
+          <Menu />
+        </button>
 
-      {/* Right */}
-      <div className="flex items-center gap-6">
-        <Maximize className="cursor-pointer text-gray-600" />
-        <Bell className="cursor-pointer text-gray-600" />
-
-        <div className="flex items-center gap-2">
-          <span className="text-sm font-medium">Ella Jones</span>
-          <img
-            src={admin}
-            className="w-8 h-8 rounded-full"
-            alt="user"
-          />
-        </div>
+        <h1 className="font-semibold text-gray-700">
+          Employee Dashboard
+        </h1>
       </div>
     </header>
   );
 };
 
 export default Navbar;
+
+
+

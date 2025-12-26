@@ -1,27 +1,36 @@
-import React, { useState } from 'react'
-import Navbar from '../components/Employee/Navbar/Navbar';
-import Sidebar
- from '../components/Employee/Sidebar/Sidebar';
-const EmployeeLayout = () => {
+
+import React, { useState } from "react";
+import Navbar from "../components/Employee/Navbar/Navbar";
+import Sidebar from "../components/Employee/Sidebar/Sidebar";
+
+const EmployeeLayout = ({ children }) => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
-  // Toggle function
+
   const toggleSidebar = () => {
     setIsSidebarOpen(prev => !prev);
   };
 
   return (
-    <div className="flex min-h-screen bg-gray-100">
-      
-      {/* Sidebar */}
-      <Sidebar isSidebarOpen={isSidebarOpen} />
+    <div className="min-h-screen bg-gray-100 overflow-hidden">
+      <Sidebar
+        isSidebarOpen={isSidebarOpen}
+        setIsSidebarOpen={setIsSidebarOpen}
+      />
 
-      {/* Right Section */}
-      <div className="flex-1">
+      <div
+        className={`
+          transition-all duration-300 ease-in-out
+          ${isSidebarOpen ? "ml-64" : "ml-0"}
+        `}
+      >
         <Navbar toggleSidebar={toggleSidebar} />
-        {/* Page content goes here */}
-      </div>
-      </div>
-  )
-}
 
-export default EmployeeLayout
+        <main className="p-4">
+          {children}
+        </main>
+      </div>
+    </div>
+  );
+};
+
+export default EmployeeLayout;
