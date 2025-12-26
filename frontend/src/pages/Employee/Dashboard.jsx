@@ -274,7 +274,7 @@ const Dashboard = () => {
             </div>
 
             <div className="overflow-auto max-h-95 text-center">
-              <table className="min-w-[720px] w-full text-sm">
+              <table className="min-w-180 w-full text-sm">
                 <thead className="sticky top-0 bg-gray-50">
                   <tr className="p-5">
                     <th>Date</th>

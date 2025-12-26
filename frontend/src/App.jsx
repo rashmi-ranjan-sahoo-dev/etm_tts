@@ -1,6 +1,7 @@
 import React from 'react'
 
 import Employee from './pages/Employee/Employee'
+import EmployeeTask from './pages/Employee/EmployeeTask'
 
 const App = () => {
   return (
@@ -13,7 +14,8 @@ const App = () => {
       {/* <EmployeeLayout/> */}
 
       {/* <Dashboard/> */}
-      <Employee/>
+      {/* <Employee/> */}
+       <EmployeeTask/>
     </div>
   )
 }
