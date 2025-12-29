@@ -1,18 +1,7 @@
 
 
 import React, { useState, useEffect } from "react";
-import {
-  BarChart,
-  Bar,
-  XAxis,
-  YAxis,
-  Tooltip,
-  CartesianGrid,
-  ResponsiveContainer,
-  RadialBarChart,
-  RadialBar,
-  Legend,
-} from "recharts";
+import {BarChart,Bar,XAxis,YAxis,Tooltip,CartesianGrid,ResponsiveContainer,RadialBarChart,RadialBar,Legend,} from "recharts";
 import { Ticket, CheckCircle, Briefcase, Umbrella } from "lucide-react";
 
 /* ================= DATA ================= */
