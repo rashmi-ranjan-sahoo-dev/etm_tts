@@ -24,7 +24,8 @@ const EmployeeLayout = () => {
           ${isSidebarOpen ? "ml-64" : "ml-0"}
         `}
       >
-        <Navbar toggleSidebar={toggleSidebar} />
+        <Navbar toggleSidebar={toggleSidebar}
+                isSidebarOpen = {isSidebarOpen} />
 
         <main className="p-4">
           <Outlet />
