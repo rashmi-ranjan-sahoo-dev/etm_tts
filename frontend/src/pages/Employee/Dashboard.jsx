@@ -180,6 +180,7 @@ const Dashboard = () => {
                     lineHeight: "18px",
                   }}
                 />
+                <Tooltip/>
               </RadialBarChart>
             </ResponsiveContainer>
           </div>
