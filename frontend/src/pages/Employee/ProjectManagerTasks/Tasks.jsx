@@ -79,7 +79,7 @@ const Tasks = () => {
   return (
     <div className="p-6 bg-gray-100 min-h-screen">
       {/* HEADER */}
-      <div className="bg-blue-100 rounded-lg p-4 flex items-center justify-between mb-4">
+      {/* <div className="bg-blue-100 rounded-lg p-4 flex items-center justify-between mb-4">
         <div className="flex items-center gap-4">
           <h2 className="text-lg font-semibold text-gray-800">
             Project Manager Tasks
@@ -105,7 +105,49 @@ const Tasks = () => {
         >
           <Plus />
         </button>
-      </div>
+      </div> */}
+{/* HEADER */}
+<div className="bg-blue-100 rounded-lg p-4 rounded-xl mb-4">
+  {/* TITLE */}
+  <h2 className="text-lg font-semibold text-gray-800 mb-3">
+    My Tasks
+  </h2>
+
+  {/* SEARCH */}
+  <div className="bg-white rounded-lg px-4 py-3 flex items-center gap-3 mb-3 w-[200px]">
+    <Search className="text-gray-500" size={18} />
+    <input
+      type="text"
+      placeholder="Search"
+      value={search}
+      onChange={(e) => setSearch(e.target.value)}
+      className="outline-none text-sm"
+    />
+  </div>
+
+  {/* ACTION ICONS */}
+  <div className="flex items-center gap-5">
+    <button className="text-blue-600">
+    </button>
+
+    <button
+      onClick={handleAdd}
+      className="text-green-600"
+    >
+      <Plus size={22} className="rounded-3xl border-2" />
+    </button>
+
+    <button className="text-amber-600">
+    </button>
+
+    <button className="text-blue-600">
+    </button>
+  </div>
+</div>
+
+
+{/* TABLE (DESKTOP ONLY) */}
+<div className="hidden md:block overflow-x-auto bg-white rounded-lg shadow max-h-[650px] overflow-y-auto">
 
       {/* TABLE */}
       <div className="overflow-x-auto bg-white rounded-lg shadow max-h-[650px] overflow-y-auto">
@@ -186,7 +228,7 @@ const Tasks = () => {
           </tbody>
         </table>
       </div>
-
+</div>
       {/* MOBILE VIEW */}
       <div className="block md:hidden space-y-4 max-h-[400px] overflow-y-auto">
         {filteredTasks.map((t) => (

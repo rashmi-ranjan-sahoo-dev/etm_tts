@@ -137,8 +137,8 @@ const ClientModel = ({ close, save, editData }) => {
     id: null,
     clientId: "",
     clientName: "",
-    invoiceFile: null,   // file object
-    invoiceName: "",     // file name
+    invoiceFile: null,   
+    invoiceName: "",     
     date: "",
     amount: "",
     method: "",

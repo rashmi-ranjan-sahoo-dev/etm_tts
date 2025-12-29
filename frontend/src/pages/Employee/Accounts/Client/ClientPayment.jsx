@@ -63,18 +63,21 @@ const ClientPayment = () => {
             placeholder="Search"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="px-3 py-2 border rounded"
+            className="px-3 py-2 border rounded bg-white w-35"
           />
           <Plus
-            className="cursor-pointer text-green-600"
+            className="cursor-pointer text-green-600 rounded-2xl border-2 w-[30px] h-[30px]"
             onClick={() => {
               setEditData(null);
               setOpenModal(true);
             }}
           />
-          <Download className="cursor-pointer text-blue-600" />
         </div>
       </div>
+
+
+
+<div className="hidden md:block bg-white rounded-lg shadow overflow-x-auto">
 
       {/* TABLE */}
       <div className="bg-white rounded-lg shadow overflow-x-auto">
@@ -122,6 +125,87 @@ const ClientPayment = () => {
           </tbody>
         </table>
       </div>
+</div>
+
+
+{/* MOBILE VIEW */}
+<div className="block md:hidden space-y-4">
+  {filteredPayments.map((p) => (
+    <div
+      key={p.id}
+      className="bg-white rounded-lg shadow p-4 space-y-3"
+    >
+     
+      <div>
+        <input type="checkbox" />
+      </div>
+
+      <div className="flex justify-between border-b pb-1 text-sm">
+        <span className="font-medium">Payment ID:</span>
+        <span>{p.id}</span>
+      </div>
+
+      <div className="flex justify-between border-b pb-1 text-sm">
+        <span className="font-medium">Client ID:</span>
+        <span>{p.clientId}</span>
+      </div>
+
+      <div className="flex justify-between border-b pb-1 text-sm">
+        <span className="font-medium">Client Name:</span>
+        <span>{p.clientName}</span>
+      </div>
+
+      <div className="flex justify-between border-b pb-1 text-sm">
+        <span className="font-medium">Invoice ID:</span>
+        <span>{p.invoiceId}</span>
+      </div>
+
+      <div className="flex justify-between border-b pb-1 text-sm">
+        <span className="font-medium">Payment Date:</span>
+        <span>{p.date}</span>
+      </div>
+
+      <div className="flex justify-between border-b pb-1 text-sm">
+        <span className="font-medium">Payment Amount:</span>
+        <span>${p.amount}</span>
+      </div>
+
+      <div className="flex justify-between border-b pb-1 text-sm">
+        <span className="font-medium">Payment Method:</span>
+        <span>{p.method}</span>
+      </div>
+
+      <div className="flex justify-between border-b pb-1 text-sm">
+        <span className="font-medium">Transaction ID:</span>
+        <span>{p.transactionId}</span>
+      </div>
+
+      <div className="flex justify-between items-center">
+        <span className="font-medium">Payment Status:</span>
+        {statusBadge(p.status)}
+      </div>
+
+      {/* ACTIONS */}
+      <div className="flex gap-4 pt-2">
+        <Pencil
+          className="text-blue-600 cursor-pointer"
+          onClick={() => {
+            setEditData(p);
+            setOpenModal(true);
+          }}
+        />
+        <Trash2
+          className="text-red-600 cursor-pointer"
+          onClick={() =>
+            setPayments(payments.filter((x) => x.id !== p.id))
+          }
+        />
+      </div>
+    </div>
+  ))}
+</div>
+
+
 
       {/* MODAL */}
       {openModal && (
@@ -145,6 +229,7 @@ const ClientPayment = () => {
           }}
         />
       )}
+
     </div>
   );
 };
