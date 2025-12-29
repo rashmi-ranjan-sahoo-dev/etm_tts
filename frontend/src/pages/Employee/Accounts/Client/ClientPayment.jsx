@@ -27,6 +27,26 @@ const ClientModel = ({ close, save, editData }) => {
   );
 
   const handleSubmit = () => {
+    const{
+      clientId,
+      clientName,
+      invoiceName,
+      date,
+      amount,
+      method,
+      transactionId,
+      status,
+    }=formData;
+
+    if (!clientId.trim()) return alert("Client ID is required");
+    if (!clientName.trim()) return alert("ClientName is required");
+    if (!date) return alert("Date is required");
+    if (!amount) return alert("Amount is required");
+    if (!method) return alert(" Payment Method is required");
+    // if (!transactionId) return alert("Transaction Id is required");
+    if (!status.trim()) return alert("Status is required");
+    if (!invoiceName) return alert("Invoice file is required");
+
     save(formData);
   };
 
@@ -53,7 +73,6 @@ const ClientModel = ({ close, save, editData }) => {
               <input
                 type="text"
                 required
-                value={formData.clientId}
                 onChange={(e) =>
                   setFormData({ ...formData, clientId: e.target.value })
                 }
@@ -86,7 +105,7 @@ const ClientModel = ({ close, save, editData }) => {
                 type="file"
                 required
                 accept=".pdf,.doc,.docx,.jpg,.jpeg,.png"
-                value={formData.invoiceName}
+               
                 onChange={(e) =>
                   setFormData({ ...formData, invoiceName: e.target.files[0] })
                 }
@@ -517,7 +536,7 @@ const ClientPayment = () => {
           save={(data) => {
             const payload = {
               ...data,
-              invoiceId: data.invoiceName,
+              invoiceId:  data.invoiceName?.name || "",
             };
 
             if (editData) {

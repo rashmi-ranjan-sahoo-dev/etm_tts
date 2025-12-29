@@ -1,141 +1,10 @@
 
-
 import React, { useState,useEffect } from "react";
 import { Plus, Pencil, Trash2, Search, CheckCircle2, XCircle, Clock, Calendar } from "lucide-react";
 
-
-// const formatDate = (dateStr) => {
-//   if (!dateStr) return "";
-//   const [year, month, day] = dateStr.split("-");
-//   return `${day}/${month}/${year}`;
-// };
-
-// LeaveModal Component (embedded)
-// const LeaveModal = ({ close, save, editData }) => {
-//   const [formData, setFormData] = useState(
-//     editData || {
-//       applyDate: "",
-//       fromDate: "",
-//       toDate: "",
-//       halfDay: "No",
-//       type: "Casual Leave",
-//       reason: "",
-//     }
-//   );
-
-//   const handleSubmit = () => {
-//     save(formData);
-//   };
-
-//   return (
-//     <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-//       <div className="bg-white rounded-2xl shadow-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto">
-//         <div className="sticky top-0 bg-gradient-to-r from-teal-600 to-cyan-600 p-6 rounded-t-2xl">
-//           <h3 className="text-2xl font-bold text-white">
-//             {editData ? "Edit Leave Request" : "New Leave Request"}
-//           </h3>
-//           <p className="text-teal-100 text-sm mt-1">
-//             {editData ? "Update your leave information" : "Submit a new leave application"}
-//           </p>
-//         </div>
-        
-//         <div className="p-6 space-y-5">
-//           <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-//             <div>
-//               <label className="block text-sm font-semibold text-gray-700 mb-2">Application Date</label>
-//               <input
-//                 type="date"
-//                 required
-//                 value={formData.applyDate}
-//                 onChange={(e) => setFormData({ ...formData, applyDate: e.target.value })}
-//                 className="w-full px-4 py-3 rounded-xl border-2 border-gray-200 bg-gray-50 focus:outline-none focus:border-teal-500 focus:bg-white focus:ring-4 focus:ring-teal-500/10 transition-all"
-//               />
-//             </div>
-            
-//             <div>
-//               <label className="block text-sm font-semibold text-gray-700 mb-2">Leave Type</label>
-//               <select
-//                 value={formData.type}
-//                 onChange={(e) => setFormData({ ...formData, type: e.target.value })}
-//                 className="w-full px-4 py-3 rounded-xl border-2 border-gray-200 bg-gray-50 focus:outline-none focus:border-teal-500 focus:bg-white focus:ring-4 focus:ring-teal-500/10 transition-all"
-//               >
-//                 <option>Casual Leave</option>
-//                 <option>Sick Leave</option>
-//                 <option>Annual Leave</option>
-//                 <option>Personal Leave</option>
-//               </select>
-//             </div>
-            
-//             <div>
-//               <label className="block text-sm font-semibold text-gray-700 mb-2">From Date</label>
-//               <input
-//                 type="date"
-//                 required
-//                 value={formData.fromDate}
-//                 onChange={(e) => setFormData({ ...formData, fromDate: e.target.value })}
-//                 className="w-full px-4 py-3 rounded-xl border-2 border-gray-200 bg-gray-50 focus:outline-none focus:border-teal-500 focus:bg-white focus:ring-4 focus:ring-teal-500/10 transition-all"
-//               />
-//             </div>
-            
-//             <div>
-//               <label className="block text-sm font-semibold text-gray-700 mb-2">To Date</label>
-//               <input
-//                 type="date"
-//                 required
-//                 value={formData.toDate}
-//                 onChange={(e) => setFormData({ ...formData, toDate: e.target.value })}
-//                 className="w-full px-4 py-3 rounded-xl border-2 border-gray-200 bg-gray-50 focus:outline-none focus:border-teal-500 focus:bg-white focus:ring-4 focus:ring-teal-500/10 transition-all"
-//               />
-//             </div>
-            
-//             <div className="md:col-span-2">
-//               <label className="block text-sm font-semibold text-gray-700 mb-2">Half Day</label>
-//               <select
-//                 value={formData.halfDay}
-//                 onChange={(e) => setFormData({ ...formData, halfDay: e.target.value })}
-//                 className="w-full px-4 py-3 rounded-xl border-2 border-gray-200 bg-gray-50 focus:outline-none focus:border-teal-500 focus:bg-white focus:ring-4 focus:ring-teal-500/10 transition-all"
-//               >
-//                 <option>Yes</option>
-//                 <option>No</option>
-//               </select>
-//             </div>
-            
-//             <div className="md:col-span-2">
-//               <label className="block text-sm font-semibold text-gray-700 mb-2">Reason</label>
-//               <textarea
-//                 rows="4"
-//                 required
-//                 value={formData.reason}
-//                 onChange={(e) => setFormData({ ...formData, reason: e.target.value })}
-//                 className="w-full px-4 py-3 rounded-xl border-2 border-gray-200 bg-gray-50 resize-none focus:outline-none focus:border-teal-500 focus:bg-white focus:ring-4 focus:ring-teal-500/10 transition-all"
-//                 placeholder="Please provide a reason for your leave request..."
-//               />
-//             </div>
-//           </div>
-          
-//           <div className="flex gap-3 pt-4 border-t">
-//             <button
-//               onClick={handleSubmit}
-//               className="flex-1 bg-gradient-to-r from-teal-600 to-cyan-600 text-white px-6 py-3 rounded-xl hover:from-teal-700 hover:to-cyan-700 transition-all shadow-lg hover:shadow-xl hover:scale-105 active:scale-95 font-semibold"
-//             >
-//               {editData ? "Update Request" : "Submit Request"}
-//             </button>
-//             <button
-//               onClick={close}
-//               className="px-6 py-3 rounded-xl border-2 border-gray-300 text-gray-700 hover:bg-gray-50 transition-all font-semibold"
-//             >
-//               Cancel
-//             </button>
-//           </div>
-//         </div>
-//       </div>
-//     </div>
-//   );
-// };
-
 const formatDate = (dateStr) => {
   if (!dateStr) return "";
-  const [year, month, day] = dateStr.split("-");
+  const [year, month, day] = dateStr.split("-");        //Convert browser date format (YYYY-MM-DD) → UI format (DD/MM/YYYY)
   return `${day}/${month}/${year}`;
 };
 
@@ -145,7 +14,6 @@ const toISO = (date) => {
   return `${y}-${m.padStart(2, '0')}-${d.padStart(2, '0')}`;
 };
 
-// LeaveModal Component with Full Validation
 const LeaveModal = ({ close, save, editData }) => {
   const [form, setForm] = useState({
     applyDate: "",

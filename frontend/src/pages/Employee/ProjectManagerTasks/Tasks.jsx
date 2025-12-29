@@ -3,7 +3,25 @@
 import React, { useState } from "react";
 import { Plus, Pencil, Trash2, Search, CheckCircle2, Clock, AlertCircle, Briefcase } from "lucide-react";
 
-// TaskModal Component (embedded)
+// const TaskModal = ({ close, save, editData }) => {
+//   const [formData, setFormData] = useState(
+//     editData || {
+//       TaskNumber: "",
+//       Employee_ID: "",
+//       Project: "",
+//       Client: "",
+//       Status: "Open",
+//       Priority: "Medium",
+//       Type: "Development",
+//       TaskDate: "",
+//       Details: "",
+//     }
+//   );
+
+//   const handleSubmit = () => {
+//     save(formData);
+//   };
+
 const TaskModal = ({ close, save, editData }) => {
   const [formData, setFormData] = useState(
     editData || {
@@ -20,6 +38,28 @@ const TaskModal = ({ close, save, editData }) => {
   );
 
   const handleSubmit = () => {
+    const {
+      TaskNumber,
+      Employee_ID,
+      Project,
+      Client,
+      Status,
+      Priority,
+      Type,
+      TaskDate,
+      Details,
+    } = formData;
+
+    if (!TaskNumber.trim()) return alert("Task Number is required");
+    if (!Employee_ID.trim()) return alert("Employee ID is required");
+    if (!Project.trim()) return alert("Project is required");
+    if (!Client.trim()) return alert("Client is required");
+    if (!Status) return alert("Status is required");
+    if (!Priority) return alert("Priority is required");
+    if (!Type) return alert("Task Type is required");
+    if (!TaskDate) return alert("Task Date is required");
+    if (!Details.trim()) return alert("Task Details are required");
+
     save(formData);
   };
 

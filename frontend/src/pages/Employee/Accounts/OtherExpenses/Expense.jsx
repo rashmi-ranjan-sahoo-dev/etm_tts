@@ -19,6 +19,25 @@ const ExpenseModel = ({ close, save, editData }) => {
   );
 
   const handleSubmit = () => {
+    const{
+      invoiceNo,
+      date,
+      expenseType,
+      expenseBy,
+      paymentMode,
+      paidTo,
+      status,
+    }=formData;
+
+    if (!invoiceNo.trim()) return alert("InvoiceNo is required");
+    if (!expenseType.trim()) return alert("ExpenseType is required");
+    if (!date) return alert("Date is required");
+    if (!expenseBy) return alert("ExpenseBy is required");
+    if (!paymentMode) return alert(" Payment Method is required");
+    // if (!transactionId) return alert("Transaction Id is required");
+    if (!status.trim()) return alert("Status is required");
+    if (!paidTo) return alert("Paid is required");
+
     save(formData);
   };
 
