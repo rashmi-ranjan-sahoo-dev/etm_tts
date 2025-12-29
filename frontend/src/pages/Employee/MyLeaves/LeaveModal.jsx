@@ -6,6 +6,13 @@ const formatDate = (dateStr) => {
   const [year, month, day] = dateStr.split("-");
   return `${day}/${month}/${year}`;
 };
+// const toISO = (date) => {
+//   if (!date) return "";
+//   const [d, m, y] = date.split("/");
+//   return `${y}-${m}-${d}`;
+// };
+
+const toDateObj = (date) => new Date(date);
 
 const LeaveModal = ({ close, save, editData }) => {
   const [form, setForm] = useState({
