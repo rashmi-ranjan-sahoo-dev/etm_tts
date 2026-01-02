@@ -34,7 +34,7 @@ const ClientModel = ({ close, save, editData }) => {
       date,
       amount,
       method,
-      transactionId,
+
       status,
     }=formData;
 
