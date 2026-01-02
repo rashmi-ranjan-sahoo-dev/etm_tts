@@ -50,7 +50,7 @@ const teamData = Array.from({ length: 12 }).map((_, i) => ({
 const taskData = Array.from({ length: 18 }).map((_, i) => ({
   task: `Task ${i + 1}`,
   status: ["Completed", "In Progress", "Pending", "Not Started"][i % 4],
-  manager: "Jay Soni",
+  manager: "Jay Sharma",
   progress: [100, 60, 80, 30][i % 4],
 }));
 

@@ -1,26 +1,194 @@
-
-
 import React, { useState } from "react";
-import { Plus, Pencil, Trash2, Search, CheckCircle2, Clock, AlertCircle, Briefcase } from "lucide-react";
+import {
+  Plus,
+  Pencil,
+  Trash2,
+  Search,
+  CheckCircle2,
+  Clock,
+  AlertCircle,
+  Briefcase,
+  X,
+  User,
+} from "lucide-react";
 
-// const TaskModal = ({ close, save, editData }) => {
-//   const [formData, setFormData] = useState(
-//     editData || {
-//       TaskNumber: "",
-//       Employee_ID: "",
-//       Project: "",
-//       Client: "",
-//       Status: "Open",
-//       Priority: "Medium",
-//       Type: "Development",
-//       TaskDate: "",
-//       Details: "",
-//     }
-//   );
+// NEW: Task Detail View Modal Component
+const TaskDetailModal = ({ task, close, onMarkReview, isReviewed }) => {
+  return (
+    <div
+      className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4 overflow-hidden"
+      onClick={close}
+    >
+      <div
+        className="bg-white rounded-2xl shadow-2xl max-w-3xl w-full max-h-[90vh] overflow-y-auto transform transition-all"
+        onClick={(e) => e.stopPropagation()}
+      >
+        {/* Modal Header */}
+        <div className="sticky top-0 bg-gradient-to-r from-indigo-600 to-purple-600 p-6 rounded-t-2xl flex items-center justify-between">
+          <div>
+            <h2 className="text-2xl font-bold text-white">{task.TaskNumber}</h2>
+            <p className="text-indigo-100 text-sm mt-1">{task.Project}</p>
+          </div>
+          <button
+            onClick={close}
+            className="text-white/80 hover:text-white transition-colors"
+          >
+            <X className="w-6 h-6" />
+          </button>
+        </div>
 
-//   const handleSubmit = () => {
-//     save(formData);
-//   };
+        {/* Modal Body */}
+        <div className="p-6 space-y-6">
+          {/* Task Number & Status */}
+          <div className="grid grid-cols-2 gap-4">
+            <div>
+              <label className="block text-sm font-semibold text-gray-700 mb-2">
+                Task Number
+              </label>
+              <p className="text-lg font-semibold text-indigo-600">
+                {task.TaskNumber}
+              </p>
+            </div>
+            <div>
+              <label className="block text-sm font-semibold text-gray-700 mb-2">
+                Status
+              </label>
+              <div className="flex items-center gap-2">
+                {task.Status === "Open" && (
+                  <Clock className="w-4 h-4 text-emerald-600" />
+                )}
+                {task.Status === "Closed" && (
+                  <CheckCircle2 className="w-4 h-4 text-slate-600" />
+                )}
+                {task.Status === "In Progress" && (
+                  <AlertCircle className="w-4 h-4 text-blue-600" />
+                )}
+                <span
+                  className={`px-3 py-1.5 rounded-lg text-xs font-semibold border ${
+                    task.Status === "Open"
+                      ? "bg-emerald-500/10 text-emerald-600 border-emerald-500/20"
+                      : task.Status === "Closed"
+                      ? "bg-slate-500/10 text-slate-600 border-slate-500/20"
+                      : "bg-blue-500/10 text-blue-600 border-blue-500/20"
+                  }`}
+                >
+                  {task.Status}
+                </span>
+              </div>
+            </div>
+          </div>
+
+          {/* Project Name */}
+          <div>
+            <label className="block text-sm font-semibold text-gray-700 mb-2">
+              Project Name
+            </label>
+            <p className="text-lg text-gray-900 font-medium">{task.Project}</p>
+          </div>
+
+          {/* Assigned To & Client */}
+          <div className="grid grid-cols-2 gap-4">
+            <div>
+              <label className="block text-sm font-semibold text-gray-700 mb-2">
+                Assigned To (Employee)
+              </label>
+              <div className="flex items-center gap-2 bg-indigo-50 p-3 rounded-xl border border-indigo-100">
+                <User className="w-5 h-5 text-indigo-600" />
+                <span className="text-gray-900 font-medium">
+                  {task.Employee_ID}
+                </span>
+              </div>
+            </div>
+
+            <div>
+              <label className="block text-sm font-semibold text-gray-700 mb-2">
+                Client
+              </label>
+              <div className="bg-purple-50 p-3 rounded-xl border border-purple-100">
+                <span className="text-gray-900 font-medium">{task.Client}</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Priority, Type & Date */}
+          <div className="grid grid-cols-3 gap-4">
+            <div>
+              <label className="block text-sm font-semibold text-gray-700 mb-2">
+                Priority
+              </label>
+              <span
+                className={`inline-flex px-3 py-1.5 rounded-lg text-xs font-semibold border ${
+                  task.Priority === "High"
+                    ? "bg-rose-500/10 text-rose-600 border-rose-500/20"
+                    : task.Priority === "Medium"
+                    ? "bg-amber-500/10 text-amber-600 border-amber-500/20"
+                    : "bg-blue-500/10 text-blue-600 border-blue-500/20"
+                }`}
+              >
+                {task.Priority}
+              </span>
+            </div>
+
+            <div>
+              <label className="block text-sm font-semibold text-gray-700 mb-2">
+                Task Type
+              </label>
+              <span className="px-3 py-1.5 rounded-lg text-xs font-medium bg-gray-100 text-gray-700 border border-gray-200">
+                {task.Type}
+              </span>
+            </div>
+
+            <div>
+              <label className="block text-sm font-semibold text-gray-700 mb-2">
+                Task Date
+              </label>
+              <p className="text-gray-900 font-medium text-sm">
+                {task.TaskDate}
+              </p>
+            </div>
+          </div>
+
+          {/* Task Details */}
+          <div>
+            <label className="block text-sm font-semibold text-gray-700 mb-2">
+              Task Details
+            </label>
+            <div className="bg-blue-50 border-2 border-blue-200 rounded-xl p-4">
+              <p className="text-gray-800 leading-relaxed">
+                {task.Details || "No details provided"}
+              </p>
+            </div>
+          </div>
+
+          {/* Mark for Review Button */}
+          <div className="pt-4 border-t-2 border-gray-200">
+            <button
+              onClick={() => onMarkReview(task.TaskNumber)}
+              className={`w-full flex items-center justify-center gap-2 px-6 py-3 rounded-xl font-semibold transition-all shadow-lg hover:shadow-xl ${
+                isReviewed
+                  ? "bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 text-white"
+                  : "bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white"
+              }`}
+            >
+              <CheckCircle2 className="w-5 h-5" />
+              {isReviewed ? "Marked for Review ✓" : "Mark for Review"}
+            </button>
+          </div>
+        </div>
+
+        {/* Modal Footer */}
+        <div className="flex justify-end gap-3 p-6 border-t-2 border-gray-200 bg-gray-50 rounded-b-2xl">
+          <button
+            onClick={close}
+            className="px-6 py-2 text-gray-700 bg-white border-2 border-gray-300 rounded-xl hover:bg-gray-50 transition-colors font-semibold"
+          >
+            Close
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+};
 
 const TaskModal = ({ close, save, editData }) => {
   const [formData, setFormData] = useState(
@@ -64,8 +232,12 @@ const TaskModal = ({ close, save, editData }) => {
   };
 
   return (
-    <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-      <div className="bg-white rounded-2xl shadow-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto">
+    // <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+    <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 overflow-hidden">
+      <div
+        className="bg-white rounded-2xl shadow-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto overflow-x-hidden"
+        onClick={(e) => e.stopPropagation()}
+      >
         <div className="sticky top-0 bg-gradient-to-r from-indigo-600 to-purple-600 p-6 rounded-t-2xl">
           <h3 className="text-2xl font-bold text-white">
             {editData ? "Edit Task" : "Add New Task"}
@@ -74,62 +246,82 @@ const TaskModal = ({ close, save, editData }) => {
             {editData ? "Update task information" : "Create a new task entry"}
           </p>
         </div>
-        
+
         <div className="p-6 space-y-5">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
             <div>
-              <label className="block text-sm font-semibold text-gray-700 mb-2">Task Number</label>
+              <label className="block text-sm font-semibold text-gray-700 mb-2">
+                Task Number
+              </label>
               <input
                 type="text"
                 required
                 value={formData.TaskNumber}
-                onChange={(e) => setFormData({ ...formData, TaskNumber: e.target.value })}
+                onChange={(e) =>
+                  setFormData({ ...formData, TaskNumber: e.target.value })
+                }
                 className="w-full px-4 py-3 rounded-xl border-2 border-gray-200 bg-gray-50 focus:outline-none focus:border-indigo-500 focus:bg-white focus:ring-4 focus:ring-indigo-500/10 transition-all"
                 placeholder="e.g., TASK-01"
               />
             </div>
-            
+
             <div>
-              <label className="block text-sm font-semibold text-gray-700 mb-2">Employee ID</label>
+              <label className="block text-sm font-semibold text-gray-700 mb-2">
+                Employee ID
+              </label>
               <input
                 type="text"
                 required
                 value={formData.Employee_ID}
-                onChange={(e) => setFormData({ ...formData, Employee_ID: e.target.value })}
+                onChange={(e) =>
+                  setFormData({ ...formData, Employee_ID: e.target.value })
+                }
                 className="w-full px-4 py-3 rounded-xl border-2 border-gray-200 bg-gray-50 focus:outline-none focus:border-indigo-500 focus:bg-white focus:ring-4 focus:ring-indigo-500/10 transition-all"
                 placeholder="e.g., EMP20215"
               />
             </div>
-            
+
             <div>
-              <label className="block text-sm font-semibold text-gray-700 mb-2">Project</label>
+              <label className="block text-sm font-semibold text-gray-700 mb-2">
+                Project
+              </label>
               <input
                 type="text"
                 required
                 value={formData.Project}
-                onChange={(e) => setFormData({ ...formData, Project: e.target.value })}
+                onChange={(e) =>
+                  setFormData({ ...formData, Project: e.target.value })
+                }
                 className="w-full px-4 py-3 rounded-xl border-2 border-gray-200 bg-gray-50 focus:outline-none focus:border-indigo-500 focus:bg-white focus:ring-4 focus:ring-indigo-500/10 transition-all"
                 placeholder="e.g., PHP Website"
               />
             </div>
-            
+
             <div>
-              <label className="block text-sm font-semibold text-gray-700 mb-2">Client</label>
+              <label className="block text-sm font-semibold text-gray-700 mb-2">
+                Client
+              </label>
               <input
                 type="text"
                 required
                 value={formData.Client}
-                onChange={(e) => setFormData({ ...formData, Client: e.target.value })}
+                onChange={(e) =>
+                  setFormData({ ...formData, Client: e.target.value })
+                }
                 className="w-full px-4 py-3 rounded-xl border-2 border-gray-200 bg-gray-50 focus:outline-none focus:border-indigo-500 focus:bg-white focus:ring-4 focus:ring-indigo-500/10 transition-all"
                 placeholder="e.g., Cara Stevens"
               />
             </div>
-            
+
             <div>
-              <label className="block text-sm font-semibold text-gray-700 mb-2">Status</label>
+              <label className="block text-sm font-semibold text-gray-700 mb-2">
+                Status
+              </label>
               <select
                 value={formData.Status}
-                onChange={(e) => setFormData({ ...formData, Status: e.target.value })}
+                onChange={(e) =>
+                  setFormData({ ...formData, Status: e.target.value })
+                }
                 className="w-full px-4 py-3 rounded-xl border-2 border-gray-200 bg-gray-50 focus:outline-none focus:border-indigo-500 focus:bg-white focus:ring-4 focus:ring-indigo-500/10 transition-all"
               >
                 <option>Open</option>
@@ -137,12 +329,16 @@ const TaskModal = ({ close, save, editData }) => {
                 <option>In Progress</option>
               </select>
             </div>
-            
+
             <div>
-              <label className="block text-sm font-semibold text-gray-700 mb-2">Priority</label>
+              <label className="block text-sm font-semibold text-gray-700 mb-2">
+                Priority
+              </label>
               <select
                 value={formData.Priority}
-                onChange={(e) => setFormData({ ...formData, Priority: e.target.value })}
+                onChange={(e) =>
+                  setFormData({ ...formData, Priority: e.target.value })
+                }
                 className="w-full px-4 py-3 rounded-xl border-2 border-gray-200 bg-gray-50 focus:outline-none focus:border-indigo-500 focus:bg-white focus:ring-4 focus:ring-indigo-500/10 transition-all"
               >
                 <option>Low</option>
@@ -150,12 +346,16 @@ const TaskModal = ({ close, save, editData }) => {
                 <option>High</option>
               </select>
             </div>
-            
+
             <div>
-              <label className="block text-sm font-semibold text-gray-700 mb-2">Task Type</label>
+              <label className="block text-sm font-semibold text-gray-700 mb-2">
+                Task Type
+              </label>
               <select
                 value={formData.Type}
-                onChange={(e) => setFormData({ ...formData, Type: e.target.value })}
+                onChange={(e) =>
+                  setFormData({ ...formData, Type: e.target.value })
+                }
                 className="w-full px-4 py-3 rounded-xl border-2 border-gray-200 bg-gray-50 focus:outline-none focus:border-indigo-500 focus:bg-white focus:ring-4 focus:ring-indigo-500/10 transition-all"
               >
                 <option>Development</option>
@@ -164,30 +364,38 @@ const TaskModal = ({ close, save, editData }) => {
                 <option>Testing</option>
               </select>
             </div>
-            
+
             <div>
-              <label className="block text-sm font-semibold text-gray-700 mb-2">Task Date</label>
+              <label className="block text-sm font-semibold text-gray-700 mb-2">
+                Task Date
+              </label>
               <input
                 type="date"
                 required
                 value={formData.TaskDate}
-                onChange={(e) => setFormData({ ...formData, TaskDate: e.target.value })}
+                onChange={(e) =>
+                  setFormData({ ...formData, TaskDate: e.target.value })
+                }
                 className="w-full px-4 py-3 rounded-xl border-2 border-gray-200 bg-gray-50 focus:outline-none focus:border-indigo-500 focus:bg-white focus:ring-4 focus:ring-indigo-500/10 transition-all"
               />
             </div>
-            
+
             <div className="md:col-span-2">
-              <label className="block text-sm font-semibold text-gray-700 mb-2">Details</label>
+              <label className="block text-sm font-semibold text-gray-700 mb-2">
+                Details
+              </label>
               <textarea
                 rows="3"
                 value={formData.Details}
-                onChange={(e) => setFormData({ ...formData, Details: e.target.value })}
+                onChange={(e) =>
+                  setFormData({ ...formData, Details: e.target.value })
+                }
                 className="w-full px-4 py-3 rounded-xl border-2 border-gray-200 bg-gray-50 resize-none focus:outline-none focus:border-indigo-500 focus:bg-white focus:ring-4 focus:ring-indigo-500/10 transition-all"
                 placeholder="Additional task details..."
               />
             </div>
           </div>
-          
+
           <div className="flex gap-3 pt-4 border-t">
             <button
               onClick={handleSubmit}
@@ -217,7 +425,7 @@ const Tasks = () => {
       TaskNumber: "TASK-01",
       Employee_ID: "EMP20215",
       Project: "PHP Website",
-      Client: "Cara Stevens",
+      Client: "Chandra Deshmukh",
       Status: "Open",
       Priority: "Medium",
       Type: "Development",
@@ -229,7 +437,7 @@ const Tasks = () => {
       TaskNumber: "TASK-14",
       Employee_ID: "EMP20216",
       Project: "IOS App",
-      Client: "Airi Satou",
+      Client: "Ashutosh Sahoo",
       Status: "Open",
       Priority: "Medium",
       Type: "Bug",
@@ -241,6 +449,10 @@ const Tasks = () => {
   const [openModal, setOpenModal] = useState(false);
   const [editData, setEditData] = useState(null);
   const [search, setSearch] = useState("");
+
+  // NEW: State for task detail view modal
+  const [viewTask, setViewTask] = useState(null);
+  const [reviewedTasks, setReviewedTasks] = useState(new Set());
 
   const handleAdd = () => {
     setEditData(null);
@@ -265,6 +477,24 @@ const Tasks = () => {
     setOpenModal(false);
   };
 
+  // NEW: Handle task number click
+  const handleTaskClick = (task) => {
+    setViewTask(task);
+  };
+
+  // NEW: Handle mark for review
+  const handleMarkReview = (taskNumber) => {
+    setReviewedTasks((prev) => {
+      const newSet = new Set(prev);
+      if (newSet.has(taskNumber)) {
+        newSet.delete(taskNumber);
+      } else {
+        newSet.add(taskNumber);
+      }
+      return newSet;
+    });
+  };
+
   const filteredTasks = Tasks.filter((t) => {
     if (!search.trim()) return true;
     const s = search.toLowerCase();
@@ -287,7 +517,7 @@ const Tasks = () => {
       Closed: "bg-slate-500/10 text-slate-600 border-slate-500/20",
       "In Progress": "bg-blue-500/10 text-blue-600 border-blue-500/20",
     };
-    
+
     const priorityMap = {
       High: "bg-rose-500/10 text-rose-600 border-rose-500/20",
       Medium: "bg-amber-500/10 text-amber-600 border-amber-500/20",
@@ -295,17 +525,23 @@ const Tasks = () => {
     };
 
     const map = type === "status" ? statusMap : priorityMap;
-    
+
     return (
-      <span className={`px-3 py-1.5 rounded-lg text-xs font-semibold border ${map[text] || "bg-gray-100 text-gray-700 border-gray-200"}`}>
+      <span
+        className={`px-3 py-1.5 rounded-lg text-xs font-semibold border ${
+          map[text] || "bg-gray-100 text-gray-700 border-gray-200"
+        }`}
+      >
         {text}
       </span>
     );
   };
 
   const getStatusIcon = (status) => {
-    if (status === "Open") return <Clock className="w-4 h-4 text-emerald-600" />;
-    if (status === "Closed") return <CheckCircle2 className="w-4 h-4 text-slate-600" />;
+    if (status === "Open")
+      return <Clock className="w-4 h-4 text-emerald-600" />;
+    if (status === "Closed")
+      return <CheckCircle2 className="w-4 h-4 text-slate-600" />;
     return <AlertCircle className="w-4 h-4 text-blue-600" />;
   };
 
@@ -324,15 +560,20 @@ const Tasks = () => {
                   Project Manager Tasks
                 </h2>
                 <p className="text-sm text-gray-500 mt-1">
-                  {filteredTasks.length} {filteredTasks.length === 1 ? 'task' : 'tasks'} found
-                  {selectedIds.length > 0 && ` • ${selectedIds.length} selected`}
+                  {filteredTasks.length}{" "}
+                  {filteredTasks.length === 1 ? "task" : "tasks"} found
+                  {selectedIds.length > 0 &&
+                    ` • ${selectedIds.length} selected`}
                 </p>
               </div>
             </div>
-            
+
             <div className="flex items-center gap-3">
               <div className="relative flex-1 lg:w-80">
-                <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" size={20} />
+                <Search
+                  className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"
+                  size={20}
+                />
                 <input
                   type="text"
                   placeholder="Search tasks, projects, clients..."
@@ -341,7 +582,7 @@ const Tasks = () => {
                   className="w-full pl-12 pr-4 py-3 rounded-xl border-2 border-gray-200 bg-white focus:outline-none focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/10 transition-all"
                 />
               </div>
-              
+
               <button
                 onClick={handleAdd}
                 className="w-12 h-12 flex items-center justify-center rounded-xl bg-gradient-to-r from-emerald-500 to-teal-500 text-white hover:from-emerald-600 hover:to-teal-600 transition-all shadow-lg hover:shadow-xl hover:scale-105 active:scale-95"
@@ -361,7 +602,10 @@ const Tasks = () => {
                   <th className="p-4 text-left">
                     <input
                       type="checkbox"
-                      checked={filteredTasks.length > 0 && selectedIds.length === filteredTasks.length}
+                      checked={
+                        filteredTasks.length > 0 &&
+                        selectedIds.length === filteredTasks.length
+                      }
                       onChange={(e) => {
                         if (e.target.checked) {
                           setSelectedIds(filteredTasks.map((row) => row.id));
@@ -372,27 +616,50 @@ const Tasks = () => {
                       className="w-4 h-4 rounded border-gray-300 text-indigo-600 focus:ring-2 focus:ring-indigo-500/50 cursor-pointer"
                     />
                   </th>
-                  <th className="p-4 text-left text-xs font-bold text-gray-700 uppercase tracking-wider min-w-[120px]">Task Number</th>
-                  <th className="p-4 text-left text-xs font-bold text-gray-700 uppercase tracking-wider min-w-[140px]">Employee ID</th>
-                  <th className="p-4 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">Project</th>
-                  <th className="p-4 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">Client</th>
-                  <th className="p-4 text-left text-xs font-bold text-gray-700 uppercase tracking-wider min-w-[100px]">Status</th>
-                  <th className="p-4 text-left text-xs font-bold text-gray-700 uppercase tracking-wider min-w-[100px]">Priority</th>
-                  <th className="p-4 text-left text-xs font-bold text-gray-700 uppercase tracking-wider min-w-[120px]">Task Type</th>
-                  <th className="p-4 text-left text-xs font-bold text-gray-700 uppercase tracking-wider min-w-[120px]">Task Date</th>
-                  <th className="p-4 text-left text-xs font-bold text-gray-700 uppercase tracking-wider min-w-[100px]">Actions</th>
+                  <th className="p-4 text-left text-xs font-bold text-gray-700 uppercase tracking-wider min-w-[120px]">
+                    Task Number
+                  </th>
+                  <th className="p-4 text-left text-xs font-bold text-gray-700 uppercase tracking-wider min-w-[140px]">
+                    Employee ID
+                  </th>
+                  <th className="p-4 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">
+                    Project
+                  </th>
+                  <th className="p-4 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">
+                    Client
+                  </th>
+                  <th className="p-4 text-left text-xs font-bold text-gray-700 uppercase tracking-wider min-w-[100px]">
+                    Status
+                  </th>
+                  <th className="p-4 text-left text-xs font-bold text-gray-700 uppercase tracking-wider min-w-[100px]">
+                    Priority
+                  </th>
+                  <th className="p-4 text-left text-xs font-bold text-gray-700 uppercase tracking-wider min-w-[120px]">
+                    Task Type
+                  </th>
+                  <th className="p-4 text-left text-xs font-bold text-gray-700 uppercase tracking-wider min-w-[120px]">
+                    Task Date
+                  </th>
+                  <th className="p-4 text-left text-xs font-bold text-gray-700 uppercase tracking-wider min-w-[100px]">
+                    Actions
+                  </th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-100">
                 {filteredTasks.map((t) => (
-                  <tr key={t.id} className="hover:bg-indigo-50/50 transition-colors duration-150 cursor-pointer group">
+                  <tr
+                    key={t.id}
+                    className="hover:bg-indigo-50/50 transition-colors duration-150 cursor-pointer group"
+                  >
                     <td className="p-4">
                       <input
                         type="checkbox"
                         checked={selectedIds.includes(t.id)}
                         onChange={() => {
                           if (selectedIds.includes(t.id)) {
-                            setSelectedIds(selectedIds.filter((id) => id !== t.id));
+                            setSelectedIds(
+                              selectedIds.filter((id) => id !== t.id)
+                            );
                           } else {
                             setSelectedIds([...selectedIds, t.id]);
                           }
@@ -401,11 +668,23 @@ const Tasks = () => {
                       />
                     </td>
                     <td className="p-4">
-                      <span className="font-semibold text-indigo-600 group-hover:text-indigo-700">{t.TaskNumber}</span>
+                      <div className="flex items-center gap-2">
+                        <span
+                          className="font-semibold text-indigo-600 group-hover:text-indigo-700 cursor-pointer hover:underline"
+                          onClick={() => handleTaskClick(t)}
+                        >
+                          {t.TaskNumber}
+                        </span>
+                        {reviewedTasks.has(t.TaskNumber) && (
+                          <CheckCircle2 className="w-4 h-4 text-green-500" />
+                        )}
+                      </div>
                     </td>
                     <td className="p-4 text-gray-700">{t.Employee_ID}</td>
                     <td className="p-4">
-                      <span className="font-medium text-gray-900">{t.Project}</span>
+                      <span className="font-medium text-gray-900">
+                        {t.Project}
+                      </span>
                     </td>
                     <td className="p-4 text-gray-700">{t.Client}</td>
                     <td className="p-4">
@@ -447,7 +726,10 @@ const Tasks = () => {
         {/* MOBILE VIEW */}
         <div className="block md:hidden space-y-4 max-h-[650px] overflow-y-auto">
           {filteredTasks.map((t) => (
-            <div key={t.id} className="bg-white rounded-2xl shadow-lg shadow-indigo-100/50 p-5 space-y-3 border border-indigo-100/50 hover:shadow-xl hover:shadow-indigo-200/50 transition-all duration-300">
+            <div
+              key={t.id}
+              className="bg-white rounded-2xl shadow-lg shadow-indigo-100/50 p-5 space-y-3 border border-indigo-100/50 hover:shadow-xl hover:shadow-indigo-200/50 transition-all duration-300"
+            >
               <div className="flex items-start justify-between gap-3">
                 <div className="flex items-center gap-3 flex-1">
                   <input
@@ -463,7 +745,17 @@ const Tasks = () => {
                     className="w-4 h-4 rounded border-gray-300 text-indigo-600 focus:ring-2 focus:ring-indigo-500/50 cursor-pointer mt-1"
                   />
                   <div>
-                    <span className="font-bold text-lg text-indigo-600">{t.TaskNumber}</span>
+                    <div className="flex items-center gap-2">
+                      <span
+                        className="font-bold text-lg text-indigo-600 cursor-pointer hover:underline"
+                        onClick={() => handleTaskClick(t)}
+                      >
+                        {t.TaskNumber}
+                      </span>
+                      {reviewedTasks.has(t.TaskNumber) && (
+                        <CheckCircle2 className="w-4 h-4 text-green-500" />
+                      )}
+                    </div>
                     <p className="text-sm text-gray-500 mt-0.5">{t.TaskDate}</p>
                   </div>
                 </div>
@@ -476,24 +768,38 @@ const Tasks = () => {
 
               <div className="space-y-2.5">
                 <div className="flex items-start gap-2">
-                  <span className="text-xs font-semibold text-gray-500 uppercase tracking-wide min-w-24">Project:</span>
-                  <span className="text-sm font-semibold text-gray-900">{t.Project}</span>
+                  <span className="text-xs font-semibold text-gray-500 uppercase tracking-wide min-w-24">
+                    Project:
+                  </span>
+                  <span className="text-sm font-semibold text-gray-900">
+                    {t.Project}
+                  </span>
                 </div>
                 <div className="flex items-start gap-2">
-                  <span className="text-xs font-semibold text-gray-500 uppercase tracking-wide min-w-24">Client:</span>
+                  <span className="text-xs font-semibold text-gray-500 uppercase tracking-wide min-w-24">
+                    Client:
+                  </span>
                   <span className="text-sm text-gray-700">{t.Client}</span>
                 </div>
                 <div className="flex items-start gap-2">
-                  <span className="text-xs font-semibold text-gray-500 uppercase tracking-wide min-w-24">Employee:</span>
+                  <span className="text-xs font-semibold text-gray-500 uppercase tracking-wide min-w-24">
+                    Employee:
+                  </span>
                   <span className="text-sm text-gray-700">{t.Employee_ID}</span>
                 </div>
                 <div className="flex items-start gap-2">
-                  <span className="text-xs font-semibold text-gray-500 uppercase tracking-wide min-w-24">Type:</span>
-                  <span className="px-3 py-1 rounded-lg text-xs font-medium bg-gray-100 text-gray-700">{t.Type}</span>
+                  <span className="text-xs font-semibold text-gray-500 uppercase tracking-wide min-w-24">
+                    Type:
+                  </span>
+                  <span className="px-3 py-1 rounded-lg text-xs font-medium bg-gray-100 text-gray-700">
+                    {t.Type}
+                  </span>
                 </div>
                 {t.Details && (
                   <div className="flex items-start gap-2">
-                    <span className="text-xs font-semibold text-gray-500 uppercase tracking-wide min-w-24">Details:</span>
+                    <span className="text-xs font-semibold text-gray-500 uppercase tracking-wide min-w-24">
+                      Details:
+                    </span>
                     <span className="text-sm text-gray-700">{t.Details}</span>
                   </div>
                 )}
@@ -529,18 +835,30 @@ const Tasks = () => {
             <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
               <Search className="w-8 h-8 text-gray-400" />
             </div>
-            <h3 className="text-lg font-semibold text-gray-900 mb-2">No tasks found</h3>
+            <h3 className="text-lg font-semibold text-gray-900 mb-2">
+              No tasks found
+            </h3>
             <p className="text-gray-500">Try adjusting your search criteria</p>
           </div>
         )}
       </div>
 
-      {/* MODAL */}
+      {/* EDIT/ADD MODAL */}
       {openModal && (
         <TaskModal
           close={() => setOpenModal(false)}
           save={handleSave}
           editData={editData}
+        />
+      )}
+
+      {/* NEW: TASK DETAIL VIEW MODAL */}
+      {viewTask && (
+        <TaskDetailModal
+          task={viewTask}
+          close={() => setViewTask(null)}
+          onMarkReview={handleMarkReview}
+          isReviewed={reviewedTasks.has(viewTask.TaskNumber)}
         />
       )}
     </div>

@@ -51,7 +51,7 @@ const Sidebar = ({ isSidebarOpen = true, setIsSidebarOpen = () => { } }) => {
               <img src={ttsimg} alt="Logo" className="h-16 w-16 rounded-xl shadow-md" />
               <div className="hidden sm:block">
                 <div className="font-bold text-lg bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
-                  TTS Portal 
+                  Employee Task Management 
                 </div>
                 <div className="text-xs text-gray-500">by (Total Technology System)</div>
               </div>
@@ -77,7 +77,7 @@ const Sidebar = ({ isSidebarOpen = true, setIsSidebarOpen = () => { } }) => {
                 <Sparkles className="text-white" size={16} />
               </div>
             </div>
-            <h4 className="mt-4 font-bold text-lg text-gray-800">Ashton Cox</h4>
+            <h4 className="mt-4 font-bold text-lg text-gray-800">Sangram Singh</h4>
             <p className="text-sm text-gray-500 flex items-center justify-center gap-1 mt-1">
               <span className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></span>
               Employee

@@ -93,7 +93,7 @@ const ClientModel = ({ close, save, editData }) => {
                   setFormData({ ...formData, clientName: e.target.value })
                 }
                 className="w-full px-4 py-3 rounded-xl border-2 border-gray-200 bg-gray-50 focus:outline-none focus:border-violet-500 focus:bg-white focus:ring-4 focus:ring-violet-500/10 transition-all"
-                placeholder="e.g., Alice John"
+                placeholder="e.g., Alisha Jain"
               />
             </div>
 
@@ -223,7 +223,7 @@ const ClientPayment = () => {
     {
       id: 201,
       clientId: "C101",
-      clientName: "Alice John",
+      clientName: "Alisha Jain",
       invoiceId: "INV001.pdf",
       date: "2023-09-01",
       amount: 150,
@@ -234,7 +234,7 @@ const ClientPayment = () => {
     {
       id: 202,
       clientId: "C102",
-      clientName: "Bob Smith",
+      clientName: "Bobby Ghosh",
       invoiceId: "INV002.pdf",
       date: "2023-09-02",
       amount: 200,
