@@ -14,23 +14,18 @@ import SignUp from './components/Auth/SignUp.jsx'
 import SignIn from './components/Auth/SignIn.jsx'
 import ClientLayout from './layout/ClientLayout.jsx'
 import ClientDashboard from './pages/Client/Dashboard.jsx'
+import TeamLeaderTasks from './pages/Employee/TeamLeaderTasks/TeamLeaderTasks.jsx'
 
 const App = () => {
   return (
     <BrowserRouter>
-      <Routes>
-
-        {/* 🔹 Redirect root */}
+      {/* <Routes>
         <Route path="/" element={<Navigate to="/signin" replace />} />
         <Route path="/signin" element={<SignIn />} />
         <Route path="/signup" element={<SignUp />} />
 
-
-        {/* Employee pages */}
         <Route path="/employee" element={<EmployeeLayout />}>
-          {/* Default page */}
           <Route index element={<EmployeeDashboard />} />
-          {/* Child routes */}
           <Route path="dashboard" element={<EmployeeDashboard />} />
           <Route path="myLeaves" element={<MyLeaves />} />
           <Route path="ProjectManagerTasks" element={<Tasks />} />
@@ -39,28 +34,17 @@ const App = () => {
           <Route path="accounts/client-payments" element={<ClientPayments />} />
           <Route path="accounts/other-payments" element={<Expense />} />
         </Route>
-
-
-        {/* Client pages */}
         <Route path="/client" element={<ClientLayout />}>
-          {/* Default page */}
           <Route index element={<ClientDashboard />} />
-          {/* Child routes */}
           <Route path="dashboard" element={<ClientDashboard />} />
           <Route path="projects" element={<Projects />} />
           <Route path="supports" element={<Supports />} />
           <Route path="billing" element={<Billing />} />
           <Route path="settings" element={<Settings />} />
         </Route>
-
         <Route path="*" element={<div>404 page not found</div>} />
-      </Routes>
-      
-   
- {/* <Projects/> 
- <Supports/>
-  */}
- {/* <Billing/>  */}
+      </Routes> */}
+      <TeamLeaderTasks/>
  </BrowserRouter> 
   )
 }

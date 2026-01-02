@@ -295,7 +295,7 @@ const TaskModal = ({ close, save, editData }) => {
 
             <div>
               <label className="block text-sm font-semibold text-gray-700 mb-2">
-                TeamLeader ID
+                Employee ID
               </label>
               <input
                 type="text"
@@ -325,7 +325,7 @@ const TaskModal = ({ close, save, editData }) => {
               />
             </div>
 
-            <div>
+            {/* <div>
               <label className="block text-sm font-semibold text-gray-700 mb-2">
                 Client
               </label>
@@ -339,7 +339,7 @@ const TaskModal = ({ close, save, editData }) => {
                 className="w-full px-4 py-3 rounded-xl border-2 border-gray-200 bg-gray-50 focus:outline-none focus:border-indigo-500 focus:bg-white focus:ring-4 focus:ring-indigo-500/10 transition-all"
                 placeholder="e.g., Cara Stevens"
               />
-            </div>
+            </div> */}
 
             <div>
               <label className="block text-sm font-semibold text-gray-700 mb-2">
@@ -408,6 +408,21 @@ const TaskModal = ({ close, save, editData }) => {
               />
             </div>
 
+            <div>
+              <label className="block text-sm font-semibold text-gray-700 mb-2">
+                Due Date
+              </label>
+              <input
+                type="date"
+                required
+                value={formData.DueDate}
+                onChange={(e) =>
+                  setFormData({ ...formData, DueDate: e.target.value })
+                }
+                className="w-full px-4 py-3 rounded-xl border-2 border-gray-200 bg-gray-50 focus:outline-none focus:border-indigo-500 focus:bg-white focus:ring-4 focus:ring-indigo-500/10 transition-all"
+              />
+            </div>
+
             <div className="md:col-span-2">
               <label className="block text-sm font-semibold text-gray-700 mb-2">
                 Details
@@ -445,19 +460,19 @@ const TaskModal = ({ close, save, editData }) => {
 };
 
 // Main Tasks Component
-const Tasks = () => {
+const TeamLeaderTasks = () => {
   const [selectedIds, setSelectedIds] = useState([]);
   const [Tasks, setTasks] = useState([
     {
       id: 1,
       TaskNumber: "TASK-01",
-      Employee_ID: "TL20215",
+      Employee_ID: "EMP2015",
       Project: "PHP Website",
-      Client: "Chandra Deshmukh",
       Status: "Open",
       Priority: "Medium",
       Type: "Development",
       TaskDate: "2018-03-22",
+      DueDate: "2019-01-02",
       Details:
         "Wrong data received from API endpoint causing display issues on the user dashboard. Need to validate data structure and implement error handling.",
       Solution:
@@ -466,13 +481,13 @@ const Tasks = () => {
     {
       id: 2,
       TaskNumber: "TASK-14",
-      Employee_ID: "TL20216",
+      Employee_ID: "EMP2016",
       Project: "IOS App",
-      Client: "Ashutosh Sahoo",
       Status: "Open",
       Priority: "Medium",
       Type: "Bug",
       TaskDate: "2018-10-12",
+      DueDate: "2018-12-02",
       Details:
         "App crashes when user tries to upload images larger than 5MB. Need to implement file size validation before upload.",
       Solution:
@@ -536,11 +551,11 @@ const Tasks = () => {
       t.TaskNumber.toLowerCase().includes(s) ||
       t.Employee_ID.toLowerCase().includes(s) ||
       t.Project.toLowerCase().includes(s) ||
-      t.Client.toLowerCase().includes(s) ||
       t.Status.toLowerCase().includes(s) ||
       t.Priority.toLowerCase().includes(s) ||
       t.Type.toLowerCase().includes(s) ||
       t.TaskDate.toLowerCase().includes(s) ||
+      t.DueDate.toLowerCase().includes(s) ||
       t.Details.toLowerCase().includes(s)
     );
   });
@@ -590,8 +605,8 @@ const Tasks = () => {
                 <Briefcase className="w-7 h-7 text-white" />
               </div>
               <div>
-                <h2 className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
-                  Project Manager Tasks
+                <h2 className="text-2xl md:text-3xl font-bold bg-linear-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
+                  TeamLeader Tasks
                 </h2>
                 <p className="text-sm text-gray-500 mt-1">
                   {filteredTasks.length}{" "}
@@ -619,7 +634,7 @@ const Tasks = () => {
 
               <button
                 onClick={handleAdd}
-                className="w-12 h-12 flex items-center justify-center rounded-xl bg-gradient-to-r from-emerald-500 to-teal-500 text-white hover:from-emerald-600 hover:to-teal-600 transition-all shadow-lg hover:shadow-xl hover:scale-105 active:scale-95"
+                className="w-12 h-12 flex items-center justify-center rounded-xl bg-linear-to-r from-emerald-500 to-teal-500 text-white hover:from-emerald-600 hover:to-teal-600 transition-all shadow-lg hover:shadow-xl hover:scale-105 active:scale-95"
               >
                 <Plus size={24} />
               </button>
@@ -650,35 +665,45 @@ const Tasks = () => {
                       className="w-4 h-4 rounded border-gray-300 text-indigo-600 focus:ring-2 focus:ring-indigo-500/50 cursor-pointer"
                     />
                   </th>
+
                   <th className="p-4 text-left text-xs font-bold text-gray-700 uppercase tracking-wider min-w-[120px]">
-                    Task Number
+                    Task ID
                   </th>
+
                   <th className="p-4 text-left text-xs font-bold text-gray-700 uppercase tracking-wider min-w-[140px]">
-                    TeamLeader ID
+                    Emp ID
                   </th>
+
                   <th className="p-4 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">
-                    Project
+                    Project Name
                   </th>
+
                   <th className="p-4 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">
-                    Client
-                  </th>
-                  <th className="p-4 text-left text-xs font-bold text-gray-700 uppercase tracking-wider min-w-[100px]">
                     Status
                   </th>
+
                   <th className="p-4 text-left text-xs font-bold text-gray-700 uppercase tracking-wider min-w-[100px]">
                     Priority
                   </th>
+
                   <th className="p-4 text-left text-xs font-bold text-gray-700 uppercase tracking-wider min-w-[120px]">
                     Task Type
                   </th>
+
                   <th className="p-4 text-left text-xs font-bold text-gray-700 uppercase tracking-wider min-w-[120px]">
                     Task Date
                   </th>
+
+                  <th className="p-4 text-left text-xs font-bold text-gray-700 uppercase tracking-wider min-w-[120px]">
+                    Due Date
+                  </th>
+
                   <th className="p-4 text-left text-xs font-bold text-gray-700 uppercase tracking-wider min-w-[100px]">
                     Actions
                   </th>
                 </tr>
               </thead>
+
               <tbody className="divide-y divide-gray-100">
                 {filteredTasks.map((t) => (
                   <tr
@@ -720,7 +745,7 @@ const Tasks = () => {
                         {t.Project}
                       </span>
                     </td>
-                    <td className="p-4 text-gray-700">{t.Client}</td>
+
                     <td className="p-4">
                       <div className="flex items-center gap-2">
                         {getStatusIcon(t.Status)}
@@ -734,6 +759,7 @@ const Tasks = () => {
                       </span>
                     </td>
                     <td className="p-4 text-gray-600 text-xs">{t.TaskDate}</td>
+                    <td className="p-4 text-gray-600 text-xs">{t.DueDate}</td>
                     <td className="p-4">
                       <div className="flex gap-3">
                         <button
@@ -809,15 +835,15 @@ const Tasks = () => {
                     {t.Project}
                   </span>
                 </div>
-                <div className="flex items-start gap-2">
+                {/* <div className="flex items-start gap-2">
                   <span className="text-xs font-semibold text-gray-500 uppercase tracking-wide min-w-24">
                     Client:
                   </span>
                   <span className="text-sm text-gray-700">{t.Client}</span>
-                </div>
+                </div> */}
                 <div className="flex items-start gap-2">
                   <span className="text-xs font-semibold text-gray-500 uppercase tracking-wide min-w-24">
-                    TeamLeader:
+                    Employee:
                   </span>
                   <span className="text-sm text-gray-700">{t.Employee_ID}</span>
                 </div>
