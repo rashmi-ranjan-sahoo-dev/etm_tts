@@ -1,15 +1,6 @@
+/* eslint-disable react-hooks/set-state-in-effect */
 import React, { useState, useEffect } from "react";
-import {
-  Plus,
-  Pencil,
-  Trash2,
-  Search,
-  CheckCircle2,
-  Clock,
-  Calendar,
-  AlertCircle,
-  User,
-} from "lucide-react";
+import {Plus,Pencil,Trash2,Search,CheckCircle2,Clock,Calendar,AlertCircle,User, PauseCircle,} from "lucide-react";
 
 const formatDate = (dateStr) => {
   if (!dateStr) return "";
@@ -180,7 +171,8 @@ const ProjectModal = ({ close, save, editData }) => {
               className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-teal-500 focus:ring-4 focus:ring-teal-100 outline-none transition-all bg-white"
             >
               <option value="">Select Status</option>
-              <option>Planned</option>
+              <option>Pending</option>
+              <option>Hold</option>
               <option>In Progress</option>
               <option>Completed</option>
             </select>
@@ -287,13 +279,15 @@ const Projects = () => {
 
   const getStatusBadge = (status) => {
     const styles = {
-      Planned: "bg-blue-100 text-blue-700 border-blue-200",
+      Pending: "bg-blue-100 text-blue-700 border-blue-200",
+      Hold: "bg-yellow-100 text-yellow-700 border-yellow-200",
       "In Progress": "bg-amber-100 text-amber-700 border-amber-200",
       Completed: "bg-green-100 text-green-700 border-green-200",
     };
     
     const icons = {
-      Planned: <Clock className="w-4 h-4" />,
+      Pending: <Clock className="w-4 h-4" />,
+      Hold: <PauseCircle className="w-4 h-4" />,
       "In Progress": <AlertCircle className="w-4 h-4" />,
       Completed: <CheckCircle2 className="w-4 h-4" />,
     };
@@ -392,9 +386,9 @@ const Projects = () => {
                     </td>
                     <td className="p-5">
                       <div className="flex items-center gap-2">
-                        <div className="w-8 h-8 bg-linear-to-br from-teal-400 to-cyan-400 rounded-full flex items-center justify-center text-white font-semibold text-sm">
+                        {/* <div className="w-8 h-8 bg-linear-to-br from-teal-400 to-cyan-400 rounded-full flex items-center justify-center text-white font-semibold text-sm">
                           {row.projectLead[0]}
-                        </div>
+                        </div> */}
                         <span className="text-gray-700 font-medium">
                           {row.projectLead}
                         </span>

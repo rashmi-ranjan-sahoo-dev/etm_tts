@@ -1,18 +1,7 @@
+/* eslint-disable react-hooks/set-state-in-effect */
 
 import React, { useState, useEffect } from "react";
-import {
-  Pencil,
-  Trash2,
-  Search,
-  CheckCircle2,
-  Clock,
-  AlertCircle,
-  User,
-  Calendar,
-  Ticket,
-  RotateCcw,
-  Plus,
-} from "lucide-react";
+import {Pencil,Trash2,Search,CheckCircle2,Clock,AlertCircle,User,Calendar,Ticket,RotateCcw,Plus,PauseCircle} from "lucide-react";
 
 /* ===================== STATUS BADGE ===================== */
 const StatusBadge = ({ status }) => {
@@ -20,12 +9,14 @@ const StatusBadge = ({ status }) => {
     Open: "bg-emerald-100 text-emerald-700 border-2 border-emerald-200",
     Closed: "bg-slate-100 text-slate-700 border-2 border-slate-200",
     Pending: "bg-rose-100 text-rose-700 border-2 border-rose-200",
+    Holding: "bg-yellow-100 text-yellow-700 border-2 border-yellow-200"
   };
 
   const icons = {
     Open: <CheckCircle2 className="w-4 h-4" />,
     Closed: <Clock className="w-4 h-4" />,
     Pending: <AlertCircle className="w-4 h-4" />,
+    Holding: <PauseCircle className="w-4 h-4" />,
   };
 
   return (
@@ -162,6 +153,7 @@ const TicketModal = ({ close, save, editData }) => {
               <option>Open</option>
               <option>Closed</option>
               <option>Pending</option>
+              <option>Holding</option>
             </select>
           </div>
 
