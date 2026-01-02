@@ -101,7 +101,7 @@ const ExpenseModel = ({ close, save, editData }) => {
                 value={formData.expenseBy}
                 onChange={(e) => setFormData({ ...formData, expenseBy: e.target.value })}
                 className="w-full px-4 py-3 rounded-xl border-2 border-gray-200 bg-gray-50 focus:outline-none focus:border-orange-500 focus:bg-white focus:ring-4 focus:ring-orange-500/10 transition-all"
-                placeholder="e.g., Alice"
+                placeholder="e.g., Alisha"
               />
             </div>
             
@@ -186,7 +186,7 @@ const Expense = () => {
       invoiceNo: "INV-001",
       date: "2023-09-01",
       expenseType: "Travel",
-      expenseBy: "Alice",
+      expenseBy: "Alisha",
       amount: 1500,
       paymentMode: "Credit Card",
       paidTo: "Uber",
@@ -197,7 +197,7 @@ const Expense = () => {
       invoiceNo: "INV-002",
       date: "2023-09-03",
       expenseType: "Food",
-      expenseBy: "Bob",
+      expenseBy: "Bobby",
       amount: 800,
       paymentMode: "Cash",
       paidTo: "Restaurant",

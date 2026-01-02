@@ -14,6 +14,7 @@ import SignUp from './components/Auth/SignUp.jsx'
 import SignIn from './components/Auth/SignIn.jsx'
 import ClientLayout from './layout/ClientLayout.jsx'
 import ClientDashboard from './pages/Client/Dashboard.jsx'
+
 const App = () => {
   return (
     <BrowserRouter>
