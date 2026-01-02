@@ -53,8 +53,10 @@ const Sidebar = ({ isSidebarOpen = true, setIsSidebarOpen = () => {} }) => {
                   TTS Portal
                 </div>
                 <div className="text-xs text-gray-500">Employee Dashboard</div>
+                <div className="text-xs text-[15px]">By Total Technology System</div>
               </div>
             </div>
+            
             <button
               className=" p-2 rounded-xl hover:bg-indigo-100 transition-colors"
               onClick={() => setIsSidebarOpen(false)}

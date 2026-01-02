@@ -1,1 +1,146 @@
 @import "tailwindcss";
+/* @media (max-width: 640px) {
+  thead {
+    display: none;
+  }
+
+  table {
+    border-collapse: separate;
+    border-spacing: 0 1.25rem;
+  }
+
+  tbody tr {
+    display: block;
+    background: #ffffff;
+    border-radius: 1.75rem;
+    padding: 1.5rem;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+  }
+
+  tbody td {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.6rem 0;
+    font-size: 0.95rem;
+  }
+
+  
+  tbody td:nth-child(1),
+  tbody td:nth-child(2) {
+    justify-content: flex-start;
+    gap: 0.75rem;
+    padding-bottom: 1rem;
+  }
+
+  tbody td:nth-child(1) {
+    width: auto;
+  }
+
+  tbody td:nth-child(2) {
+    font-size: 1.05rem;
+    font-weight: 600;
+  }
+
+  tbody td:nth-child(2)::before {
+    content: "";
+  }
+
+ 
+  tbody td::before {
+    content: attr(data-label);
+    font-size: 0.75rem;
+    color: #64748b;
+    font-weight: 500;
+  }
+
+  tbody td:nth-child(1)::before,
+  tbody td:nth-child(2)::before,
+  tbody td:last-child::before {
+    content: "";
+  }
+
+
+  tbody td:nth-child(7) {
+    font-size: 1.15rem;
+    font-weight: 700;
+    padding-top: 1rem;
+    border-top: 1px dashed #e2e8f0;
+  }
+
+ 
+  tbody td:last-child {
+    justify-content: center;
+    padding-top: 1.25rem;
+  }
+} */
+
+@media (max-width: 640px) {
+  thead {
+    display: none;
+  }
+
+  table {
+    border-collapse: separate;
+    border-spacing: 0 1.25rem;
+  }
+
+  tbody tr {
+    display: block;
+    background: #ffffff;
+    border-radius: 1.75rem;
+    padding: 1.5rem;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+  }
+
+  tbody td {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    padding: 0.6rem 0;
+    gap: 1rem;
+  }
+
+  /* ===== HEADER AREA ===== */
+  tbody td:nth-child(1),
+  tbody td:nth-child(2) {
+    grid-template-columns: auto 1fr;
+    padding-bottom: 0.75rem;
+  }
+
+  tbody td:nth-child(2) {
+    font-size: 1.05rem;
+    font-weight: 600;
+  }
+
+  /* ===== LABELS (LEFT SIDE) ===== */
+  tbody td::before {
+    content: attr(data-label);
+    font-size: 0.75rem;
+    color: #64748b;
+    font-weight: 500;
+  }
+
+  /* Remove labels where not needed */
+  tbody td:nth-child(1)::before,
+  tbody td:nth-child(2)::before,
+  tbody td:last-child::before {
+    content: "";
+  }
+
+  /* ===== TOTAL ===== */
+  tbody td:nth-child(7) {
+    font-size: 1.15rem;
+    font-weight: 700;
+    padding-top: 1rem;
+    margin-top: 0.75rem;
+    border-top: 1px dashed #e2e8f0;
+  }
+
+  /* ===== ACTION BUTTON ===== */
+  tbody td:last-child {
+    display: flex;
+    justify-content: center;
+    padding-top: 1.25rem;
+  }
+}

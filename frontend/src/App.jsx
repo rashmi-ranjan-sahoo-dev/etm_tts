@@ -7,20 +7,21 @@ import MyTask from './pages/Employee/EmployeeTask.jsx'
 import Settings from './pages/Employee/Settings.jsx'
 import ClientPayments from "./pages/Employee/Accounts/Client/ClientPayment.jsx"
 import Expense from "./pages/Employee/Accounts/OtherExpenses/Expense.jsx"
+import Projects from './pages/Client/Projects.jsx'
+import Supports from './pages/Client/Supports.jsx'
+import Billing from './pages/Client/Billing.jsx'
 
 const App = () => {
   return (
  <BrowserRouter>
       <Routes>
 
-        {/* 🔹 Redirect root */}
+        
         <Route path="/" element={<Navigate to="/employee" replace />} />
 
         <Route path="/employee" element={<EmployeeLayout />}>
-          {/* Default page */}
+          
           <Route index element={<Dashboard />} />
-
-          {/* Child routes */}
           <Route path="dashboard" element={<Dashboard />} />
           <Route path="myLeaves" element={<MyLeaves />} />
           <Route path="ProjectManagerTasks" element={<Tasks />} />
@@ -31,7 +32,13 @@ const App = () => {
           <Route path ="*" element= {<div>404 page not found</div>} />
         </Route>
       </Routes>
-    </BrowserRouter>
+      
+   
+ {/* <Projects/> 
+ <Supports/>
+  */}
+ {/* <Billing/>  */}
+ </BrowserRouter> 
   )
 }
 
