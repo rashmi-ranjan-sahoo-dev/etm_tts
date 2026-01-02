@@ -3,10 +3,6 @@
 import React, { useState,useEffect } from "react";
 import { Plus, Pencil, Trash2, Search, CheckCircle2, XCircle, Clock, Calendar ,AlertCircle} from "lucide-react";
 
-<<<<<<< HEAD
-=======
-
->>>>>>> 326b706e745bb186229c892e958a926ce354dd1f
 const formatDate = (dateStr) => {
   if (!dateStr) return "";
   const [year, month, day] = dateStr.split("-");        //Convert browser date format (YYYY-MM-DD) → UI format (DD/MM/YYYY)

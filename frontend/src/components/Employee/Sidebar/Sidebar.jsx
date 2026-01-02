@@ -1,11 +1,12 @@
 import React, { useState } from "react";
-import {LayoutDashboard,FileText,CheckSquare,Settings,MessageSquare,ChevronDown,X,Sparkles,} from "lucide-react";
+import { LayoutDashboard, FileText, CheckSquare, Settings, MessageSquare, ChevronDown, X, Sparkles, } from "lucide-react";
 import { Link } from "react-router-dom";
+import { LogOut } from "lucide-react";
 
 
-const Sidebar = ({ isSidebarOpen = true, setIsSidebarOpen = () => {} }) => {
+const Sidebar = ({ isSidebarOpen = true, setIsSidebarOpen = () => { } }) => {
   const [openAccounts, setOpenAccounts] = useState(false);
-  const [activeRoute, setActiveRoute] = useState("/employee/dashboard");
+  const [activeRoute, setActiveRoute] = useState(window.location.pathname);
 
   // Placeholder images
   const ttsimg = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%234F46E5'/%3E%3Ctext x='50' y='55' font-family='Arial' font-size='24' fill='white' text-anchor='middle'%3ETTS%3C/text%3E%3C/svg%3E";
@@ -45,14 +46,14 @@ const Sidebar = ({ isSidebarOpen = true, setIsSidebarOpen = () => {} }) => {
         {/* Content */}
         <div className="relative z-10 h-full flex flex-col">
           {/* Header */}
-          <div className="flex items-center justify-between px-6 py-4 border-b border-indigo-100/50">
+          <div className="flex items-center justify-between px-6 py-4 border-indigo-100/50">
             <div className="flex items-center gap-3">
               <img src={ttsimg} alt="Logo" className="h-16 w-16 rounded-xl shadow-md" />
               <div className="hidden sm:block">
                 <div className="font-bold text-lg bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
-                  TTS Portal
+                  TTS Portal 
                 </div>
-                <div className="text-xs text-gray-500">Employee Dashboard</div>
+                <div className="text-xs text-gray-500">by (Total Technology System)</div>
               </div>
             </div>
             <button
@@ -85,18 +86,17 @@ const Sidebar = ({ isSidebarOpen = true, setIsSidebarOpen = () => {} }) => {
           {/* Menu */}
           <div className="flex-1 px-4 pb-4 space-y-2 overflow-y-auto">
             {menuItems.map((item, index) => {
-              const isActive =  activeRoute === item.to;
+              const isActive = activeRoute === item.to;
               return (
                 <Link
                   key={index}
                   onClick={() => setActiveRoute(item.to)}
-                  to= {item.to}
+                  to={item.to}
                   className={`group flex items-center gap-3 px-4 py-3.5 rounded-xl font-medium transition-all duration-200 w-full
-                  ${
-                    isActive
+                  ${isActive
                       ? "bg-gradient-to-r from-indigo-500 to-purple-500 text-white shadow-lg shadow-indigo-300/50 scale-105"
                       : "hover:bg-white/80 hover:shadow-md hover:scale-102 text-gray-700"
-                  }`}
+                    }`}
                 >
                   <div className={`${isActive ? "scale-110" : "group-hover:scale-110"} transition-transform`}>
                     <item.icon size={20} />
@@ -132,13 +132,12 @@ const Sidebar = ({ isSidebarOpen = true, setIsSidebarOpen = () => {} }) => {
               ${openAccounts ? "max-h-40 opacity-100 mt-2" : "max-h-0 opacity-0"}`}
             >
               <Link
-               to="/employee/accounts/client-payments"
+                to="/employee/accounts/client-payments"
                 onClick={() => setActiveRoute("/employee/accounts/client-payments")}
                 className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm transition-all duration-200 w-full text-left
-                  ${
-                    activeRoute === "/employee/accounts/client-payments"
-                      ? "bg-gradient-to-r from-indigo-500 to-purple-500 text-white shadow-md"
-                      : "hover:bg-white/80 hover:shadow-sm text-gray-600 hover:text-gray-900"
+                  ${activeRoute === "/employee/accounts/client-payments"
+                    ? "bg-gradient-to-r from-indigo-500 to-purple-500 text-white shadow-md"
+                    : "hover:bg-white/80 hover:shadow-sm text-gray-600 hover:text-gray-900"
                   }`}
               >
                 <div className="w-1.5 h-1.5 rounded-full bg-current"></div>
@@ -146,13 +145,12 @@ const Sidebar = ({ isSidebarOpen = true, setIsSidebarOpen = () => {} }) => {
               </Link>
 
               <Link
-              to = "/employee/accounts/other-payments"
+                to="/employee/accounts/other-payments"
                 onClick={() => setActiveRoute("/employee/accounts/other-payments")}
                 className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm transition-all duration-200 w-full text-left
-                  ${
-                    activeRoute === "/employee/accounts/other-payments"
-                      ? "bg-gradient-to-r from-indigo-500 to-purple-500 text-white shadow-md"
-                      : "hover:bg-white/80 hover:shadow-sm text-gray-600 hover:text-gray-900"
+                  ${activeRoute === "/employee/accounts/other-payments"
+                    ? "bg-gradient-to-r from-indigo-500 to-purple-500 text-white shadow-md"
+                    : "hover:bg-white/80 hover:shadow-sm text-gray-600 hover:text-gray-900"
                   }`}
               >
                 <div className="w-1.5 h-1.5 rounded-full bg-current"></div>
@@ -168,6 +166,16 @@ const Sidebar = ({ isSidebarOpen = true, setIsSidebarOpen = () => {} }) => {
               <div className="text-xs text-gray-600">Contact support team</div>
             </div>
           </div> */}
+
+          <Link
+            to="/signin"
+            className="flex items-center gap-2 px-4 py-2 rounded-lg bg-red-500 text-white text-sm font-medium
+             hover:bg-red-600 active:scale-95 transition-all duration-200"
+          >
+            <LogOut size={16} />
+            Logout
+          </Link>
+
 
         </div>
       </aside>
