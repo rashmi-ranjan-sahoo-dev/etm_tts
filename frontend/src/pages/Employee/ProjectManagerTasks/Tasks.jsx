@@ -1,16 +1,6 @@
+/* eslint-disable no-unused-vars */
 import React, { useState } from "react";
-import {
-  Plus,
-  Pencil,
-  Trash2,
-  Search,
-  CheckCircle2,
-  Clock,
-  AlertCircle,
-  Briefcase,
-  X,
-  User,
-} from "lucide-react";
+import { Plus, Pencil, Trash2, Search, CheckCircle2, Clock, AlertCircle, Briefcase, X, User } from "lucide-react";
 
 const TaskDetailModal = ({ task, close, onMarkReview, isReviewed }) => {
   return (
@@ -64,13 +54,12 @@ const TaskDetailModal = ({ task, close, onMarkReview, isReviewed }) => {
                   <AlertCircle className="w-5 h-5 text-blue-600" />
                 )}
                 <span
-                  className={`text-sm font-bold ${
-                    task.Status === "Open"
-                      ? "text-emerald-600"
-                      : task.Status === "Closed"
+                  className={`text-sm font-bold ${task.Status === "Open"
+                    ? "text-emerald-600"
+                    : task.Status === "Closed"
                       ? "text-slate-600"
                       : "text-blue-600"
-                  }`}
+                    }`}
                 >
                   {task.Status}
                 </span>
@@ -131,13 +120,12 @@ const TaskDetailModal = ({ task, close, onMarkReview, isReviewed }) => {
                 Priority
               </label>
               <span
-                className={`inline-flex px-4 py-2 rounded-lg text-sm font-bold shadow-sm ${
-                  task.Priority === "High"
-                    ? "bg-rose-500 text-white"
-                    : task.Priority === "Medium"
+                className={`inline-flex px-4 py-2 rounded-lg text-sm font-bold shadow-sm ${task.Priority === "High"
+                  ? "bg-rose-500 text-white"
+                  : task.Priority === "Medium"
                     ? "bg-amber-500 text-white"
                     : "bg-blue-500 text-white"
-                }`}
+                  }`}
               >
                 {task.Priority}
               </span>
@@ -192,11 +180,10 @@ const TaskDetailModal = ({ task, close, onMarkReview, isReviewed }) => {
           <div className="pt-2">
             <button
               onClick={() => onMarkReview(task.TaskNumber)}
-              className={`w-full flex items-center justify-center gap-3 px-6 py-4 rounded-xl font-bold text-lg transition-all shadow-lg hover:shadow-2xl hover:scale-[1.02] active:scale-95 ${
-                isReviewed
-                  ? "bg-gradient-to-r from-green-500 via-emerald-500 to-teal-500 hover:from-green-600 hover:via-emerald-600 hover:to-teal-600 text-white"
-                  : "bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 hover:from-indigo-700 hover:via-purple-700 hover:to-pink-700 text-white"
-              }`}
+              className={`w-full flex items-center justify-center gap-3 px-6 py-4 rounded-xl font-bold text-lg transition-all shadow-lg hover:shadow-2xl hover:scale-[1.02] active:scale-95 ${isReviewed
+                ? "bg-gradient-to-r from-green-500 via-emerald-500 to-teal-500 hover:from-green-600 hover:via-emerald-600 hover:to-teal-600 text-white"
+                : "bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 hover:from-indigo-700 hover:via-purple-700 hover:to-pink-700 text-white"
+                }`}
             >
               <CheckCircle2 className="w-6 h-6" />
               {isReviewed ? "Marked for Review ✓" : "Mark for Review"}
@@ -218,7 +205,7 @@ const TaskDetailModal = ({ task, close, onMarkReview, isReviewed }) => {
   );
 };
 
-const TaskModal = ({ close, save, editData }) => {
+const TaskModal = ({ close, save, editData, userRole }) => {
   const [formData, setFormData] = useState(
     editData || {
       TaskNumber: "",
@@ -231,6 +218,7 @@ const TaskModal = ({ close, save, editData }) => {
       TaskDate: "",
       Details: "",
       // Solution: "",
+      Attachements: [],
     }
   );
 
@@ -251,13 +239,21 @@ const TaskModal = ({ close, save, editData }) => {
     if (!Employee_ID.trim()) return alert("TeamLeader ID is required");
     if (!Project.trim()) return alert("Project is required");
     if (!Client.trim()) return alert("Client is required");
-    if (!Status) return alert("Status is required");
+    if (editData && !Status) return alert("Status is required");
     if (!Priority) return alert("Priority is required");
     if (!Type) return alert("Task Type is required");
     if (!TaskDate) return alert("Task Date is required");
     if (!Details.trim()) return alert("Task Details are required");
 
-    save(formData);
+
+    const finalData =
+      userRole === "client"
+        ? { ...formData, Status: editData.Status } // keep old status
+        : formData;
+
+    save(finalData);
+
+
   };
 
   return (
@@ -341,7 +337,7 @@ const TaskModal = ({ close, save, editData }) => {
               />
             </div>
 
-            <div>
+            {/* <div>
               <label className="block text-sm font-semibold text-gray-700 mb-2">
                 Status
               </label>
@@ -356,7 +352,56 @@ const TaskModal = ({ close, save, editData }) => {
                 <option>Closed</option>
                 <option>In Progress</option>
               </select>
-            </div>
+            </div> */}
+            {/* Status – Client can see, Manager can edit */}
+            {/* {editData && (
+              <div>
+                <label className="block text-sm font-semibold text-gray-700 mb-2">
+                  Status
+                </label>
+
+                <select
+                  value={formData.Status}
+                  disabled={userRole === "client"}
+                  onChange={(e) =>
+                    setFormData({ ...formData, Status: e.target.value })
+                  }
+                  className={`w-full px-4 py-3 rounded-xl border-2 
+        ${userRole === "client"
+                      ? "bg-gray-100 text-gray-500 cursor-not-allowed"
+                      : "bg-gray-50 focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/10"
+                    }`}
+                >
+                  <option>Open</option>
+                  <option>In Progress</option>
+                  <option>Closed</option>
+                </select>
+              </div>
+            )} */}
+
+            {userRole !== "client" && (
+              <div>
+                <label className="block text-sm font-semibold text-gray-700 mb-2">
+                  Status
+                </label>
+
+                <select
+                  value={formData.Status}
+                  onChange={(e) =>
+                    setFormData({ ...formData, Status: e.target.value })
+                  }
+                  className="w-full px-4 py-3 rounded-xl border-2 bg-gray-50
+                 focus:border-indigo-500 focus:ring-4
+                 focus:ring-indigo-500/10"
+                >
+                  <option>Open</option>
+                  <option>In Progress</option>
+                  <option>Closed</option>
+                </select>
+              </div>
+            )}
+
+
 
             <div>
               <label className="block text-sm font-semibold text-gray-700 mb-2">
@@ -483,6 +528,7 @@ const Tasks = () => {
   const [openModal, setOpenModal] = useState(false);
   const [editData, setEditData] = useState(null);
   const [search, setSearch] = useState("");
+  const userRole = "client";
 
   // NEW: State for task detail view modal
   const [viewTask, setViewTask] = useState(null);
@@ -562,9 +608,8 @@ const Tasks = () => {
 
     return (
       <span
-        className={`px-3 py-1.5 rounded-lg text-xs font-semibold border ${
-          map[text] || "bg-gray-100 text-gray-700 border-gray-200"
-        }`}
+        className={`px-3 py-1.5 rounded-lg text-xs font-semibold border ${map[text] || "bg-gray-100 text-gray-700 border-gray-200"
+          }`}
       >
         {text}
       </span>
@@ -883,6 +928,7 @@ const Tasks = () => {
           close={() => setOpenModal(false)}
           save={handleSave}
           editData={editData}
+          userRole={userRole}
         />
       )}
 

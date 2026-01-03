@@ -44,6 +44,7 @@ const App = () => {
           <Route path="settings" element={<Settings />} />
         </Route>
         <Route path="*" element={<div>404 page not found</div>} />
+
       </Routes>
       {/* <TeamLeaderTasks/>
       <TeamDetail/> */}
