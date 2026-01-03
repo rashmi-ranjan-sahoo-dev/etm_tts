@@ -2,7 +2,8 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import EmployeeLayout from './layout/EmployeeLayout'
 import MyLeaves from './pages/Employee/MyLeaves/MyLeaves'
 import EmployeeDashboard from './pages/Employee/Dashboard'
-import Tasks from './pages/Employee/ProjectManagerTasks/Tasks'
+import Tasks from './pages/Employee/ProjectManager/Tasks.jsx'
+import AllProject from './pages/Employee/ProjectManager/Projects.jsx'
 import MyTask from './pages/Employee/EmployeeTask.jsx'
 import Settings from './pages/Settings.jsx'
 import ClientPayments from "./pages/Employee/Accounts/Client/ClientPayment.jsx"
@@ -19,7 +20,7 @@ import TeamLeaderTasks from './pages/Employee/TeamLeaderTasks/TeamLeaderTasks.js
 const App = () => {
   return (
     <BrowserRouter>
-      {/* <Routes>
+       <Routes>
         <Route path="/" element={<Navigate to="/signin" replace />} />
         <Route path="/signin" element={<SignIn />} />
         <Route path="/signup" element={<SignUp />} />
@@ -28,7 +29,8 @@ const App = () => {
           <Route index element={<EmployeeDashboard />} />
           <Route path="dashboard" element={<EmployeeDashboard />} />
           <Route path="myLeaves" element={<MyLeaves />} />
-          <Route path="ProjectManagerTasks" element={<Tasks />} />
+          <Route path="projectmanager/tasks" element={<Tasks />} />
+           <Route path='projectmanager/allprojects' element={<AllProject/>}/>
           <Route path="myTasks" element={<MyTask />} />
           <Route path="settings" element={<Settings />} />
           <Route path="accounts/client-payments" element={<ClientPayments />} />
@@ -43,12 +45,7 @@ const App = () => {
           <Route path="settings" element={<Settings />} />
         </Route>
         <Route path="*" element={<div>404 page not found</div>} />
-<<<<<<< HEAD
       </Routes>
-=======
-      </Routes> */}
-      <TeamLeaderTasks/>
->>>>>>> 19468adc2aa5d017183421e1d29c9262cfe217d6
  </BrowserRouter> 
   )
 }
