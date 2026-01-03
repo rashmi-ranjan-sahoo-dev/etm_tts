@@ -15,11 +15,12 @@ import SignIn from './components/Auth/SignIn.jsx'
 import ClientLayout from './layout/ClientLayout.jsx'
 import ClientDashboard from './pages/Client/Dashboard.jsx'
 import TeamLeaderTasks from './pages/Employee/TeamLeaderTasks/TeamLeaderTasks.jsx'
+import TeamDetail from './pages/Employee/ProjectManagerTasks/TeamDetail.jsx'
 
 const App = () => {
   return (
     <BrowserRouter>
-      {/* <Routes>
+      <Routes>
         <Route path="/" element={<Navigate to="/signin" replace />} />
         <Route path="/signin" element={<SignIn />} />
         <Route path="/signup" element={<SignUp />} />
@@ -43,8 +44,9 @@ const App = () => {
           <Route path="settings" element={<Settings />} />
         </Route>
         <Route path="*" element={<div>404 page not found</div>} />
-      </Routes> */}
-      <TeamLeaderTasks/>
+      </Routes>
+      {/* <TeamLeaderTasks/>
+      <TeamDetail/> */}
  </BrowserRouter> 
   )
 }
