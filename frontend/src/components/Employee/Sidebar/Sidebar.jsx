@@ -7,6 +7,7 @@ import { LogOut } from "lucide-react";
 const Sidebar = ({ isSidebarOpen = true, setIsSidebarOpen = () => { } }) => {
   const [openAccounts, setOpenAccounts] = useState(false);
   const [openProjects, setOpenProjects] = useState(false);
+  const [openTasks, setOpenTasks] = useState(false);
   const [activeRoute, setActiveRoute] = useState(window.location.pathname);
 
   // Placeholder images
@@ -157,7 +158,7 @@ const Sidebar = ({ isSidebarOpen = true, setIsSidebarOpen = () => { } }) => {
                   }`}
               >
                 <div className="w-1.5 h-1.5 rounded-full bg-current"></div>
-                Tasks
+                Add Project
               </Link>
             </div>
 
@@ -208,6 +209,60 @@ const Sidebar = ({ isSidebarOpen = true, setIsSidebarOpen = () => { } }) => {
               >
                 <div className="w-1.5 h-1.5 rounded-full bg-current"></div>
                 Other Payments
+              </Link>
+            </div>
+
+            {/* Tasks Section */}
+            <button
+              onClick={() => setOpenTasks(!openTasks)}
+              className={`group flex items-center justify-between w-full px-4 py-3.5 rounded-xl font-medium transition-all duration-200 text-gray-700
+  ${openTasks ? "bg-white/80 shadow-md" : "hover:bg-white/80 hover:shadow-md"}`}
+            >
+              <div className="flex items-center gap-3">
+                <div className="group-hover:scale-110 transition-transform">
+                  <CheckSquare size={20} />
+                </div>
+                <span className="text-sm">Tasks</span>
+              </div>
+
+              <div
+                className={`transition-transform duration-300 ${openTasks ? "rotate-180" : ""
+                  }`}
+              >
+                <ChevronDown size={18} />
+              </div>
+            </button>
+
+
+            {/* Tasks Submenu */}
+            <div
+              className={`ml-4 space-y-1 overflow-hidden transition-all duration-300 ease-in-out
+  ${openTasks ? "max-h-40 opacity-100 mt-2" : "max-h-0 opacity-0"}`}
+            >
+              <Link
+                to="/employee/teamleader/alltasks"
+                onClick={() => setActiveRoute("/employee/teamleader/alltasks")}
+                className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm transition-all duration-200 w-full text-left
+    ${activeRoute === "/employee/teamleader/alltasks"
+                    ? "bg-gradient-to-r from-indigo-500 to-purple-500 text-white shadow-md"
+                    : "hover:bg-white/80 hover:shadow-sm text-gray-600 hover:text-gray-900"
+                  }`}
+              >
+                <div className="w-1.5 h-1.5 rounded-full bg-current"></div>
+                My Tasks
+              </Link>
+
+              <Link
+                to="/employee/teamleader/addtask"
+                onClick={() => setActiveRoute("/employee/teamleader/addtask")}
+                className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm transition-all duration-200 w-full text-left
+    ${activeRoute === "/employee/teamleader/addtask"
+                    ? "bg-gradient-to-r from-indigo-500 to-purple-500 text-white shadow-md"
+                    : "hover:bg-white/80 hover:shadow-sm text-gray-600 hover:text-gray-900"
+                  }`}
+              >
+                <div className="w-1.5 h-1.5 rounded-full bg-current"></div>
+                Add Task
               </Link>
             </div>
 

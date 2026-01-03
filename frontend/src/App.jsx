@@ -2,7 +2,7 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import EmployeeLayout from './layout/EmployeeLayout'
 import MyLeaves from './pages/Employee/MyLeaves/MyLeaves'
 import EmployeeDashboard from './pages/Employee/Dashboard'
-import Tasks from './pages/Employee/ProjectManager/Tasks.jsx'
+import Tasks from './pages/Employee/ProjectManager/TeamDetail.jsx'
 import AllProject from './pages/Employee/ProjectManager/Projects.jsx'
 import MyTask from './pages/Employee/EmployeeTask.jsx'
 import Settings from './pages/Settings.jsx'
@@ -15,13 +15,15 @@ import SignUp from './components/Auth/SignUp.jsx'
 import SignIn from './components/Auth/SignIn.jsx'
 import ClientLayout from './layout/ClientLayout.jsx'
 import ClientDashboard from './pages/Client/Dashboard.jsx'
-import TeamLeaderTasks from './pages/Employee/TeamLeaderTasks/TeamLeaderTasks.jsx'
-import TeamDetail from './pages/Employee/ProjectManagerTasks/TeamDetail.jsx'
+import TeamLeaderAddTask from './pages/Employee/TeamLeader/TeamLeaderTasks.jsx'
+import AllTasks from './pages/Employee/TeamLeader/AllTasks.jsx'
+
+
 
 const App = () => {
   return (
     <BrowserRouter>
-       <Routes>
+      <Routes>
         <Route path="/" element={<Navigate to="/signin" replace />} />
         <Route path="/signin" element={<SignIn />} />
         <Route path="/signup" element={<SignUp />} />
@@ -31,7 +33,9 @@ const App = () => {
           <Route path="dashboard" element={<EmployeeDashboard />} />
           <Route path="myLeaves" element={<MyLeaves />} />
           <Route path="projectmanager/tasks" element={<Tasks />} />
-           <Route path='projectmanager/allprojects' element={<AllProject/>}/>
+          <Route path='projectmanager/allprojects' element={<AllProject />} />
+          <Route path='teamleader/addtask' element={<TeamLeaderAddTask />} />
+          <Route path='teamleader/alltasks' element={<AllTasks />} />
           <Route path="myTasks" element={<MyTask />} />
           <Route path="settings" element={<Settings />} />
           <Route path="accounts/client-payments" element={<ClientPayments />} />
@@ -46,15 +50,8 @@ const App = () => {
           <Route path="settings" element={<Settings />} />
         </Route>
         <Route path="*" element={<div>404 page not found</div>} />
-<<<<<<< HEAD
       </Routes>
-=======
-
-      </Routes> */}
-      {/* <TeamLeaderTasks/> */}
-      <TeamDetail/>
->>>>>>> 9f5e7c21be543d30f855b20b9a6698f6d7680142
- </BrowserRouter> 
+    </BrowserRouter>
   )
 }
 
