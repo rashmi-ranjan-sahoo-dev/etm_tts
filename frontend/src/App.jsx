@@ -20,7 +20,7 @@ import TeamDetail from './pages/Employee/ProjectManagerTasks/TeamDetail.jsx'
 const App = () => {
   return (
     <BrowserRouter>
-      <Routes>
+      {/* <Routes>
         <Route path="/" element={<Navigate to="/signin" replace />} />
         <Route path="/signin" element={<SignIn />} />
         <Route path="/signup" element={<SignUp />} />
@@ -45,9 +45,9 @@ const App = () => {
         </Route>
         <Route path="*" element={<div>404 page not found</div>} />
 
-      </Routes>
-      {/* <TeamLeaderTasks/>
-      <TeamDetail/> */}
+      </Routes> */}
+      {/* <TeamLeaderTasks/> */}
+      <TeamDetail/>
  </BrowserRouter> 
   )
 }
