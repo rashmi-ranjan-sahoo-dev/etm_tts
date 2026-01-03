@@ -102,6 +102,7 @@ const TeamDetail = () => {
     description: "",
   });
   const [editingTeam, setEditingTeam] = useState(null);
+  const [editingProject, setEditingProject] = useState(null);
   const [editingProjectId, setEditingProjectId] = useState(null);
 
   const toggleProject = (projectId) => {
@@ -183,6 +184,7 @@ const TeamDetail = () => {
 
   const closeCreateProjectModal = () => {
     setShowCreateProjectModal(false);
+    setEditingProject(null);
     setNewProject({
       name: "",
       code: "",
@@ -202,22 +204,64 @@ const TeamDetail = () => {
       return;
     }
 
+    //     const project = {
+    //       id: Date.now(),
+    //       name: newProject.name,
+    //       code: newProject.code,
+    //       client: newProject.client,
+    //       manager: newProject.manager,
+    //       startDate: newProject.startDate,
+    //       endDate: newProject.endDate,
+    //       status: newProject.status,
+    //       priority: newProject.priority,
+    //       teams: [],
+    //     };
+
+    //     setProjects((prev) => [...prev, project]);
+    //     closeCreateProjectModal();
+    //   };
+
+    if (editingProject) {
+      setProjects((prev) =>
+        prev.map((project) =>
+          project.id === editingProject.id
+            ? { ...project, ...newProject }
+            : project
+        )
+      );
+
+      setEditingProject(null);
+      closeCreateProjectModal();
+      return;
+    }
     const project = {
       id: Date.now(),
-      name: newProject.name,
-      code: newProject.code,
-      client: newProject.client,
-      manager: newProject.manager,
-      startDate: newProject.startDate,
-      endDate: newProject.endDate,
-      status: newProject.status,
-      priority: newProject.priority,
+      ...newProject,
       teams: [],
     };
 
     setProjects((prev) => [...prev, project]);
     closeCreateProjectModal();
   };
+
+  const handleEditProject = (project) => {
+    setEditingProject(project);
+
+    setNewProject({
+      name: project.name,
+      code: project.code,
+      client: project.client,
+      manager: project.manager,
+      startDate: project.startDate,
+      endDate: project.endDate,
+      status: project.status,
+      priority: project.priority,
+      description: project.description || "",
+    });
+
+    setShowCreateProjectModal(true);
+  };
+
   const handleDeleteTeam = (projectId, teamId) => {
     if (!window.confirm("Are you sure you want to delete this team?")) return;
 
@@ -232,6 +276,13 @@ const TeamDetail = () => {
       )
     );
   };
+  const handleDeleteProject = (projectId) => {
+    if (!window.confirm("Are you sure you want to delete this project?"))
+      return;
+
+    setProjects((prev) => prev.filter((project) => project.id !== projectId));
+  };
+
   const handleEditTeam = (projectId, team) => {
     setEditingProjectId(projectId);
     setEditingTeam(team);
@@ -277,22 +328,30 @@ const TeamDetail = () => {
   // Search Filter Function
   const filteredProjects = projects.filter((project) => {
     if (!searchQuery) return true;
-    
+
     const query = searchQuery.toLowerCase();
-    
+
     const projectMatch =
       project.name.toLowerCase().includes(query) ||
       project.code.toLowerCase().includes(query) ||
       project.client.toLowerCase().includes(query) ||
       project.manager.toLowerCase().includes(query);
 
-    const teamMatch = project.teams.some((team) =>
-      team.name.toLowerCase().includes(query) ||
-      team.lead.toLowerCase().includes(query)
+    const teamMatch = project.teams.some(
+      (team) =>
+        team.name.toLowerCase().includes(query) ||
+        team.lead.toLowerCase().includes(query)
     );
 
     return projectMatch || teamMatch;
   });
+  const membersList = [
+    "John Doe - Developer",
+    "Jane Smith - Designer",
+    "Mike Johnson - Tester",
+    "Sarah Williams - Developer",
+    "David Brown - Developer",
+  ];
 
   return (
     <div className="min-h-screen bg-gray-50 p-6">
@@ -337,7 +396,8 @@ const TeamDetail = () => {
           </div>
           {searchQuery && (
             <p className="text-sm text-gray-600 mt-2">
-              Found {filteredProjects.length} {filteredProjects.length === 1 ? 'project' : 'projects'}
+              Found {filteredProjects.length}{" "}
+              {filteredProjects.length === 1 ? "project" : "projects"}
             </p>
           )}
         </div>
@@ -346,223 +406,207 @@ const TeamDetail = () => {
           {filteredProjects.length === 0 ? (
             <div className="text-center py-12 bg-white rounded-lg shadow-md">
               <Search className="w-12 h-12 text-gray-400 mx-auto mb-3" />
-              <h3 className="text-lg font-medium text-gray-900 mb-1">No projects found</h3>
+              <h3 className="text-lg font-medium text-gray-900 mb-1">
+                No projects found
+              </h3>
               <p className="text-gray-500">Try adjusting your search query</p>
             </div>
           ) : (
             filteredProjects.map((project) => (
-            <div
-              key={project.id}
-              className="bg-white rounded-lg shadow-md overflow-hidden"
-            >
-              {/* Project Header */}
-              <div className="p-6 border-b border-gray-200">
-                <div className="flex items-start justify-between">
-                  <div className="flex-1">
-                    <div className="flex items-center gap-3">
-                      <h2 className="text-xl font-semibold text-gray-900">
-                        {project.name}
-                      </h2>
-                      <span
-                        className={`px-3 py-1 rounded-full text-xs font-medium ${getStatusColor(
-                          project.status
-                        )}`}
-                      >
-                        {project.status}
-                      </span>
-                      <span
-                        className={`px-3 py-1 rounded-full text-xs font-medium ${getPriorityColor(
-                          project.priority
-                        )}`}
-                      >
-                        {project.priority}
-                      </span>
+              <div
+                key={project.id}
+                className="bg-white rounded-lg shadow-md overflow-hidden"
+              >
+                {/* Project Header */}
+                <div className="p-6 border-b border-gray-200">
+                  <div className="flex items-start justify-between">
+                    <div className="flex-1">
+                      <div className="flex items-center gap-3">
+                        <h2 className="text-xl font-semibold text-gray-900">
+                          {project.name}
+                        </h2>
+                        <span
+                          className={`px-3 py-1 rounded-full text-xs font-medium ${getStatusColor(
+                            project.status
+                          )}`}
+                        >
+                          {project.status}
+                        </span>
+                        <span
+                          className={`px-3 py-1 rounded-full text-xs font-medium ${getPriorityColor(
+                            project.priority
+                          )}`}
+                        >
+                          {project.priority}
+                        </span>
+                      </div>
+                      <p className="text-sm text-gray-500 mt-1">
+                        Project Code: {project.code}
+                      </p>
                     </div>
-                    <p className="text-sm text-gray-500 mt-1">
-                      Project Code: {project.code}
-                    </p>
+                    <button className="p-2 hover:bg-gray-100 rounded-lg transition">
+                      <MoreVertical className="w-5 h-5 text-gray-500" />
+                    </button>
                   </div>
-                  <button className="p-2 hover:bg-gray-100 rounded-lg transition">
-                    <MoreVertical className="w-5 h-5 text-gray-500" />
-                  </button>
-                </div>
 
-                {/* Project Details Grid */}
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-4">
-                  <div>
-                    <p className="text-xs text-gray-500">Client</p>
-                    <p className="text-sm font-medium text-gray-900">
-                      {project.client}
-                    </p>
-                  </div>
-                  {/* <div>
+                  {/* Project Details Grid */}
+                  <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-4">
+                    <div>
+                      <p className="text-xs text-gray-500">Client</p>
+                      <p className="text-sm font-medium text-gray-900">
+                        {project.client}
+                      </p>
+                    </div>
+                    {/* <div>
                     <p className="text-xs text-gray-500">Project Manager</p>
                     <p className="text-sm font-medium text-gray-900">
                       {project.manager}
                     </p>
                   </div> */}
-                  <div>
-                    <p className="text-xs text-gray-500">Start Date</p>
-                    <p className="text-sm font-medium text-gray-900">
-                      {project.startDate}
-                    </p>
-                  </div>
-                  <div>
-                    <p className="text-xs text-gray-500">End Date</p>
-                    <p className="text-sm font-medium text-gray-900">
-                      {project.endDate}
-                    </p>
+                    <div>
+                      <p className="text-xs text-gray-500">Start Date</p>
+                      <p className="text-sm font-medium text-gray-900">
+                        {project.startDate}
+                      </p>
+                    </div>
+                    <div>
+                      <p className="text-xs text-gray-500">End Date</p>
+                      <p className="text-sm font-medium text-gray-900">
+                        {project.endDate}
+                      </p>
+                    </div>
                   </div>
                 </div>
-              </div>
 
-              {/* Team Details Dropdown */}
-              <div className="border-b border-gray-200">
-                <button
-                  onClick={() => toggleProject(project.id)}
-                  className="w-full px-6 py-4 flex items-center justify-between hover:bg-gray-50 transition"
-                >
-                  <div className="flex items-center gap-3">
-                    <Users className="w-5 h-5 text-gray-600" />
-                    <span className="font-semibold text-gray-900">
-                      Team Details
-                    </span>
-                    <span className="px-2 py-1 bg-blue-100 text-blue-800 text-xs font-medium rounded-full">
-                      {project.teams.length}{" "}
-                      {project.teams.length === 1 ? "team" : "teams"}
-                    </span>
-                  </div>
-                  {expandedProjects[project.id] ? (
-                    <ChevronUp className="w-5 h-5 text-gray-600" />
-                  ) : (
-                    <ChevronDown className="w-5 h-5 text-gray-600" />
-                  )}
-                </button>
-
-                {/* Expanded Team List */}
-                {expandedProjects[project.id] && (
-                  <div className="px-6 pb-6 pt-2 bg-gray-50">
-                    <div className="flex items-center justify-between mb-4">
-                      <h3 className="text-sm font-medium text-gray-700">
-                        All Teams
-                      </h3>
-                      <button
-                        onClick={() => openCreateTeamModal(project.id)}
-                        className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition text-sm font-medium"
-                      >
-                        <Plus className="w-4 h-4" />
-                        Create New Team
-                      </button>
+                {/* Team Details Dropdown */}
+                <div className="border-b border-gray-200">
+                  <button
+                    onClick={() => toggleProject(project.id)}
+                    className="w-full px-6 py-4 flex items-center justify-between hover:bg-gray-50 transition"
+                  >
+                    <div className="flex items-center gap-3">
+                      <Users className="w-5 h-5 text-gray-600" />
+                      <span className="font-semibold text-gray-900">
+                        Team Details
+                      </span>
+                      <span className="px-2 py-1 bg-blue-100 text-blue-800 text-xs font-medium rounded-full">
+                        {project.teams.length}{" "}
+                        {project.teams.length === 1 ? "team" : "teams"}
+                      </span>
                     </div>
+                    {expandedProjects[project.id] ? (
+                      <ChevronUp className="w-5 h-5 text-gray-600" />
+                    ) : (
+                      <ChevronDown className="w-5 h-5 text-gray-600" />
+                    )}
+                  </button>
 
-                    <div className="space-y-3">
-                      {project.teams.map((team) => (
-                        <div
-                          key={team.id}
-                          className="bg-white rounded-lg p-4 border border-gray-200 hover:shadow-md transition"
+                  {/* Expanded Team List */}
+                  {expandedProjects[project.id] && (
+                    <div className="px-6 pb-6 pt-2 bg-gray-50">
+                      <div className="flex items-center justify-between mb-4">
+                        <h3 className="text-sm font-medium text-gray-700">
+                          All Teams
+                        </h3>
+                        <button
+                          onClick={() => openCreateTeamModal(project.id)}
+                          className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition text-sm font-medium"
                         >
-                          <div className="flex items-start justify-between">
-                            <div className="flex-1">
-                              <div className="flex items-center gap-2 mb-2">
-                                <h4 className="font-semibold text-gray-900">
-                                  {team.name}
-                                </h4>
-                                <span
-                                  className={`px-2 py-1 rounded text-xs font-medium ${getStatusColor(
-                                    team.status
-                                  )}`}
+                          <Plus className="w-4 h-4" />
+                          Create New Team
+                        </button>
+                      </div>
+
+                      <div className="space-y-3">
+                        {project.teams.map((team) => (
+                          <div
+                            key={team.id}
+                            className="bg-white rounded-lg p-4 border border-gray-200 hover:shadow-md transition"
+                          >
+                            <div className="flex items-start justify-between">
+                              <div className="flex-1">
+                                <div className="flex items-center gap-2 mb-2">
+                                  <h4 className="font-semibold text-gray-900">
+                                    {team.name}
+                                  </h4>
+                                  <span
+                                    className={`px-2 py-1 rounded text-xs font-medium ${getStatusColor(
+                                      team.status
+                                    )}`}
+                                  >
+                                    {team.status}
+                                  </span>
+                                </div>
+
+                                <div className="grid grid-cols-2 gap-3 text-sm">
+                                  <div>
+                                    <p className="text-gray-500">Team Lead</p>
+                                    <p className="font-medium text-gray-900">
+                                      {team.lead}
+                                    </p>
+                                  </div>
+                                  <div>
+                                    <p className="text-gray-500">Members</p>
+                                    <p className="font-medium text-gray-900">
+                                      {team.members} members
+                                    </p>
+                                  </div>
+                                </div>
+                              </div>
+
+                              <div className="flex gap-2 ml-4">
+                                <button
+                                  onClick={() =>
+                                    handleEditTeam(project.id, team)
+                                  }
+                                  className="p-2 hover:bg-gray-100 rounded-lg transition"
+                                  title="Edit Team"
                                 >
-                                  {team.status}
-                                </span>
+                                  <Edit className="w-4 h-4 text-gray-600" />
+                                </button>
+                                <button
+                                  onClick={() =>
+                                    handleDeleteTeam(project.id, team.id)
+                                  }
+                                  className="p-2 hover:bg-red-50 rounded-lg transition"
+                                  title="Delete Team"
+                                >
+                                  <Trash2 className="w-4 h-4 text-red-600" />
+                                </button>
                               </div>
-
-                              <div className="grid grid-cols-2 gap-3 text-sm">
-                                <div>
-                                  <p className="text-gray-500">Team Lead</p>
-                                  <p className="font-medium text-gray-900">
-                                    {team.lead}
-                                  </p>
-                                </div>
-                                <div>
-                                  <p className="text-gray-500">Members</p>
-                                  <p className="font-medium text-gray-900">
-                                    {team.members} members
-                                  </p>
-                                </div>
-                              </div>
-
-                              <div className="mt-3 pt-3 border-t border-gray-100">
-                                <p className="text-xs text-gray-500 mb-2">
-                                  Task Summary
-                                </p>
-                                <div className="flex items-center gap-4 text-sm">
-                                  <div className="flex items-center gap-1">
-                                    <AlertCircle className="w-4 h-4 text-red-500" />
-                                    <span className="text-gray-700">
-                                      {team.tasksOpen} Open
-                                    </span>
-                                  </div>
-                                  <div className="flex items-center gap-1">
-                                    <Clock className="w-4 h-4 text-yellow-500" />
-                                    <span className="text-gray-700">
-                                      {team.tasksInProgress} In Progress
-                                    </span>
-                                  </div>
-                                  <div className="flex items-center gap-1">
-                                    <CheckCircle className="w-4 h-4 text-green-500" />
-                                    <span className="text-gray-700">
-                                      {team.tasksDone} Done
-                                    </span>
-                                  </div>
-                                  <div className="ml-auto">
-                                    <span className="font-semibold text-gray-900">
-                                      Total: {team.taskCount}
-                                    </span>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-
-                            <div className="flex gap-2 ml-4">
-                              <button
-                                onClick={() => handleEditTeam(project.id, team)}
-                                className="p-2 hover:bg-gray-100 rounded-lg transition"
-                                title="Edit Team"
-                              >
-                                <Edit className="w-4 h-4 text-gray-600" />
-                              </button>
-                              <button
-                                onClick={() =>
-                                  handleDeleteTeam(project.id, team.id)
-                                }
-                                className="p-2 hover:bg-red-50 rounded-lg transition"
-                                title="Delete Team"
-                              >
-                                <Trash2 className="w-4 h-4 text-red-600" />
-                              </button>
                             </div>
                           </div>
-                        </div>
-                      ))}
+                        ))}
+                      </div>
                     </div>
-                  </div>
-                )}
-              </div>
+                  )}
+                </div>
 
-              {/* Other Options */}
-              <div className="px-6 py-3 bg-gray-50 flex gap-2">
-                <button className="px-4 py-2 text-sm text-gray-700 hover:bg-gray-200 rounded-lg transition">
-                  Edit Project
-                </button>
-                <button className="px-4 py-2 text-sm text-gray-700 hover:bg-gray-200 rounded-lg transition">
-                  Archive
-                </button>
-                <button className="px-4 py-2 text-sm text-gray-700 hover:bg-gray-200 rounded-lg transition">
-                  Share
-                </button>
+                {/* Other Options */}
+                <div className="px-6 py-3 bg-gray-50 flex gap-2">
+                  {/* <button className="px-4 py-2 text-sm text-gray-700 hover:bg-gray-200 rounded-lg transition">
+                    Edit Project
+                  </button>
+                  <button className="px-4 py-2 text-sm text-gray-700 hover:bg-gray-200 rounded-lg transition">
+                    Delete Project
+                  </button> */}
+                  <button
+                    onClick={() => handleEditProject(project)}
+                    className="px-4 py-2 text-sm text-gray-700 hover:bg-gray-200 rounded-lg transition"
+                  >
+                    Edit Project
+                  </button>
+
+                  <button
+                    onClick={() => handleDeleteProject(project.id)}
+                    className="px-4 py-2 text-sm text-red-600 hover:bg-red-100 rounded-lg transition"
+                  >
+                    Delete Project
+                  </button>
+                </div>
               </div>
-            </div>
-          )))}
+            ))
+          )}
         </div>
       </div>
 
@@ -571,9 +615,10 @@ const TeamDetail = () => {
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
           <div className="bg-white rounded-lg max-w-3xl w-full max-h-[90vh] overflow-y-auto">
             <div className="sticky top-0 bg-white border-b border-gray-200 px-6 py-4 flex items-center justify-between">
-              <h2 className="text-xl font-semibold text-gray-900">
-                Create New Project
-              </h2>
+            <h2 className="text-xl font-semibold text-gray-900">
+  {editingProject ? "Edit Project" : "Create New Project"}
+</h2>
+
               <button
                 onClick={closeCreateProjectModal}
                 className="p-2 hover:bg-gray-100 rounded-lg transition"
@@ -766,7 +811,7 @@ const TeamDetail = () => {
                   onClick={handleCreateProject}
                   className="flex-1 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition font-medium"
                 >
-                  Create Project
+                  {editingProject ? "Update Project" : "Create Project"}
                 </button>
                 <button
                   onClick={closeCreateProjectModal}
@@ -946,7 +991,7 @@ const TeamDetail = () => {
                 <h3 className="text-sm font-semibold text-gray-900 mb-4">
                   Team Members
                 </h3>
-                <div className="space-y-4">
+                {/* <div className="space-y-4">
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">
                       Select Members
@@ -981,6 +1026,50 @@ const TeamDetail = () => {
                     </select>
                     <p className="text-xs text-gray-500 mt-1">
                       Hold Ctrl/Cmd to select multiple members
+                    </p>
+                  </div>
+                </div> */}
+
+                <div className="space-y-4">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      Select Members
+                    </label>
+
+                    <div className="border border-gray-300 rounded-lg p-3 space-y-2 max-h-40 overflow-y-auto">
+                      {membersList.map((member) => (
+                        <label
+                          key={member}
+                          className="flex items-center gap-2 text-sm text-gray-700 cursor-pointer"
+                        >
+                          <input
+                            type="checkbox"
+                            value={member}
+                            checked={newTeam.members.includes(member)}
+                            onChange={(e) => {
+                              if (e.target.checked) {
+                                setNewTeam({
+                                  ...newTeam,
+                                  members: [...newTeam.members, member],
+                                });
+                              } else {
+                                setNewTeam({
+                                  ...newTeam,
+                                  members: newTeam.members.filter(
+                                    (m) => m !== member
+                                  ),
+                                });
+                              }
+                            }}
+                            className="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+                          />
+                          {member}
+                        </label>
+                      ))}
+                    </div>
+
+                    <p className="text-xs text-gray-500 mt-1">
+                      Select one or more team members
                     </p>
                   </div>
                 </div>
