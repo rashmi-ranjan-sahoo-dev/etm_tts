@@ -16,6 +16,7 @@ import SignIn from './components/Auth/SignIn.jsx'
 import ClientLayout from './layout/ClientLayout.jsx'
 import ClientDashboard from './pages/Client/Dashboard.jsx'
 import TeamLeaderTasks from './pages/Employee/TeamLeaderTasks/TeamLeaderTasks.jsx'
+import TeamDetail from './pages/Employee/ProjectManagerTasks/TeamDetail.jsx'
 
 const App = () => {
   return (
@@ -45,7 +46,14 @@ const App = () => {
           <Route path="settings" element={<Settings />} />
         </Route>
         <Route path="*" element={<div>404 page not found</div>} />
+<<<<<<< HEAD
       </Routes>
+=======
+
+      </Routes> */}
+      {/* <TeamLeaderTasks/> */}
+      <TeamDetail/>
+>>>>>>> 9f5e7c21be543d30f855b20b9a6698f6d7680142
  </BrowserRouter> 
   )
 }
