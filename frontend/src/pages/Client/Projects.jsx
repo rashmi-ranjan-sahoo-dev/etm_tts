@@ -1,6 +1,8 @@
 /* eslint-disable react-hooks/set-state-in-effect */
 import React, { useState, useEffect } from "react";
-import {Plus,Pencil,Trash2,Search,CheckCircle2,Clock,Calendar,AlertCircle,User, PauseCircle,} from "lucide-react";
+import { Plus, Pencil, Trash2, Search, CheckCircle2, Clock, Calendar, AlertCircle, User, PauseCircle, } from "lucide-react";
+import { FileText, Image, FileArchive, FileSpreadsheet, File, } from "lucide-react";
+
 
 const formatDate = (dateStr) => {
   if (!dateStr) return "";
@@ -16,18 +18,25 @@ const toISO = (date) => {
 
 /* ===================== PROJECT MODAL ===================== */
 const ProjectModal = ({ close, save, editData }) => {
+
   const today = new Date().toISOString().split("T")[0];
 
   const [form, setForm] = useState({
     projectName: "",
     projectCategory: "",
     projectLead: "",
-    status: "",
+    status: "Pending",
     startDate: "",
     endDate: "",
+    // attachments:[]
   });
 
   const [errors, setErrors] = useState({});
+
+  const [attachments, setAttachments] = useState(
+    editData?.attachments || []
+  );
+
 
   useEffect(() => {
     if (editData) {
@@ -64,13 +73,39 @@ const ProjectModal = ({ close, save, editData }) => {
     if (Object.keys(newErrors).length === 0) {
       save({
         ...form,
-         id: editData?.id,
+        id: editData?.id,
         startDate: formatDate(form.startDate),
         endDate: formatDate(form.endDate),
+        attachments
       });
       close();
     }
   };
+
+  const handleAttachmentAdd = (e) => {
+    const files = Array.from(e.target.files);
+
+    const newFiles = files.map((file) => ({
+      name: file.name,
+      size: `${(file.size / 1024 / 1024).toFixed(5)} MB`,
+      type: file.type,
+      url: URL.createObjectURL(file),
+    }));
+
+    setAttachments((prev) => [...prev, ...newFiles]);
+  };
+
+  //   const getFileIcon = (type) => {
+  //   if (type.includes("image")) return <Image className="w-5 h-5 text-pink-500" />;
+  //   if (type.includes("pdf")) return <FileText className="w-5 h-5 text-red-500" />;
+  //   if (type.includes("sheet") || type.includes("excel"))
+  //     return <FileSpreadsheet className="w-5 h-5 text-green-600" />;
+  //   if (type.includes("zip"))
+  //     return <FileArchive className="w-5 h-5 text-yellow-500" />;
+
+  //   return <File className="w-5 h-5 text-gray-500" />;
+  // };
+
 
   return (
     <div className="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center z-50 p-4 animate-in fade-in duration-200">
@@ -159,30 +194,32 @@ const ProjectModal = ({ close, save, editData }) => {
             )}
           </div>
 
-          {/* Status */}
-          <div className="md:col-span-2">
-            <label className="block text-sm font-semibold text-gray-700 mb-2">
-              Status
-            </label>
-            <select
-              name="status"
-              value={form.status}
-              onChange={handleChange}
-              className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-teal-500 focus:ring-4 focus:ring-teal-100 outline-none transition-all bg-white"
-            >
-              <option value="">Select Status</option>
-              <option>Pending</option>
-              <option>Hold</option>
-              <option>In Progress</option>
-              <option>Completed</option>
-            </select>
-            {errors.status && (
+          {/* Status – Only visible when editing (Manager) */}
+          {/* {editData && (
+            <div className="md:col-span-2">
+              <label className="block text-sm font-semibold text-gray-700 mb-2">
+                Status
+              </label>
+              <select
+                name="status"
+                value={form.status}
+                onChange={handleChange}
+                className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl rounded-xl
+               focus:border-teal-500 focus:ring-4 focus:ring-teal-100 outline-none transition-all bg-white"
+              >
+                <option>Pending</option>
+                <option>Hold</option>
+                <option>In Progress</option>
+                <option>Completed</option>
+              </select>
+               {errors.status && (
               <p className="text-red-500 text-sm mt-1 flex items-center gap-1">
                 <AlertCircle className="w-4 h-4" />
                 {errors.status}
               </p>
             )}
-          </div>
+            </div>
+          )} */}
 
           {/* Dates */}
           <div>
@@ -226,6 +263,65 @@ const ProjectModal = ({ close, save, editData }) => {
               </p>
             )}
           </div>
+
+          {/* Attachments */}
+          <div className="md:col-span-2">
+            <label className="block text-sm font-semibold text-gray-700 mb-2">
+              Attachments
+            </label>
+
+            <div className="border-2 border-dashed border-gray-300 rounded-2xl p-5 bg-gray-50">
+              <label className="flex items-center justify-center gap-3 cursor-pointer text-teal-600 font-semibold">
+                <Plus className="w-5 h-5" />
+                Add Attachment
+                <input
+                  type="file"
+                  multiple
+                  accept="image/*,.pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.zip"
+                  className="hidden"
+                  onChange={handleAttachmentAdd}
+                />
+
+              </label>
+
+              {/* Attachment List */}
+              {attachments.length > 0 && (
+                <div className="mt-4 space-y-3">
+                  {attachments.map((file, idx) => (
+                    <div
+                      key={idx}
+                      className="flex items-center justify-between bg-white p-4 rounded-xl shadow-sm border"
+                    >
+                      <div>
+                        <p className="font-medium text-gray-800">{file.name}</p>
+                        <p className="text-xs text-gray-500">{file.size}</p>
+                      </div>
+
+                      <div className="flex gap-2">
+                        <a
+                          href={file.url}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="px-3 py-1.5 text-sm bg-blue-100 text-blue-600 rounded-lg hover:bg-blue-200"
+                        >
+                          View
+                        </a>
+                        <button
+                          onClick={() =>
+                            setAttachments(attachments.filter((_, i) => i !== idx))
+                          }
+                          className="px-3 py-1.5 text-sm bg-red-100 text-red-600 rounded-lg hover:bg-red-200"
+                        >
+                          Remove
+                        </button>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          </div>
+
         </div>
 
         <div className="flex gap-4 p-8 border-t-2 border-gray-100 bg-gray-50 rounded-b-3xl">
@@ -242,6 +338,7 @@ const ProjectModal = ({ close, save, editData }) => {
             Cancel
           </button>
         </div>
+
       </div>
     </div>
   );
@@ -258,12 +355,19 @@ const Projects = () => {
       status: "In Progress",
       startDate: "01/01/2025",
       endDate: "30/06/2025",
+      attachments: [
+        { name: "Requirements.pdf", url: "", size: "5MB" }
+      ]
     },
   ]);
 
   const [openModal, setOpenModal] = useState(false);
   const [editData, setEditData] = useState(null);
   const [search, setSearch] = useState("");
+
+  const [showAttachments, setShowAttachments] = useState(false);
+  const [selectedAttachments, setSelectedAttachments] = useState([]);
+
 
   const handleSave = (data) => {
     if (editData) {
@@ -284,7 +388,7 @@ const Projects = () => {
       "In Progress": "bg-amber-100 text-amber-700 border-amber-200",
       Completed: "bg-green-100 text-green-700 border-green-200",
     };
-    
+
     const icons = {
       Pending: <Clock className="w-4 h-4" />,
       Hold: <PauseCircle className="w-4 h-4" />,
@@ -299,6 +403,8 @@ const Projects = () => {
       </span>
     );
   };
+
+
 
   return (
     <div className="min-h-screen bg-linear-to-br from-slate-50 via-blue-50 to-teal-50 p-8">
@@ -350,7 +456,7 @@ const Projects = () => {
                     Type
                   </th>
                   <th className="p-5 text-left text-sm font-bold text-gray-700 uppercase tracking-wider">
-                    Lead
+                    Assigned to
                   </th>
                   <th className="p-5 text-left text-sm font-bold text-gray-700 uppercase tracking-wider">
                     Status
@@ -361,6 +467,7 @@ const Projects = () => {
                   <th className="p-5 text-left text-sm font-bold text-gray-700 uppercase tracking-wider">
                     Completion Date
                   </th>
+                  <th className="p-5 text-left text-sm font-bold">Attachments</th>
                   <th className="p-5 text-left text-sm font-bold text-gray-700 uppercase tracking-wider">
                     Actions
                   </th>
@@ -370,9 +477,8 @@ const Projects = () => {
                 {filtered.map((row, index) => (
                   <tr
                     key={row.id}
-                    className={`border-b border-gray-100 hover:bg-linear-to-r hover:from-teal-50 hover:to-cyan-50 transition-all ${
-                      index % 2 === 0 ? "bg-white" : "bg-gray-50/50"
-                    }`}
+                    className={`border-b border-gray-100 hover:bg-linear-to-r hover:from-teal-50 hover:to-cyan-50 transition-all ${index % 2 === 0 ? "bg-white" : "bg-gray-50/50"
+                      }`}
                   >
                     <td className="p-5">
                       <div className="font-semibold text-gray-800">
@@ -386,9 +492,6 @@ const Projects = () => {
                     </td>
                     <td className="p-5">
                       <div className="flex items-center gap-2">
-                        {/* <div className="w-8 h-8 bg-linear-to-br from-teal-400 to-cyan-400 rounded-full flex items-center justify-center text-white font-semibold text-sm">
-                          {row.projectLead[0]}
-                        </div> */}
                         <span className="text-gray-700 font-medium">
                           {row.projectLead}
                         </span>
@@ -406,6 +509,17 @@ const Projects = () => {
                         <Calendar className="w-4 h-4" />
                         {row.endDate}
                       </div>
+                    </td>
+                    <td className="p-5">
+                      <button
+                        onClick={() => {
+                          setSelectedAttachments(row.attachments || []);
+                          setShowAttachments(true);
+                        }}
+                        className="text-sm font-semibold text-teal-600 hover:underline cursor-pointer"
+                      >
+                        {row.attachments?.length || 0} files
+                      </button>
                     </td>
                     <td className="p-5">
                       <div className="flex gap-2">
@@ -459,8 +573,80 @@ const Projects = () => {
           editData={editData}
         />
       )}
+
+      {showAttachments && (
+        <AttachmentsModal
+          attachments={selectedAttachments}
+          onClose={() => setShowAttachments(false)}
+        />
+      )}
     </div>
+
   );
 };
 
 export default Projects;
+
+
+const AttachmentsModal = ({ attachments = [], onClose }) => {
+  return (
+    <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+      <div className="bg-white rounded-2xl w-full max-w-lg shadow-2xl">
+        {/* Header */}
+        <div className="flex items-center justify-between p-5 border-b">
+          <h3 className="text-xl font-bold text-gray-800">
+            Project Attachments
+          </h3>
+          <button
+            onClick={onClose}
+            className="text-gray-500 hover:text-red-500 text-lg font-bold"
+          >
+            ✕
+          </button>
+        </div>
+
+        {/* Body */}
+        <div className="p-5 max-h-[60vh] overflow-y-auto space-y-3">
+          {attachments.length === 0 ? (
+            <p className="text-center text-gray-500">
+              No attachments available
+            </p>
+          ) : (
+            attachments.map((file, idx) => (
+              <div
+                key={idx}
+                className="flex items-center justify-between bg-gray-50 p-4 rounded-xl border"
+              >
+                <div>
+                  <p className="font-medium text-gray-800">{file.name}</p>
+                  <p className="text-xs text-gray-500">{file.size}</p>
+                </div>
+
+                <a
+                  href={file.url}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="px-3 py-1.5 text-sm bg-teal-100 text-teal-700 rounded-lg hover:bg-teal-200"
+                >
+                  View
+                </a>
+              </div>
+            ))
+          )}
+        </div>
+
+        {/* Footer */}
+        <div className="p-4 border-t bg-gray-50 text-right">
+          <button
+            onClick={onClose}
+            className="px-5 py-2 rounded-xl border font-semibold hover:bg-gray-100"
+          >
+            Close
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+

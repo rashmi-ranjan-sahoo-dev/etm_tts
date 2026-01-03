@@ -55,12 +55,6 @@ const App = () => {
 
         <Route path="*" element={<div>404 page not found</div>} />
       </Routes>
-      
-   
- {/* <Projects/> 
- <Supports/>
-  */}
- {/* <Billing/>  */}
  </BrowserRouter> 
   )
 }
