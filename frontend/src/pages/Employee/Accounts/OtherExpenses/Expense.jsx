@@ -1,7 +1,7 @@
 
 
 import React, { useState } from "react";
-import { Search, Plus, Pencil, Trash2, CheckCircle2, Clock, XCircle, Receipt, Wallet } from "lucide-react";
+import { Search, Plus, Pencil, Trash2, CheckCircle2, Clock, XCircle, Receipt, Wallet, FileText, Download } from "lucide-react";
 
 // ExpenseModel Component (embedded)
 const ExpenseModel = ({ close, save, editData }) => {
@@ -15,6 +15,7 @@ const ExpenseModel = ({ close, save, editData }) => {
       paymentMode: "Credit Card",
       paidTo: "",
       status: "Pending",
+      attachment: null,
     }
   );
 
@@ -156,6 +157,24 @@ const ExpenseModel = ({ close, save, editData }) => {
                 <option>Failed</option>
               </select>
             </div>
+            
+            <div className="md:col-span-2">
+              <label className="block text-sm font-semibold text-gray-700 mb-2">Attachment</label>
+              <input
+                type="file"
+                accept=".pdf,.doc,.docx,.jpg,.jpeg,.png,.xlsx,.xls"
+                onChange={(e) =>
+                  setFormData({ ...formData, attachment: e.target.files[0] })
+                }
+                className="w-full px-4 py-3 rounded-xl border-2 border-gray-200 bg-gray-50 focus:outline-none focus:border-orange-500 focus:bg-white focus:ring-4 focus:ring-orange-500/10 transition-all"
+              />
+              {formData.attachment && (
+                <p className="text-xs text-gray-500 mt-1 flex items-center gap-1">
+                  <FileText className="w-3 h-3" />
+                  {formData.attachment.name || formData.attachment}
+                </p>
+              )}
+            </div>
           </div>
           
           <div className="flex gap-3 pt-4 border-t">
@@ -191,6 +210,7 @@ const Expense = () => {
       paymentMode: "Credit Card",
       paidTo: "Uber",
       status: "Completed",
+      attachment: "receipt-001.pdf",
     },
     {
       id: 2,
@@ -202,6 +222,7 @@ const Expense = () => {
       paymentMode: "Cash",
       paidTo: "Restaurant",
       status: "Pending",
+      attachment: "receipt-002.jpg",
     },
   ]);
 
@@ -235,13 +256,51 @@ const Expense = () => {
     return <XCircle className="w-4 h-4 text-rose-600" />;
   };
 
+  const handleDownload = (expense) => {
+    if (!expense.attachment) {
+      alert("No attachment available for this expense.");
+      return;
+    }
+
+    // If attachment is a File object (new upload)
+    if (expense.attachment instanceof File) {
+      const url = URL.createObjectURL(expense.attachment);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = expense.attachment.name || expense.invoiceNo;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
+      return;
+    }
+
+    // If attachment is a string (existing file path/name)
+    if (typeof expense.attachment === "string") {
+      const link = document.createElement("a");
+      link.href = expense.attachment.startsWith("http") 
+        ? expense.attachment 
+        : `/attachments/${expense.attachment}`;
+      link.download = expense.attachment;
+      link.target = "_blank";
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
+  };
+
   const handleSave = (data) => {
+    const payload = {
+      ...data,
+      attachment: data.attachment instanceof File ? data.attachment.name : data.attachment || null,
+    };
+
     if (editData) {
       setExpenses(
-        expenses.map((e) => (e.id === data.id ? data : e))
+        expenses.map((e) => (e.id === data.id ? payload : e))
       );
     } else {
-      setExpenses([...expenses, { ...data, id: Date.now() }]);
+      setExpenses([...expenses, { ...payload, id: Date.now() }]);
     }
     setOpenModal(false);
     setEditData(null);
@@ -305,6 +364,7 @@ const Expense = () => {
                   <th className="p-4 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">Payment Mode</th>
                   <th className="p-4 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">Paid To</th>
                   <th className="p-4 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">Status</th>
+                  <th className="p-4 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">Attachment</th>
                   <th className="p-4 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">Actions</th>
                 </tr>
               </thead>
@@ -337,6 +397,22 @@ const Expense = () => {
                         {getStatusIcon(e.status)}
                         {badge(e.status)}
                       </div>
+                    </td>
+                    <td className="p-4">
+                      {e.attachment ? (
+                        <button
+                          onClick={() => handleDownload(e)}
+                          className="flex items-center gap-2 px-3 py-2 bg-orange-50 hover:bg-orange-100 text-orange-700 rounded-lg transition-colors font-medium text-xs cursor-pointer"
+                        >
+                          <FileText className="w-4 h-4" />
+                          <span className="truncate max-w-[120px]">
+                            {typeof e.attachment === "string" ? e.attachment : e.attachment.name}
+                          </span>
+                          <Download className="w-3 h-3" />
+                        </button>
+                      ) : (
+                        <span className="text-gray-400 text-xs">No attachment</span>
+                      )}
                     </td>
                     <td className="p-4">
                       <div className="flex gap-3">
@@ -414,6 +490,24 @@ const Expense = () => {
                 <div className="flex items-start gap-2">
                   <span className="text-xs font-semibold text-gray-500 uppercase tracking-wide min-w-24">Status:</span>
                   {badge(e.status)}
+                </div>
+
+                <div className="flex items-start gap-2">
+                  <span className="text-xs font-semibold text-gray-500 uppercase tracking-wide min-w-24">Attachment:</span>
+                  {e.attachment ? (
+                    <button
+                      onClick={() => handleDownload(e)}
+                      className="flex items-center gap-2 px-3 py-1.5 bg-orange-50 hover:bg-orange-100 text-orange-700 rounded-lg transition-colors font-medium text-xs"
+                    >
+                      <FileText className="w-3 h-3" />
+                      <span className="truncate max-w-[100px]">
+                        {typeof e.attachment === "string" ? e.attachment : e.attachment.name}
+                      </span>
+                      <Download className="w-3 h-3" />
+                    </button>
+                  ) : (
+                    <span className="text-gray-400 text-xs">No attachment</span>
+                  )}
                 </div>
               </div>
 

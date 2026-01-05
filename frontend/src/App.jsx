@@ -2,7 +2,7 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import EmployeeLayout from './layout/EmployeeLayout'
 import MyLeaves from './pages/Employee/MyLeaves/MyLeaves'
 import EmployeeDashboard from './pages/Employee/Dashboard'
-import Tasks from './pages/Employee/ProjectManager/TeamDetail.jsx'
+import Tasks from './pages/Employee/ProjectManager/AddProjects.jsx'
 import AllProject from './pages/Employee/ProjectManager/Projects.jsx'
 import MyTask from './pages/Employee/EmployeeTask.jsx'
 import Settings from './pages/Settings.jsx'
@@ -23,7 +23,7 @@ import AllTasks from './pages/Employee/TeamLeader/AllTasks.jsx'
 const App = () => {
   return (
     <BrowserRouter>
-      <Routes>
+        <Routes>
         <Route path="/" element={<Navigate to="/signin" replace />} />
         <Route path="/signin" element={<SignIn />} />
         <Route path="/signup" element={<SignUp />} />
