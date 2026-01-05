@@ -2,7 +2,7 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import EmployeeLayout from './layout/EmployeeLayout'
 import MyLeaves from './pages/Employee/MyLeaves/MyLeaves'
 import EmployeeDashboard from './pages/Employee/Dashboard'
-import Tasks from './pages/Employee/ProjectManager/TeamDetail.jsx'
+import Tasks from './pages/Employee/ProjectManager/AddProjects.jsx'
 import AllProject from './pages/Employee/ProjectManager/Projects.jsx'
 import MyTask from './pages/Employee/EmployeeTask.jsx'
 import Settings from './pages/Settings.jsx'
@@ -15,8 +15,10 @@ import SignUp from './components/Auth/SignUp.jsx'
 import SignIn from './components/Auth/SignIn.jsx'
 import ClientLayout from './layout/ClientLayout.jsx'
 import ClientDashboard from './pages/Client/Dashboard.jsx'
-import TeamLeaderTasks from './pages/Employee/TeamLeaderTasks/TeamLeaderTasks.jsx'
-import TeamDetail from './pages/Employee/ProjectManager/TeamDetail.jsx'
+import TeamLeaderAddTask from './pages/Employee/TeamLeader/TeamLeaderTasks.jsx'
+import AllTasks from './pages/Employee/TeamLeader/AllTasks.jsx'
+
+
 
 const App = () => {
   return (
@@ -48,11 +50,8 @@ const App = () => {
           <Route path="settings" element={<Settings />} />
         </Route>
         <Route path="*" element={<div>404 page not found</div>} />
-
-      </Routes> 
-      {/* <TeamLeaderTasks/> */}
-      {/* <TeamDetail/> */}
- </BrowserRouter> 
+      </Routes>
+    </BrowserRouter>
   )
 }
 
