@@ -1,15 +1,5 @@
 import React, { useState } from "react";
-import {
-  Search,
-  Plus,
-  Pencil,
-  Trash2, 
-  CheckCircle2,
-  Clock,
-  XCircle,
-  DollarSign,
-  FileText,
-} from "lucide-react";
+import {Search,Plus,Pencil,Trash2, CheckCircle2,Clock,XCircle,DollarSign,FileText,} from "lucide-react";
 
 // ClientModel Component (embedded)
 const ClientModel = ({ close, save, editData }) => {
@@ -20,6 +10,8 @@ const ClientModel = ({ close, save, editData }) => {
       invoiceName: "",
       date: "",
       amount: "",
+      tax: "",
+      discount: "",
       method: "Credit Card",
       transactionId: "",
       status: "Pending",
@@ -147,6 +139,36 @@ const ClientModel = ({ close, save, editData }) => {
 
             <div>
               <label className="block text-sm font-semibold text-gray-700 mb-2">
+                Tax
+              </label>
+              <input
+                type="number"
+                value={formData.tax || ""}
+                onChange={(e) =>
+                  setFormData({ ...formData, tax: e.target.value })
+                }
+                className="w-full px-4 py-3 rounded-xl border-2 border-gray-200 bg-gray-50 focus:outline-none focus:border-violet-500 focus:bg-white focus:ring-4 focus:ring-violet-500/10 transition-all"
+                placeholder="e.g., 10"
+              />
+            </div>
+
+            <div>
+              <label className="block text-sm font-semibold text-gray-700 mb-2">
+                Discount
+              </label>
+              <input
+                type="number"
+                value={formData.discount || ""}
+                onChange={(e) =>
+                  setFormData({ ...formData, discount: e.target.value })
+                }
+                className="w-full px-4 py-3 rounded-xl border-2 border-gray-200 bg-gray-50 focus:outline-none focus:border-violet-500 focus:bg-white focus:ring-4 focus:ring-violet-500/10 transition-all"
+                placeholder="e.g., 5"
+              />
+            </div>
+
+            <div>
+              <label className="block text-sm font-semibold text-gray-700 mb-2">
                 Payment Method
               </label>
               <select
@@ -227,6 +249,9 @@ const ClientPayment = () => {
       invoiceId: "INV001.pdf",
       date: "2023-09-01",
       amount: 150,
+      tax: 0,
+      discount: 0,
+      total: 150,
       method: "Credit Card",
       transactionId: "TXN12345",
       status: "Completed",
@@ -238,6 +263,9 @@ const ClientPayment = () => {
       invoiceId: "INV002.pdf",
       date: "2023-09-02",
       amount: 200,
+      tax: 0,
+      discount: 0,
+      total: 200,
       method: "Bank Transfer",
       transactionId: "TXN12346",
       status: "Pending",
@@ -273,6 +301,36 @@ const ClientPayment = () => {
     if (status === "Pending")
       return <Clock className="w-4 h-4 text-amber-600" />;
     return <XCircle className="w-4 h-4 text-rose-600" />;
+  };
+
+  const handleDownload = (payment) => {
+    if (!payment.invoiceName && !payment.invoiceFile) {
+      alert("No attachment available for this payment.");
+      return;
+    }
+
+    const file = payment.invoiceName || payment.invoiceFile;
+
+    if (file instanceof File) {
+      const url = URL.createObjectURL(file);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = payment.invoiceId || file.name;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(url);
+    } else {
+      // If it's just a string (e.g., existing seeded data), try to open as a relative URL
+      const a = document.createElement("a");
+      a.href = file;
+      a.target = "_blank";
+      a.rel = "noopener noreferrer";
+      a.download = payment.invoiceId || file;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+    }
   };
 
   return (
@@ -345,6 +403,15 @@ const ClientPayment = () => {
                     Amount
                   </th>
                   <th className="p-4 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">
+                    Tax
+                  </th>
+                  <th className="p-4 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">
+                    Discount
+                  </th>
+                  <th className="p-4 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">
+                    Total
+                  </th>
+                  <th className="p-4 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">
                     Method
                   </th>
                   <th className="p-4 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">
@@ -378,15 +445,35 @@ const ClientPayment = () => {
                       </div>
                     </td>
                     <td className="p-4">
-                      <div className="flex items-center gap-2">
-                        <FileText className="w-4 h-4 text-gray-400" />
+                      <button
+                        type="button"
+                        onClick={() => handleDownload(p)}
+                        className="flex items-center gap-2 text-violet-600 hover:text-violet-700 hover:underline"
+                      >
+                        <FileText className="w-4 h-4" />
                         <span className="text-gray-700">{p.invoiceId}</span>
-                      </div>
+                      </button>
                     </td>
                     <td className="p-4 text-gray-700">{p.date}</td>
                     <td className="p-4">
                       <span className="font-bold text-gray-900">
                         ${p.amount}
+                      </span>
+                    </td>
+                    <td className="p-4">
+                      <span className="font-bold text-gray-900">
+                        ${p.tax ?? 0}
+                      </span>
+                    </td>
+                    <td className="p-4">
+                      <span className="font-bold text-gray-900">
+                        ${p.discount ?? 0}
+                      </span>
+                    </td>
+                    <td className="p-4">
+                      <span className="font-bold text-gray-900">
+                        $
+                        {p.total ?? (Number(p.amount || 0) + Number(p.tax || 0) - Number(p.discount || 0))}
                       </span>
                     </td>
                     <td className="p-4">
@@ -459,10 +546,14 @@ const ClientPayment = () => {
               <div className="h-px bg-gradient-to-r from-transparent via-gray-200 to-transparent"></div>
 
               <div className="space-y-2.5">
-                <div className="flex items-center gap-2">
-                  <FileText className="w-4 h-4 text-gray-400" />
+                <button
+                  type="button"
+                  onClick={() => handleDownload(p)}
+                  className="flex items-center gap-2 text-left text-violet-600 hover:text-violet-700 hover:underline"
+                >
+                  <FileText className="w-4 h-4" />
                   <span className="text-sm text-gray-700">{p.invoiceId}</span>
-                </div>
+                </button>
 
                 <div className="flex items-start gap-2">
                   <span className="text-xs font-semibold text-gray-500 uppercase tracking-wide min-w-20">
@@ -470,6 +561,34 @@ const ClientPayment = () => {
                   </span>
                   <span className="px-3 py-1 rounded-lg text-xs font-medium bg-gray-100 text-gray-700">
                     {p.method}
+                  </span>
+                </div>
+
+                <div className="flex items-start gap-2">
+                  <span className="text-xs font-semibold text-gray-500 uppercase tracking-wide min-w-20">
+                    Tax:
+                  </span>
+                  <span className="text-sm text-gray-700">
+                    ${p.tax ?? 0}
+                  </span>
+                </div>
+
+                <div className="flex items-start gap-2">
+                  <span className="text-xs font-semibold text-gray-500 uppercase tracking-wide min-w-20">
+                    Discount:
+                  </span>
+                  <span className="text-sm text-gray-700">
+                    ${p.discount ?? 0}
+                  </span>
+                </div>
+
+                <div className="flex items-start gap-2">
+                  <span className="text-xs font-semibold text-gray-500 uppercase tracking-wide min-w-20">
+                    Total:
+                  </span>
+                  <span className="text-sm font-semibold text-gray-900">
+                    $
+                    {p.total ?? (Number(p.amount || 0) + Number(p.tax || 0) - Number(p.discount || 0))}
                   </span>
                 </div>
 
@@ -536,8 +655,15 @@ const ClientPayment = () => {
           save={(data) => {
             const payload = {
               ...data,
-              invoiceId:  data.invoiceName?.name || "",
+              invoiceId: data.invoiceName?.name || data.invoiceId || "",
+              invoiceFile: data.invoiceName instanceof File ? data.invoiceName : data.invoiceFile,
             };
+
+            const amountNum = Number(payload.amount || 0);
+            const taxNum = Number(payload.tax || 0);
+            const discountNum = Number(payload.discount || 0);
+
+            payload.total = amountNum + taxNum - discountNum;
 
             if (editData) {
               setPayments(
