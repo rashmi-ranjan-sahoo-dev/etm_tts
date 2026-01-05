@@ -15,24 +15,15 @@ import SignUp from './components/Auth/SignUp.jsx'
 import SignIn from './components/Auth/SignIn.jsx'
 import ClientLayout from './layout/ClientLayout.jsx'
 import ClientDashboard from './pages/Client/Dashboard.jsx'
-<<<<<<< HEAD
-import TeamLeaderTasks from './pages/Employee/TeamLeaderTasks/TeamLeaderTasks.jsx'
-import TeamDetail from './pages/Employee/ProjectManager/TeamDetail.jsx'
-=======
 import TeamLeaderAddTask from './pages/Employee/TeamLeader/TeamLeaderTasks.jsx'
 import AllTasks from './pages/Employee/TeamLeader/AllTasks.jsx'
 
 
->>>>>>> 7a3b3fbeb8177723063ef1387a6303435fca558b
 
 const App = () => {
   return (
     <BrowserRouter>
-<<<<<<< HEAD
-       {/* <Routes>
-=======
       <Routes>
->>>>>>> 7a3b3fbeb8177723063ef1387a6303435fca558b
         <Route path="/" element={<Navigate to="/signin" replace />} />
         <Route path="/signin" element={<SignIn />} />
         <Route path="/signup" element={<SignUp />} />
@@ -59,16 +50,8 @@ const App = () => {
           <Route path="settings" element={<Settings />} />
         </Route>
         <Route path="*" element={<div>404 page not found</div>} />
-<<<<<<< HEAD
-
-      </Routes> */}
-      {/* <TeamLeaderTasks/> */}
-      <TeamDetail/>
- </BrowserRouter> 
-=======
       </Routes>
     </BrowserRouter>
->>>>>>> 7a3b3fbeb8177723063ef1387a6303435fca558b
   )
 }
 
