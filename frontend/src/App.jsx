@@ -20,6 +20,10 @@ import AllTasks from './pages/Employee/TeamLeader/AllTasks.jsx'
 import EmployeeIssueTracker from './pages/Employee/EmployeeIssueTracker.jsx'
 import EmployeeDetail from './pages/Admin/EmployeeDetail.jsx'
 import LeaveRequests from './pages/Admin/Leaves/LeaveRequests.jsx'
+import LeaveBalances from './pages/Admin/Leaves/LeaveBalances.jsx'
+import LeaveTypes from './pages/Admin/Leaves/LeaveTypes.jsx'
+import Holiday from './pages/Admin/Holiday.jsx'
+import DepartmentPage from './pages/Admin/Department.jsx'
 // import Dashboard from './pages/Admin/Dashboard.jsx'
 
 
@@ -30,12 +34,12 @@ const App = () => {
         <Routes>
         <Route path="/" element={<Navigate to="/signin" replace />} />
         <Route path="/signin" element={<SignIn />} />
-        <Route path="/signup" element={<SignUp />} />
+        <Route path="/signup" element={<SignUp />} /> 
 
-        {/* <Route path="/employee" element={<EmployeeLayout />}>
+        {/* <Route path="/admin" element={<AdminLayout />}>
           <Route index element={<EmployeeDashboard />} />
           <Route path="dashboard" element={<EmployeeDashboard />} />
-          <Route path="myLeaves" element={<MyLeaves />} />
+          <Route path="EmployeeDetail" element={<EmployeeDetail />} />
           <Route path="projectmanager/tasks" element={<Tasks />} />
           <Route path='projectmanager/allprojects' element={<AllProject />} />
           <Route path='teamleader/addtask' element={<TeamLeaderAddTask />} />
@@ -72,8 +76,12 @@ const App = () => {
         <Route path="*" element={<div>404 page not found</div>} />
       </Routes>
       {/* <Dashboard/> */}
-      {/* <EmployeeDetail/> */}
-      {/* <LeaveRequests/> */}
+       {/* <EmployeeDetail/>  */}
+     {/* <LeaveRequests/> */}
+      {/* <LeaveBalances/> */}
+      {/* <LeaveTypes/> */}
+      {/* <Holiday/> */}
+      {/* <DepartmentPage/> */}
     </BrowserRouter>
   )
 }
