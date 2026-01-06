@@ -1,8 +1,23 @@
-
-
 /* eslint-disable no-unused-vars */
 import React, { useState } from "react";
-import { ChevronDown, ChevronUp, Plus, Users, CheckCircle, Clock, AlertCircle, X, Edit, Trash2, MoreVertical, Search, Paperclip, Upload, FileText, Download } from "lucide-react";
+import {
+  ChevronDown,
+  ChevronUp,
+  Plus,
+  Users,
+  CheckCircle,
+  Clock,
+  AlertCircle,
+  X,
+  Edit,
+  Trash2,
+  MoreVertical,
+  Search,
+  Paperclip,
+  Upload,
+  FileText,
+  Download,
+} from "lucide-react";
 
 const AddProjects = () => {
   const [projects, setProjects] = useState([
@@ -158,12 +173,12 @@ const AddProjects = () => {
 
         const updatedProject = shouldAutoFill
           ? {
-            ...project,
-            status: project.status || defaultProjectMeta.status,
-            priority: project.priority || defaultProjectMeta.priority,
-            startDate: project.startDate || defaultProjectMeta.startDate,
-            endDate: project.endDate || defaultProjectMeta.endDate,
-          }
+              ...project,
+              status: project.status || defaultProjectMeta.status,
+              priority: project.priority || defaultProjectMeta.priority,
+              startDate: project.startDate || defaultProjectMeta.startDate,
+              endDate: project.endDate || defaultProjectMeta.endDate,
+            }
           : project;
 
         if (editingTeam) {
@@ -172,13 +187,13 @@ const AddProjects = () => {
             teams: updatedProject.teams.map((team) =>
               team.id === editingTeam.id
                 ? {
-                  ...team,
-                  name: newTeam.name,
-                  lead: newTeam.lead,
-                  status: newTeam.status,
-                  members: newTeam.members.length,
-                  attachments: newTeam.attachments,
-                }
+                    ...team,
+                    name: newTeam.name,
+                    lead: newTeam.lead,
+                    status: newTeam.status,
+                    members: newTeam.members.length,
+                    attachments: newTeam.attachments,
+                  }
                 : team
             ),
           };
@@ -281,14 +296,14 @@ const AddProjects = () => {
       prev.map((project) =>
         project.id === projectId
           ? {
-            ...project,
-            teams: project.teams.filter((team) => team.id !== teamId),
-          }
+              ...project,
+              teams: project.teams.filter((team) => team.id !== teamId),
+            }
           : project
       )
     );
   };
-  
+
   const handleDeleteProject = (projectId) => {
     if (!window.confirm("Are you sure you want to delete this project?"))
       return;
@@ -358,7 +373,7 @@ const AddProjects = () => {
 
     return projectMatch || teamMatch;
   });
-  
+
   const membersList = [
     "John Doe - Developer",
     "Jane Smith - Designer",
@@ -387,7 +402,9 @@ const AddProjects = () => {
   const handleProjectFileDelete = (attachmentId) => {
     setNewProject({
       ...newProject,
-      attachments: newProject.attachments.filter((att) => att.id !== attachmentId),
+      attachments: newProject.attachments.filter(
+        (att) => att.id !== attachmentId
+      ),
     });
   };
 
@@ -418,9 +435,9 @@ const AddProjects = () => {
   // Handle opening attachment in new tab
   const handleOpenAttachment = (file) => {
     if (file.url) {
-      window.open(file.url, '_blank');
+      window.open(file.url, "_blank");
     } else {
-      alert('File preview not available');
+      alert("File preview not available");
     }
   };
 
@@ -554,16 +571,20 @@ const AddProjects = () => {
                       </p>
                       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2">
                         {project.attachments.map((file) => (
-                          <div 
-                            key={file.id} 
+                          <div
+                            key={file.id}
                             onClick={() => handleOpenAttachment(file)}
                             className="flex items-center gap-2 p-2 bg-gray-50 rounded border border-gray-200 hover:border-blue-400 hover:bg-blue-50 transition cursor-pointer group"
                             title="Click to open attachment"
                           >
                             <FileText className="w-4 h-4 text-blue-600 flex-shrink-0 group-hover:scale-110 transition" />
                             <div className="flex-1 min-w-0">
-                              <p className="text-xs text-gray-900 truncate font-medium group-hover:text-blue-700">{file.name}</p>
-                              <p className="text-xs text-gray-500">{file.size}</p>
+                              <p className="text-xs text-gray-900 truncate font-medium group-hover:text-blue-700">
+                                {file.name}
+                              </p>
+                              <p className="text-xs text-gray-500">
+                                {file.size}
+                              </p>
                             </div>
                             <Download className="w-3.5 h-3.5 text-gray-400 group-hover:text-blue-600 flex-shrink-0" />
                           </div>
@@ -648,56 +669,80 @@ const AddProjects = () => {
 
                                 {/* Project Details in Team Card */}
                                 <div className="mt-3 pt-3 border-t border-gray-100">
-                                  <p className="text-xs font-medium text-gray-700 mb-2">Project Details</p>
+                                  <p className="text-xs font-medium text-gray-700 mb-2">
+                                    Project Details
+                                  </p>
                                   <div className="grid grid-cols-2 gap-2 text-xs">
                                     <div>
                                       <p className="text-gray-500">Status</p>
-                                      <span className={`inline-block px-2 py-0.5 rounded text-xs font-medium mt-0.5 ${getStatusColor(project.status)}`}>
+                                      <span
+                                        className={`inline-block px-2 py-0.5 rounded text-xs font-medium mt-0.5 ${getStatusColor(
+                                          project.status
+                                        )}`}
+                                      >
                                         {project.status}
                                       </span>
                                     </div>
                                     <div>
                                       <p className="text-gray-500">Priority</p>
-                                      <span className={`inline-block px-2 py-0.5 rounded text-xs font-medium mt-0.5 ${getPriorityColor(project.priority)}`}>
+                                      <span
+                                        className={`inline-block px-2 py-0.5 rounded text-xs font-medium mt-0.5 ${getPriorityColor(
+                                          project.priority
+                                        )}`}
+                                      >
                                         {project.priority}
                                       </span>
                                     </div>
                                     <div>
-                                      <p className="text-gray-500">Start Date</p>
-                                      <p className="font-medium text-gray-900 mt-0.5">{project.startDate || 'N/A'}</p>
+                                      <p className="text-gray-500">
+                                        Start Date
+                                      </p>
+                                      <p className="font-medium text-gray-900 mt-0.5">
+                                        {project.startDate || "N/A"}
+                                      </p>
                                     </div>
                                     <div>
                                       <p className="text-gray-500">Due Date</p>
-                                      <p className="font-medium text-gray-900 mt-0.5">{project.endDate || 'N/A'}</p>
+                                      <p className="font-medium text-gray-900 mt-0.5">
+                                        {project.endDate || "N/A"}
+                                      </p>
                                     </div>
                                   </div>
                                 </div>
 
-                                {team.attachments && team.attachments.length > 0 && (
-                                  <div className="mt-3 pt-3 border-t border-gray-100">
-                                    <p className="text-xs text-gray-500 mb-2 flex items-center gap-1">
-                                      <Paperclip className="w-3 h-3" />
-                                      {team.attachments.length} attachment{team.attachments.length > 1 ? 's' : ''}
-                                    </p>
-                                    <div className="space-y-1.5">
-                                      {team.attachments.map((file) => (
-                                        <div 
-                                          key={file.id} 
-                                          onClick={() => handleOpenAttachment(file)}
-                                          className="flex items-center gap-2 p-1.5 bg-gray-50 rounded border border-gray-200 hover:border-blue-400 hover:bg-blue-50 cursor-pointer group transition"
-                                          title="Click to open attachment"
-                                        >
-                                          <FileText className="w-3 h-3 text-blue-600 flex-shrink-0 group-hover:scale-110 transition" />
-                                          <div className="flex-1 min-w-0">
-                                            <p className="text-xs text-gray-900 truncate group-hover:text-blue-700">{file.name}</p>
-                                            <p className="text-xs text-gray-500">{file.size}</p>
+                                {team.attachments &&
+                                  team.attachments.length > 0 && (
+                                    <div className="mt-3 pt-3 border-t border-gray-100">
+                                      <p className="text-xs text-gray-500 mb-2 flex items-center gap-1">
+                                        <Paperclip className="w-3 h-3" />
+                                        {team.attachments.length} attachment
+                                        {team.attachments.length > 1 ? "s" : ""}
+                                      </p>
+                                      <div className="space-y-1.5">
+                                        {team.attachments.map((file) => (
+                                          <div
+                                            key={file.id}
+                                            onClick={() =>
+                                              handleOpenAttachment(file)
+                                            }
+                                            className="flex items-center gap-2 p-1.5 bg-gray-50 rounded border border-gray-200 hover:border-blue-400 hover:bg-blue-50 cursor-pointer group transition"
+                                            title="Click to open attachment"
+                                          >
+                                            <FileText className="w-3 h-3 text-blue-600 flex-shrink-0 group-hover:scale-110 transition" />
+                                            <div className="flex-1 min-w-0">
+                                              <p className="text-xs text-gray-900 truncate group-hover:text-blue-700">
+                                                {file.name}
+                                              </p>
+                                              <p className="text-xs text-gray-500">
+                                                {file.size}
+                                              </p>
+                                            </div>
+                                            <Download className="w-3 h-3 text-gray-400 group-hover:text-blue-600 flex-shrink-0" />
                                           </div>
-                                          <Download className="w-3 h-3 text-gray-400 group-hover:text-blue-600 flex-shrink-0" />
-                                        </div>
-                                      ))}
+                                        ))}
+                                      </div>
                                     </div>
-                                  </div>
-                                )}
+                                  )}
                               </div>
 
                               <div className="flex gap-2 flex-shrink-0">
@@ -824,7 +869,7 @@ const AddProjects = () => {
                     <label className="block text-sm font-medium text-gray-700 mb-2">
                       Project Attachments
                     </label>
-                    
+
                     <div className="border-2 border-dashed border-gray-300 rounded-lg p-4 hover:border-blue-400 transition">
                       <input
                         type="file"
@@ -858,7 +903,7 @@ const AddProjects = () => {
                               key={file.id}
                               className="flex items-center justify-between p-2 bg-gray-50 border border-gray-200 rounded-lg hover:border-blue-300 transition group"
                             >
-                              <div 
+                              <div
                                 onClick={() => handleOpenAttachment(file)}
                                 className="flex items-center gap-2 flex-1 min-w-0 cursor-pointer"
                                 title="Click to open attachment"
@@ -1238,7 +1283,7 @@ const AddProjects = () => {
                 <h3 className="text-sm font-semibold text-gray-900 mb-4">
                   Team Attachments
                 </h3>
-                
+
                 <div className="border-2 border-dashed border-gray-300 rounded-lg p-4 hover:border-blue-400 transition">
                   <input
                     type="file"
@@ -1272,7 +1317,7 @@ const AddProjects = () => {
                           key={file.id}
                           className="flex items-center justify-between p-2 bg-gray-50 border border-gray-200 rounded-lg hover:border-blue-300 transition group"
                         >
-                          <div 
+                          <div
                             onClick={() => handleOpenAttachment(file)}
                             className="flex items-center gap-2 flex-1 min-w-0 cursor-pointer"
                             title="Click to open attachment"
