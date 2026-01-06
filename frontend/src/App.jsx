@@ -19,6 +19,10 @@ import ClientLayout from './layout/ClientLayout.jsx'
 import ClientDashboard from './pages/Client/Dashboard.jsx'
 import TeamLeaderAddTask from './pages/Employee/TeamLeader/TeamLeaderTasks.jsx'
 import AllTasks from './pages/Employee/TeamLeader/AllTasks.jsx'
+import EmployeeIssueTracker from './pages/Employee/EmployeeIssueTracker.jsx'
+import EmployeeDetail from './pages/Admin/EmployeeDetail.jsx'
+import LeaveRequests from './pages/Admin/Leaves/LeaveRequests.jsx'
+// import Dashboard from './pages/Admin/Dashboard.jsx'
 
 
 
@@ -30,10 +34,27 @@ const App = () => {
         <Route path="/signin" element={<SignIn />} />
         <Route path="/signup" element={<SignUp />} />
 
+<<<<<<< HEAD
         <Route path='/super-admin' element ={<SuperAdminLayout />}>
           <Route index element={<SuperAdminDashboard />} />
           <Route path="dashboard" element={<SuperAdminDashboard />} />
         </Route>
+=======
+        {/* <Route path="/employee" element={<EmployeeLayout />}>
+          <Route index element={<EmployeeDashboard />} />
+          <Route path="dashboard" element={<EmployeeDashboard />} />
+          <Route path="myLeaves" element={<MyLeaves />} />
+          <Route path="projectmanager/tasks" element={<Tasks />} />
+          <Route path='projectmanager/allprojects' element={<AllProject />} />
+          <Route path='teamleader/addtask' element={<TeamLeaderAddTask />} />
+          <Route path='teamleader/alltasks' element={<AllTasks />} />
+          <Route path="myTasks" element={<MyTask />} />
+          <Route path="IssueTracker" element={<EmployeeIssueTracker/>}/>
+          <Route path="settings" element={<Settings />} />
+          <Route path="accounts/client-payments" element={<ClientPayments />} />
+          <Route path="accounts/other-payments" element={<Expense />} />
+        </Route> */}
+>>>>>>> c7b472fade07da71d956eb6d995989e438239655
 
         <Route path="/employee" element={<EmployeeLayout />}>
           <Route index element={<EmployeeDashboard />} />
@@ -44,6 +65,7 @@ const App = () => {
           <Route path='teamleader/addtask' element={<TeamLeaderAddTask />} />
           <Route path='teamleader/alltasks' element={<AllTasks />} />
           <Route path="myTasks" element={<MyTask />} />
+          <Route path="IssueTracker" element={<EmployeeIssueTracker/>}/>
           <Route path="settings" element={<Settings />} />
           <Route path="accounts/client-payments" element={<ClientPayments />} />
           <Route path="accounts/other-payments" element={<Expense />} />
@@ -58,6 +80,9 @@ const App = () => {
         </Route>
         <Route path="*" element={<div>404 page not found</div>} />
       </Routes>
+      {/* <Dashboard/> */}
+      {/* <EmployeeDetail/> */}
+      {/* <LeaveRequests/> */}
     </BrowserRouter>
   )
 }

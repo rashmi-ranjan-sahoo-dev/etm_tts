@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { LayoutDashboard, FileText, CheckSquare, Settings, MessageSquare, ChevronDown, X, Sparkles, } from "lucide-react";
 import { Link } from "react-router-dom";
 import { LogOut } from "lucide-react";
+import {Ticket} from "lucide-react";
 
 
 const Sidebar = ({ isSidebarOpen = true, setIsSidebarOpen = () => { } }) => {
@@ -20,6 +21,7 @@ const Sidebar = ({ isSidebarOpen = true, setIsSidebarOpen = () => { } }) => {
     { name: "My Tasks", icon: CheckSquare, to: "/employee/myTasks" },
     // { name: "Tasks", icon: CheckSquare, to: "/employee/ProjectManagerTasks" },
     { name: "Settings", icon: Settings, to: "/employee/settings" },
+    { name: "Tickets", icon:Ticket, to: "/employee/IssueTracker" },
   ];
 
   return (
@@ -251,6 +253,22 @@ const Sidebar = ({ isSidebarOpen = true, setIsSidebarOpen = () => { } }) => {
                 <div className="w-1.5 h-1.5 rounded-full bg-current"></div>
                 My Tasks
               </Link>
+
+
+              <Link
+                to="/employee/IssueTracker"
+                onClick={() => setActiveRoute("/employee/IssueTracker")}
+                className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm transition-all duration-200 w-full text-left
+    ${activeRoute === "/employee/IssueTracker"
+                    ? "bg-gradient-to-r from-indigo-500 to-purple-500 text-white shadow-md"
+                    : "hover:bg-white/80 hover:shadow-sm text-gray-600 hover:text-gray-900"
+                  }`}
+              >
+                <div className="w-1.5 h-1.5 rounded-full bg-current"></div>
+                Tickets
+              </Link>
+
+
 
               <Link
                 to="/employee/teamleader/addtask"
