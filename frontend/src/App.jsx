@@ -1,4 +1,6 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
+import SuperAdminLayout from './layout/SuperAdmin.jsx'
+import SuperAdminDashboard from './pages/SuperAdmin/Dashboard.jsx'
 import EmployeeLayout from './layout/EmployeeLayout'
 import MyLeaves from './pages/Employee/MyLeaves/MyLeaves'
 import EmployeeDashboard from './pages/Employee/Dashboard'
@@ -27,6 +29,11 @@ const App = () => {
         <Route path="/" element={<Navigate to="/signin" replace />} />
         <Route path="/signin" element={<SignIn />} />
         <Route path="/signup" element={<SignUp />} />
+
+        <Route path='/super-admin' element ={<SuperAdminLayout />}>
+          <Route index element={<SuperAdminDashboard />} />
+          <Route path="dashboard" element={<SuperAdminDashboard />} />
+        </Route>
 
         <Route path="/employee" element={<EmployeeLayout />}>
           <Route index element={<EmployeeDashboard />} />
