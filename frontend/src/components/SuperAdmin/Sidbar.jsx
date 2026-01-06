@@ -1,160 +1,14 @@
-// import React, { useState } from "react";
-// import {
-//   LayoutDashboard,
-//   Users,
-//   FolderKanban,
-//   ShieldCheck,
-//   BarChart3,
-//   Settings,
-//   LogOut,
-//   X,
-//   Crown,
-// } from "lucide-react";
-// import { Link, useLocation } from "react-router-dom";
-
-// const SuperAdminSidebar = ({
-//   isSidebarOpen = true,
-//   setIsSidebarOpen = () => {},
-// }) => {
-//   const location = useLocation();
-//   const [activeRoute, setActiveRoute] = useState(location.pathname);
-
-//   const logo =
-//     "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Ccircle cx='50' cy='50' r='50' fill='%237C3AED'/%3E%3Ctext x='50' y='60' font-size='34' fill='white' text-anchor='middle'%3ESA%3C/text%3E%3C/svg%3E";
-
-//   const profile =
-//     "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Crect width='100' height='100' rx='20' fill='%236D28D9'/%3E%3Ctext x='50' y='62' font-size='32' fill='white' text-anchor='middle'%3EADMIN%3C/text%3E%3C/svg%3E";
-
-//   const menuItems = [
-//     { name: "Dashboard", icon: LayoutDashboard, to: "/superadmin/dashboard" },
-//     { name: "Clients", icon: Users, to: "/superadmin/clients" },
-//     { name: "Projects", icon: FolderKanban, to: "/superadmin/projects" },
-//     { name: "Admins", icon: ShieldCheck, to: "/superadmin/admins" },
-//     { name: "Reports", icon: BarChart3, to: "/superadmin/reports" },
-//     { name: "Settings", icon: Settings, to: "/superadmin/settings" },
-//   ];
-
-//   return (
-//     <>
-//       {/* Mobile Overlay */}
-//       {isSidebarOpen && (
-//         <div
-//           onClick={() => setIsSidebarOpen(false)}
-//           className="fixed inset-0 bg-black/20 backdrop-blur-sm z-100 lg:hidden"
-//         />
-//       )}
-
-//       <aside
-//         className={`fixed top-0 left-0 z-100 h-screen w-72
-//         bg-gradient-to-b from-white via-purple-50/40 to-indigo-50/40
-//         border-r border-purple-100 shadow-2xl
-//         transform transition-all duration-300 ease-in-out
-//         ${isSidebarOpen ? "translate-x-0" : "-translate-x-full"}`}
-//       >
-//         {/* Glow Background */}
-//         <div className="absolute inset-0 pointer-events-none overflow-hidden">
-//           <div className="absolute -top-20 -left-20 w-40 h-40 bg-purple-400/20 blur-3xl rounded-full" />
-//           <div className="absolute bottom-0 right-0 w-40 h-40 bg-indigo-400/20 blur-3xl rounded-full" />
-//         </div>
-
-//         <div className="relative z-10 h-full flex flex-col">
-//           {/* Header */}
-//           <div className="flex items-center justify-between px-6 py-4">
-//             <div className="flex items-center gap-3">
-//               <img src={logo} className="h-14 w-14 rounded-xl shadow-md" />
-//               <div>
-//                 <h2 className="font-bold text-lg bg-gradient-to-r from-purple-600 to-indigo-600 bg-clip-text text-transparent">
-//                   Kuber
-//                 </h2>
-//                 <p className="text-xs text-gray-500">Super Admin</p>
-//               </div>
-//             </div>
-//             <button
-//               onClick={() => setIsSidebarOpen(false)}
-//               className="p-2 rounded-xl hover:bg-purple-100"
-//             >
-//               <X size={20} />
-//             </button>
-//           </div>
-
-//           {/* Profile */}
-//           <div className="p-6 text-center">
-//             <div className="relative inline-block">
-//               <img
-//                 src={profile}
-//                 className="w-24 h-24 rounded-2xl shadow-lg ring-4 ring-white"
-//               />
-//               <div className="absolute -bottom-2 -right-2 w-8 h-8 bg-gradient-to-br from-purple-500 to-indigo-500 rounded-full flex items-center justify-center">
-//                 <Crown className="text-white" size={16} />
-//               </div>
-//             </div>
-//             <h4 className="mt-4 font-bold text-gray-800">Super Admin</h4>
-//             <p className="text-sm text-purple-600 font-medium">
-//               Full Access
-//             </p>
-//           </div>
-
-//           {/* Menu */}
-//           <div className="flex-1 px-4 space-y-2 overflow-y-auto">
-//             {menuItems.map((item, idx) => {
-//               const isActive = activeRoute === item.to;
-//               return (
-//                 <Link
-//                   key={idx}
-//                   to={item.to}
-//                   onClick={() => setActiveRoute(item.to)}
-//                   className={`flex items-center gap-3 px-4 py-3.5 rounded-xl text-sm font-medium transition-all
-//                   ${
-//                     isActive
-//                       ? "bg-gradient-to-r from-purple-500 to-indigo-500 text-white shadow-lg scale-105"
-//                       : "text-gray-700 hover:bg-white hover:shadow-md"
-//                   }`}
-//                 >
-//                   <item.icon size={20} />
-//                   {item.name}
-//                   {isActive && (
-//                     <span className="ml-auto w-2 h-2 bg-white rounded-full animate-pulse" />
-//                   )}
-//                 </Link>
-//               );
-//             })}
-//           </div>
-
-//           {/* Logout */}
-//           <div className="p-4">
-//             <Link
-//               to="/signin"
-//               className="flex items-center gap-3 px-4 py-3 rounded-xl bg-gradient-to-r from-red-500 to-red-600 text-white text-sm font-medium shadow-lg hover:from-red-600 hover:to-red-700"
-//             >
-//               <LogOut size={18} />
-//               Logout
-//             </Link>
-//           </div>
-//         </div>
-//       </aside>
-//     </>
-//   );
-// };
-
-// export default SuperAdminSidebar;
 
 import React, { useState } from "react";
 import {
-  LayoutDashboard,
-  Users,
-  FolderKanban,
-  ShieldCheck,
-  BarChart3,
-  Settings,
-  LogOut,
-  X,
-  Crown,
+  LayoutDashboard, Users, FolderKanban, ShieldCheck, BarChart3, Settings, LogOut, X, Crown, CheckSquare, ChevronDown
 } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 
-const SuperAdminSidebar = ({ isSidebarOpen = true, setIsSidebarOpen = () => {} }) => {
+const SuperAdminSidebar = ({ isSidebarOpen = true, setIsSidebarOpen = () => { } }) => {
   const location = useLocation();
   const [activeRoute, setActiveRoute] = useState(location.pathname);
+  const [openProjects, setOpenProjects] = useState(false);
 
   const logo =
     "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Ccircle cx='50' cy='50' r='50' fill='%237C3AED'/%3E%3Ctext x='50' y='58' font-size='30' fill='white' text-anchor='middle'%3EK%3C/text%3E%3C/svg%3E";
@@ -164,11 +18,9 @@ const SuperAdminSidebar = ({ isSidebarOpen = true, setIsSidebarOpen = () => {} }
 
   const menuItems = [
     { name: "Dashboard", icon: LayoutDashboard, to: "/super-admin/dashboard" },
-    { name: "Clients", icon: Users, to: "/super-admin/clients" },
-    { name: "Projects", icon: FolderKanban, to: "/super-admin/projects" },
-    { name: "Admins", icon: ShieldCheck, to: "/super-admin/admins" },
-    { name: "Reports", icon: BarChart3, to: "/super-admin/reports" },
-    { name: "Settings", icon: Settings, to: "/super-admin/settings" },
+    { name: "Client", icon: Users, to: "/super-admin/client" },
+    { name: "Admin", icon: ShieldCheck, to: "/super-admin/admin" },
+    { name: "Setting", icon: Settings, to: "/super-admin/setting" },
   ];
 
   return (
@@ -244,11 +96,10 @@ const SuperAdminSidebar = ({ isSidebarOpen = true, setIsSidebarOpen = () => {} }
                   onClick={() => setActiveRoute(item.to)}
                   to={item.to}
                   className={`group flex items-center gap-3 px-4 py-3.5 rounded-xl font-medium transition-all duration-200 w-full
-                  ${
-                    isActive
+                  ${isActive
                       ? "bg-gradient-to-r from-purple-500 to-indigo-500 text-white shadow-lg shadow-purple-300/50 scale-105"
                       : "hover:bg-white/80 hover:shadow-md hover:scale-102 text-gray-700"
-                  }`}
+                    }`}
                 >
                   <div className={`${isActive ? "scale-110" : "group-hover:scale-110"} transition-transform`}>
                     <item.icon size={20} />
@@ -260,7 +111,59 @@ const SuperAdminSidebar = ({ isSidebarOpen = true, setIsSidebarOpen = () => {} }
                 </Link>
               );
             })}
+
+            <button
+              onClick={() => setOpenProjects(!openProjects)}
+              className={`group flex items-center justify-between w-full px-4 py-3.5 rounded-xl font-medium transition-all duration-200 text-gray-700
+    ${openProjects ? "bg-white/80 shadow-md" : "hover:bg-white/80 hover:shadow-md"}`}
+            >
+              <div className="flex items-center gap-3">
+                <div className="group-hover:scale-110 transition-transform">
+                  <CheckSquare size={20} />
+                </div>
+                <span className="text-sm">Projects</span>
+              </div>
+
+              <div className={`transition-transform duration-300 ${openProjects ? "rotate-180" : ""}`}>
+                <ChevronDown size={18} />
+              </div>
+            </button>
+
+            <div
+              className={`ml-4 space-y-1 overflow-hidden transition-all duration-300 ease-in-out
+              ${openProjects ? "max-h-40 opacity-100 mt-2" : "max-h-0 opacity-0"}`}
+            >
+              <Link
+                to="allprojects"
+                onClick={() => setActiveRoute("allprojects")}
+                className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm transition-all duration-200 w-full text-left
+                  ${activeRoute === "allprojects"
+                    ? "bg-gradient-to-r from-indigo-500 to-purple-500 text-white shadow-md"
+                    : "hover:bg-white/80 hover:shadow-sm text-gray-600 hover:text-gray-900"
+                  }`}
+              >
+                <div className="w-1.5 h-1.5 rounded-full bg-current"></div>
+                All Projects
+              </Link>
+
+              <Link
+                to="addprojects"
+                onClick={() => setActiveRoute("addprojects")}
+                className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm transition-all duration-200 w-full text-left
+                  ${activeRoute === "addprojects"
+                    ? "bg-gradient-to-r from-indigo-500 to-purple-500 text-white shadow-md"
+                    : "hover:bg-white/80 hover:shadow-sm text-gray-600 hover:text-gray-900"
+                  }`}
+              >
+                <div className="w-1.5 h-1.5 rounded-full bg-current"></div>
+                Add Project
+              </Link>
+            </div>
+
+
+
           </div>
+
 
           {/* Logout */}
           <div className="px-4 py-4">
