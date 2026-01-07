@@ -1,10 +1,10 @@
 import React from 'react'
-import Sidebar from '../components/Admin/Sidebar/Sidebar.jsx'
-import Navbar from '../components/Admin/Navbar/Navbar.jsx'
+import Sidebar from '../components/SuperAdmin/Sidbar.jsx'
+import Navbar from '../components/SuperAdmin/Navbar.jsx'
 import { Outlet } from 'react-router-dom'
 import { useState } from 'react'
 
-const AdminLayout = () => {
+const SuperAdminLayout = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
 
   const toggleSidebar = () => {
@@ -27,7 +27,7 @@ const AdminLayout = () => {
         <Navbar toggleSidebar={toggleSidebar}
                 isSidebarOpen = {isSidebarOpen} />
 
-        <main className="pl-20 pt-8 pr-15">
+        <main className="p-4">
           <Outlet />
         </main>
       </div>
@@ -35,4 +35,4 @@ const AdminLayout = () => {
   );
 }
 
-export default AdminLayout
+export default SuperAdminLayout
