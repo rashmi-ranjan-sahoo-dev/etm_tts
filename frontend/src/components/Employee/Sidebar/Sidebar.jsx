@@ -21,7 +21,8 @@ const Sidebar = ({ isSidebarOpen = true, setIsSidebarOpen = () => { } }) => {
     { name: "My Tasks", icon: CheckSquare, to: "/employee/myTasks" },
     // { name: "Tasks", icon: CheckSquare, to: "/employee/ProjectManagerTasks" },
     { name: "Settings", icon: Settings, to: "/employee/settings" },
-    { name: "Tickets", icon:Ticket, to: "/employee/IssueTracker" },
+    { name: "LeadTickets", icon:Ticket, to: "/employee/lead-issue-tracker" },
+    { name: "ManagerTickets", icon:Ticket, to: "/employee/issue-tracker" },
   ];
 
   return (

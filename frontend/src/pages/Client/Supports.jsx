@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/set-state-in-effect */
 
 import React, { useState, useEffect } from "react";
-import {Pencil,Trash2,Search,CheckCircle2,Clock,AlertCircle,User,Calendar,Ticket,RotateCcw,Plus,PauseCircle} from "lucide-react";
+import {Pencil,Trash2,Search,CheckCircle2,Clock,AlertCircle,User,Calendar,Ticket,RotateCcw,Plus,PauseCircle,FileText,Download,Paperclip} from "lucide-react";
 
 /* ===================== STATUS BADGE ===================== */
 const StatusBadge = ({ status }) => {
@@ -32,17 +32,20 @@ const StatusBadge = ({ status }) => {
 /* ===================== TICKET MODAL ===================== */
 const TicketModal = ({ close, save, editData }) => {
   const [form, setForm] = useState({
+    ticketId: "",
     title: "",
     status: "",
     assignedTo: "",
     date: "",
     detail: "",
+    attachment: null,
   });
   const [errors, setErrors] = useState({});
 
   const validate = () => {
     const newErrors = {};
 
+    if (!form.ticketId.trim()) newErrors.ticketId = "Ticket ID is required";
     if (!form.title.trim()) newErrors.title = "Project title is required";
     if (!form.assignedTo.trim())
       newErrors.assignedTo = "Assigned person is required";
@@ -68,6 +71,13 @@ const TicketModal = ({ close, save, editData }) => {
 
     if (errors[name]) {
       setErrors({ ...errors, [name]: "" });
+    }
+  };
+
+  const handleFileChange = (e) => {
+    const file = e.target.files && e.target.files[0];
+    if (file) {
+      setForm({ ...form, attachment: file });
     }
   };
 
@@ -107,6 +117,22 @@ const TicketModal = ({ close, save, editData }) => {
         </div>
 
         <div className="p-6 md:p-8 space-y-4 md:space-y-5">
+          <div>
+            <label className="block text-sm font-semibold text-gray-700 mb-1 md:mb-2">
+              Ticket ID <span className="text-red-500">*</span>
+            </label>
+            <input
+              name="ticketId"
+              placeholder="Enter ticket ID (e.g., TI1254)"
+              value={form.ticketId}
+              onChange={handleChange}
+              className="w-full border-2 border-gray-200 p-3 md:p-4 rounded-xl focus:border-blue-500 focus:ring-4 focus:ring-blue-100 outline-none transition-all"
+            />
+            {errors.ticketId && (
+              <p className="text-red-500 text-xs mt-1">{errors.ticketId}</p>
+            )}
+          </div>
+
           <div>
             <label className="block text-sm font-semibold text-gray-700 mb-1 md:mb-2">
               Project Title
@@ -184,6 +210,42 @@ const TicketModal = ({ close, save, editData }) => {
               className="w-full border-2 border-gray-200 p-3 md:p-4 rounded-xl focus:border-blue-500 focus:ring-4 focus:ring-blue-100 outline-none transition-all resize-none"
             />
           </div>
+
+          <div>
+            <label className="block text-sm font-semibold text-gray-700 mb-1 md:mb-2 flex items-center gap-2">
+              <Paperclip className="w-4 h-4 text-blue-600" />
+              Attachment
+            </label>
+            <div className="border-2 border-dashed border-gray-300 rounded-xl p-4 bg-gray-50">
+              <label className="flex items-center justify-center gap-2 cursor-pointer text-blue-600 font-semibold hover:text-blue-700 transition-colors">
+                <Plus className="w-5 h-5" />
+                <span>Add Attachment</span>
+                <input
+                  type="file"
+                  accept=".pdf,.doc,.docx,.jpg,.jpeg,.png,.xlsx,.xls,.txt"
+                  className="hidden"
+                  onChange={handleFileChange}
+                />
+              </label>
+              {form.attachment && (
+                <div className="mt-3 flex items-center justify-between bg-white p-3 rounded-lg border border-gray-200">
+                  <div className="flex items-center gap-2">
+                    <FileText className="w-4 h-4 text-blue-600" />
+                    <span className="text-sm font-medium text-gray-700">
+                      {form.attachment.name || form.attachment}
+                    </span>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => setForm({ ...form, attachment: null })}
+                    className="text-red-500 hover:text-red-700 text-sm font-semibold"
+                  >
+                    Remove
+                  </button>
+                </div>
+              )}
+            </div>
+          </div>
         </div>
 
         <div className="flex flex-col md:flex-row gap-3 p-6 md:p-8 pt-0">
@@ -214,19 +276,47 @@ const Supports = () => {
   const [tickets, setTickets] = useState([
     {
       id: "TI1254",
+      ticketId: "TI1254",
       title: "HR Portal",
       status: "Closed",
       assignedTo: "John Deo",
       date: "2020-02-25",
       detail: "Lorem Ipsum is simply",
+      attachment: null,
     },
   ]);
 
   const handleSave = (data) => {
+    const payload = {
+      ...data,
+      id: data.ticketId || data.id,
+      attachment: data.attachment instanceof File ? data.attachment : data.attachment,
+    };
+    
     if (editData) {
-      setTickets(tickets.map((t) => (t.id === data.id ? data : t)));
+      setTickets(tickets.map((t) => (t.id === editData.id ? payload : t)));
     } else {
-      setTickets([...tickets, data]);
+      setTickets([...tickets, payload]);
+    }
+  };
+
+  const handleAttachmentClick = (ticket) => {
+    if (!ticket.attachment) {
+      alert("No attachment available for this ticket.");
+      return;
+    }
+
+    if (ticket.attachment instanceof File) {
+      const url = URL.createObjectURL(ticket.attachment);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = ticket.attachment.name;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
+    } else if (typeof ticket.attachment === "string") {
+      window.open(ticket.attachment, "_blank");
     }
   };
 
@@ -316,6 +406,7 @@ const Supports = () => {
                     "Assigned To",
                     "Date",
                     "Issue Detail",
+                    "Attachment",
                     "Actions",
                   ].map((h) => (
                     <th
@@ -346,6 +437,26 @@ const Supports = () => {
                     <td className="p-5 whitespace-nowrap">{t.assignedTo}</td>
                     <td className="p-5 whitespace-nowrap">{t.date}</td>
                     <td className="p-5 text-gray-600 max-w-xs">{t.detail}</td>
+                    <td className="p-5 whitespace-nowrap">
+                      {t.attachment ? (
+                        <button
+                          onClick={() => handleAttachmentClick(t)}
+                          className="flex items-center gap-2 px-3 py-2 bg-blue-50 hover:bg-blue-100 text-blue-700 rounded-lg transition-colors font-medium text-sm cursor-pointer"
+                        >
+                          <FileText className="w-4 h-4" />
+                          <span>
+                            {t.attachment instanceof File
+                              ? t.attachment.name
+                              : typeof t.attachment === "string"
+                              ? "View File"
+                              : "Attachment"}
+                          </span>
+                          <Download className="w-3 h-3" />
+                        </button>
+                      ) : (
+                        <span className="text-gray-400 text-sm">No attachment</span>
+                      )}
+                    </td>
                     <td className="p-5 whitespace-nowrap">
                       <div className="flex gap-2">
                         <button
@@ -407,6 +518,20 @@ const Supports = () => {
                 <div className="flex justify-between items-start mb-2">
                   <span className="font-bold">Details:</span>
                   <span className="truncate max-w-[60%]">{t.detail}</span>
+                </div>
+                <div className="flex justify-between items-center mb-2">
+                  <span className="font-bold">Attachment:</span>
+                  {t.attachment ? (
+                    <button
+                      onClick={() => handleAttachmentClick(t)}
+                      className="flex items-center gap-1 px-2 py-1 bg-blue-50 text-blue-700 rounded-lg text-xs font-medium"
+                    >
+                      <FileText className="w-3 h-3" />
+                      View
+                    </button>
+                  ) : (
+                    <span className="text-gray-400 text-xs">No attachment</span>
+                  )}
                 </div>
                 <div className="flex gap-2 mt-2">
                   <button

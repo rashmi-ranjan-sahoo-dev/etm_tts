@@ -1,11 +1,608 @@
-import React from 'react'
+/* eslint-disable react-hooks/set-state-in-effect */
+import React, { useState, useEffect } from "react";
+import { Plus, Pencil, Trash2, Search, CheckCircle2, Clock, Calendar, AlertCircle, User, PauseCircle } from "lucide-react";
+import { FileText, Image, FileArchive, FileSpreadsheet, File } from "lucide-react";
 
-const AddProjects = () => {
+const formatDate = (dateStr) => {
+  if (!dateStr) return "";
+  const [year, month, day] = dateStr.split("-");
+  return `${day}/${month}/${year}`;
+};
+
+const toISO = (date) => {
+  if (!date) return "";
+  const [d, m, y] = date.split("/");
+  return `${y}-${m.padStart(2, "0")}-${d.padStart(2, "0")}`;
+};
+
+/* ===================== PROJECT MODAL ===================== */
+const ProjectModal = ({ close, save, editData }) => {
+  const today = new Date().toISOString().split("T")[0];
+  const [form, setForm] = useState({
+    projectName: "",
+    projectCategory: "",
+    clientName: "",
+    projectManagerName: "",
+    projectManagerId: "",
+    status: "Pending",
+    startDate: "",
+    endDate: "",
+  });
+  const [errors, setErrors] = useState({});
+  const [attachments, setAttachments] = useState(
+    editData?.attachments || []
+  );
+
+  useEffect(() => {
+    if (editData) {
+      setForm({
+        ...editData,
+        startDate: toISO(editData.startDate),
+        endDate: toISO(editData.endDate),
+      });
+    }
+  }, [editData]);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setForm({ ...form, [name]: value });
+    if (errors[name]) setErrors({ ...errors, [name]: "" });
+  };
+
+  const handleSubmit = () => {
+    let newErrors = {};
+    if (!form.projectName) newErrors.projectName = "Required";
+    if (!form.projectCategory) newErrors.projectCategory = "Required";
+    if (!form.clientName) newErrors.clientName = "Required";
+    if (!form.status) newErrors.status = "Required";
+    if (!form.startDate) newErrors.startDate = "Required";
+    if (!form.endDate) newErrors.endDate = "Required";
+    if (form.startDate && form.endDate && form.startDate > form.endDate) {
+      newErrors.startDate = "Must be before completion date";
+    }
+    setErrors(newErrors);
+    if (Object.keys(newErrors).length === 0) {
+      save({
+        ...form,
+        id: editData?.id,
+        startDate: formatDate(form.startDate),
+        endDate: formatDate(form.endDate),
+        attachments
+      });
+      close();
+    }
+  };
+
+  const handleAttachmentAdd = (e) => {
+    const files = Array.from(e.target.files);
+    const newFiles = files.map((file) => ({
+      name: file.name,
+      size: `${(file.size / 1024 / 1024).toFixed(5)} MB`,
+      type: file.type,
+      url: URL.createObjectURL(file),
+    }));
+    setAttachments((prev) => [...prev, ...newFiles]);
+  };
+
   return (
-    <div>
-      
+    <div className="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center z-50 p-4 animate-in fade-in duration-200">
+      <div className="bg-white rounded-3xl w-full max-w-2xl shadow-2xl transform transition-all animate-in zoom-in-95 duration-200">
+        <div className="bg-linear-to-br from-teal-500 via-cyan-500 to-blue-500 p-8 rounded-t-3xl relative overflow-hidden">
+          <div className="absolute inset-0 bg-white/10 backdrop-blur-sm"></div>
+          <h3 className="text-3xl font-bold text-white relative z-10 flex items-center gap-3">
+            {editData ? (
+              <>
+                <Pencil className="w-8 h-8" />
+                Edit Project
+              </>
+            ) : (
+              <>
+                <Plus className="w-8 h-8" />
+                New Project
+              </>
+            )}
+          </h3>
+          <p className="text-teal-50 mt-2 relative z-10">
+            {editData ? "Update project details" : "Create a new project"}
+          </p>
+        </div>
+        <div className="p-8 grid grid-cols-1 md:grid-cols-2 gap-6">
+          {/* Project Name */}
+          <div className="md:col-span-2">
+            <label className="block text-sm font-semibold text-gray-700 mb-2">
+              Project Name
+            </label>
+            <input
+              name="projectName"
+              placeholder="Enter project name"
+              value={form.projectName}
+              onChange={handleChange}
+              className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-teal-500 focus:ring-4 focus:ring-teal-100 outline-none transition-all"
+            />
+            {errors.projectName && (
+              <p className="text-red-500 text-sm mt-1 flex items-center gap-1">
+                <AlertCircle className="w-4 h-4" />
+                {errors.projectName}
+              </p>
+            )}
+          </div>
+          {/* Category */}
+          <div className="md:col-span-2">
+            <label className="block text-sm font-semibold text-gray-700 mb-2">
+              Category
+            </label>
+            <select
+              name="projectCategory"
+              value={form.projectCategory}
+              onChange={handleChange}
+              className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-teal-500 focus:ring-4 focus:ring-teal-100 outline-none transition-all bg-white"
+            >
+              <option value="">Select Category</option>
+              <option>Hardware</option>
+              <option>Software</option>
+            </select>
+            {errors.projectCategory && (
+              <p className="text-red-500 text-sm mt-1 flex items-center gap-1">
+                <AlertCircle className="w-4 h-4" />
+                {errors.projectCategory}
+              </p>
+            )}
+          </div>
+          {/* Client Name */}
+          <div className="md:col-span-2">
+            <label className="block text-sm font-semibold text-gray-700 mb-2">
+              Client Name
+            </label>
+            <input
+              name="clientName"
+              placeholder="Enter client name"
+              value={form.clientName}
+              onChange={handleChange}
+              className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-teal-500 focus:ring-4 focus:ring-teal-100 outline-none transition-all"
+            />
+            {errors.clientName && (
+              <p className="text-red-500 text-sm mt-1 flex items-center gap-1">
+                <AlertCircle className="w-4 h-4" />
+                {errors.clientName}
+              </p>
+            )}
+          </div>
+          {/* Project Manager (Assign To) */}
+          <div>
+            <label className="block text-sm font-semibold text-gray-700 mb-2">
+              Project Manager Name
+            </label>
+            <input
+              name="projectManagerName"
+              placeholder="Enter project manager name"
+              value={form.projectManagerName || ""}
+              onChange={handleChange}
+              className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-teal-500 focus:ring-4 focus:ring-teal-100 outline-none transition-all"
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-semibold text-gray-700 mb-2">
+              Project Manager ID
+            </label>
+            <input
+              name="projectManagerId"
+              placeholder="Enter project manager ID"
+              value={form.projectManagerId || ""}
+              onChange={handleChange}
+              className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-teal-500 focus:ring-4 focus:ring-teal-100 outline-none transition-all"
+            />
+          </div>
+          {/* Dates */}
+          <div>
+            <label className="block text-sm font-semibold text-gray-700 mb-2 flex items-center gap-2">
+              <Calendar className="w-4 h-4 text-teal-600" />
+              Preferred Start Date
+            </label>
+            <input
+              type="date"
+              name="startDate"
+              value={form.startDate}
+              onChange={handleChange}
+              min={today}
+              className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-teal-500 focus:ring-4 focus:ring-teal-100 outline-none transition-all"
+            />
+            {errors.startDate && (
+              <p className="text-red-500 text-sm mt-1 flex items-center gap-1">
+                <AlertCircle className="w-4 h-4" />
+                {errors.startDate}
+              </p>
+            )}
+          </div>
+          <div>
+            <label className="block text-sm font-semibold text-gray-700 mb-2 flex items-center gap-2">
+              <Calendar className="w-4 h-4 text-teal-600" />
+              Expected Completion Date
+            </label>
+            <input
+              type="date"
+              name="endDate"
+              value={form.endDate}
+              onChange={handleChange}
+              min={form.startDate || today}
+              className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-teal-500 focus:ring-4 focus:ring-teal-100 outline-none transition-all"
+            />
+            {errors.endDate && (
+              <p className="text-red-500 text-sm mt-1 flex items-center gap-1">
+                <AlertCircle className="w-4 h-4" />
+                {errors.endDate}
+              </p>
+            )}
+          </div>
+          {/* Attachments */}
+          <div className="md:col-span-2">
+            <label className="block text-sm font-semibold text-gray-700 mb-2">
+              Attachments
+            </label>
+            <div className="border-2 border-dashed border-gray-300 rounded-2xl p-5 bg-gray-50">
+              <label className="flex items-center justify-center gap-3 cursor-pointer text-teal-600 font-semibold">
+                <Plus className="w-5 h-5" />
+                Add Attachment
+                <input
+                  type="file"
+                  multiple
+                  accept="image/*,.pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.zip"
+                  className="hidden"
+                  onChange={handleAttachmentAdd}
+                />
+              </label>
+              {attachments.length > 0 && (
+                <div className="mt-4 space-y-3">
+                  {attachments.map((file, idx) => (
+                    <div
+                      key={idx}
+                      className="flex items-center justify-between bg-white p-4 rounded-xl shadow-sm border"
+                    >
+                      <div>
+                        <p className="font-medium text-gray-800">{file.name}</p>
+                        <p className="text-xs text-gray-500">{file.size}</p>
+                      </div>
+                      <div className="flex gap-2">
+                        <a
+                          href={file.url}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="px-3 py-1.5 text-sm bg-blue-100 text-blue-600 rounded-lg hover:bg-blue-200"
+                        >
+                          View
+                        </a>
+                        <button
+                          onClick={() =>
+                            setAttachments(attachments.filter((_, i) => i !== idx))
+                          }
+                          className="px-3 py-1.5 text-sm bg-red-100 text-red-600 rounded-lg hover:bg-red-200"
+                        >
+                          Remove
+                        </button>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+        <div className="flex gap-4 p-8 border-t-2 border-gray-100 bg-gray-50 rounded-b-3xl">
+          <button
+            onClick={handleSubmit}
+            className="flex-1 bg-linear-to-r from-teal-600 to-cyan-600 text-white py-4 rounded-xl font-semibold hover:from-teal-700 hover:to-cyan-700 transform hover:scale-105 transition-all shadow-lg hover:shadow-xl"
+          >
+            Save Project
+          </button>
+          <button
+            onClick={close}
+            className="flex-1 border-2 border-gray-300 py-4 rounded-xl font-semibold hover:bg-gray-100 transition-all"
+          >
+            Cancel
+          </button>
+        </div>
+      </div>
     </div>
-  )
-}
+  );
+};
 
-export default AddProjects
+/* ===================== MAIN COMPONENT ===================== */
+const Projects = () => {
+  const [projects, setProjects] = useState([
+    {
+      id: 1,
+      projectName: "HR Portal",
+      projectCategory: "Software",
+      clientName: "ABC Corp",
+      projectManagerName: "John",
+      projectManagerId: "PM-001",
+      status: "In Progress",
+      startDate: "01/01/2025",
+      endDate: "30/06/2025",
+      attachments: [
+        { name: "Requirements.pdf", url: "", size: "5MB" }
+      ]
+    },
+  ]);
+  const [openModal, setOpenModal] = useState(false);
+  const [editData, setEditData] = useState(null);
+  const [search, setSearch] = useState("");
+  const [showAttachments, setShowAttachments] = useState(false);
+  const [selectedAttachments, setSelectedAttachments] = useState([]);
+
+  const handleSave = (data) => {
+    if (editData) {
+      setProjects(projects.map((p) => (p.id === data.id ? data : p)));
+    } else {
+      setProjects([...projects, { ...data, id: Date.now() }]);
+    }
+  };
+
+  const filtered = projects.filter((p) =>
+    Object.values(p).join(" ").toLowerCase().includes(search.toLowerCase())
+  );
+
+  const getStatusBadge = (status) => {
+    const styles = {
+      Pending: "bg-blue-100 text-blue-700 border-blue-200",
+      Hold: "bg-yellow-100 text-yellow-700 border-yellow-200",
+      "In Progress": "bg-amber-100 text-amber-700 border-amber-200",
+      Completed: "bg-green-100 text-green-700 border-green-200",
+    };
+    const icons = {
+      Pending: <Clock className="w-4 h-4" />,
+      Hold: <PauseCircle className="w-4 h-4" />,
+      "In Progress": <AlertCircle className="w-4 h-4" />,
+      Completed: <CheckCircle2 className="w-4 h-4" />,
+    };
+    return (
+      <span className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-sm font-semibold border-2 ${styles[status]}`}>
+        {icons[status]}
+        {status}
+      </span>
+    );
+  };
+
+  return (
+    <div className="min-h-screen bg-linear-to-br from-slate-50 via-blue-50 to-teal-50 p-8">
+      <div className="max-w-7xl mx-auto">
+        {/* Header */}
+        <div className="mb-8">
+          <h1 className="text-4xl font-bold text-gray-800 mb-2 flex items-center gap-3">
+            <div className="w-12 h-12 bg-linear-to-br from-teal-500 to-cyan-500 rounded-2xl flex items-center justify-center">
+              <User className="w-6 h-6 text-white" />
+            </div>
+            Client Name
+          </h1>
+          <p className="text-gray-600 ml-15">Manage and track all your projects</p>
+        </div>
+        {/* Search & Add */}
+        <div className="flex flex-col md:flex-row gap-4 mb-6">
+          <div className="relative flex-1">
+            <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+            <input
+              placeholder="Search projects..."
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              className="w-full pl-12 pr-4 py-4 border-2 border-gray-200 rounded-2xl focus:border-teal-500 focus:ring-4 focus:ring-teal-100 outline-none transition-all bg-white shadow-sm"
+            />
+          </div>
+          <button
+            onClick={() => {
+              setEditData(null);
+              setOpenModal(true);
+            }}
+            className="bg-linear-to-r from-teal-600 to-cyan-600 text-white px-8 py-4 rounded-2xl font-semibold hover:from-teal-700 hover:to-cyan-700 transform hover:scale-105 transition-all shadow-lg hover:shadow-xl flex items-center gap-2 justify-center"
+          >
+            <Plus className="w-5 h-5" />
+            New Project
+          </button>
+        </div>
+        {/* Table */}
+        <div className="bg-white rounded-3xl shadow-xl overflow-hidden border-2 border-gray-100">
+          <div className="overflow-x-auto">
+            <table className="w-full">
+              <thead>
+                <tr className="bg-linear-to-r from-gray-50 to-gray-100 border-b-2 border-gray-200">
+                  <th className="p-5 text-left text-sm font-bold text-gray-700 uppercase tracking-wider">
+                    Project Name
+                  </th>
+                  <th className="p-5 text-left text-sm font-bold text-gray-700 uppercase tracking-wider">
+                    Type
+                  </th>
+                  <th className="p-5 text-left text-sm font-bold text-gray-700 uppercase tracking-wider">
+                    Client
+                  </th>
+                  <th className="p-5 text-left text-sm font-bold text-gray-700 uppercase tracking-wider">
+                    Assigned To
+                  </th>
+                  <th className="p-5 text-left text-sm font-bold text-gray-700 uppercase tracking-wider">
+                    Status
+                  </th>
+                  <th className="p-5 text-left text-sm font-bold text-gray-700 uppercase tracking-wider">
+                    Start Date
+                  </th>
+                  <th className="p-5 text-left text-sm font-bold text-gray-700 uppercase tracking-wider">
+                    Completion Date
+                  </th>
+                  <th className="p-5 text-left text-sm font-bold">Attachments</th>
+                  <th className="p-5 text-left text-sm font-bold text-gray-700 uppercase tracking-wider">
+                    Actions
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {filtered.map((row, index) => (
+                  <tr
+                    key={row.id}
+                    className={`border-b border-gray-100 hover:bg-linear-to-r hover:from-teal-50 hover:to-cyan-50 transition-all ${index % 2 === 0 ? "bg-white" : "bg-gray-50/50"
+                      }`}
+                  >
+                    <td className="p-5">
+                      <div className="font-semibold text-gray-800">
+                        {row.projectName}
+                      </div>
+                    </td>
+                    <td className="p-5">
+                      <span className="inline-flex items-center px-3 py-1 rounded-lg text-sm font-medium bg-purple-100 text-purple-700">
+                        {row.projectCategory}
+                      </span>
+                    </td>
+                    <td className="p-5">
+                      <span className="text-sm font-medium text-gray-800">
+                        {row.clientName || "-"}
+                      </span>
+                    </td>
+                    <td className="p-5">
+                      <div className="flex flex-col">
+                        <span className={`font-medium ${row.projectManagerName ? "text-gray-700" : "text-gray-400 italic"}`}>
+                          {row.projectManagerName || "Not Assigned"}
+                        </span>
+                        {row.projectManagerId && (
+                          <span className="text-xs text-gray-500">
+                            ID: {row.projectManagerId}
+                          </span>
+                        )}
+                      </div>
+                    </td>
+                    <td className="p-5">{getStatusBadge(row.status)}</td>
+                    <td className="p-5">
+                      <div className="flex items-center gap-2 text-gray-600">
+                        <Calendar className="w-4 h-4" />
+                        {row.startDate}
+                      </div>
+                    </td>
+                    <td className="p-5">
+                      <div className="flex items-center gap-2 text-gray-600">
+                        <Calendar className="w-4 h-4" />
+                        {row.endDate}
+                      </div>
+                    </td>
+                    <td className="p-5">
+                      <button
+                        onClick={() => {
+                          setSelectedAttachments(row.attachments || []);
+                          setShowAttachments(true);
+                        }}
+                        className="text-sm font-semibold text-teal-600 hover:underline cursor-pointer"
+                      >
+                        {row.attachments?.length || 0} files
+                      </button>
+                    </td>
+                    <td className="p-5">
+                      <div className="flex gap-2">
+                        <button
+                          onClick={() => {
+                            setEditData(row);
+                            setOpenModal(true);
+                          }}
+                          className="p-2.5 bg-blue-100 text-blue-600 rounded-xl hover:bg-blue-200 transition-all hover:scale-110"
+                        >
+                          <Pencil className="w-4 h-4" />
+                        </button>
+                        <button
+                          onClick={() =>
+                            setProjects(projects.filter((p) => p.id !== row.id))
+                          }
+                          className="p-2.5 bg-red-100 text-red-600 rounded-xl hover:bg-red-200 transition-all hover:scale-110"
+                        >
+                          <Trash2 className="w-4 h-4" />
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          {filtered.length === 0 && (
+            <div className="text-center py-16">
+              <div className="w-20 h-20 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Search className="w-10 h-10 text-gray-400" />
+              </div>
+              <p className="text-gray-500 text-lg font-medium">No projects found</p>
+              <p className="text-gray-400 mt-1">Try adjusting your search</p>
+            </div>
+          )}
+        </div>
+        {/* Project Count */}
+        <div className="mt-6 text-center text-gray-600">
+          Showing <span className="font-semibold text-teal-600">{filtered.length}</span> of{" "}
+          <span className="font-semibold text-teal-600">{projects.length}</span> projects
+        </div>
+      </div>
+      {openModal && (
+        <ProjectModal
+          close={() => setOpenModal(false)}
+          save={handleSave}
+          editData={editData}
+        />
+      )}
+      {showAttachments && (
+        <AttachmentsModal
+          attachments={selectedAttachments}
+          onClose={() => setShowAttachments(false)}
+        />
+      )}
+    </div>
+  );
+};
+
+export default Projects;
+
+const AttachmentsModal = ({ attachments = [], onClose }) => {
+  return (
+    <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+      <div className="bg-white rounded-2xl w-full max-w-lg shadow-2xl">
+        {/* Header */}
+        <div className="flex items-center justify-between p-5 border-b">
+          <h3 className="text-xl font-bold text-gray-800">
+            Project Attachments
+          </h3>
+          <button
+            onClick={onClose}
+            className="text-gray-500 hover:text-red-500 text-lg font-bold"
+          >
+            ✕
+          </button>
+        </div>
+        {/* Body */}
+        <div className="p-5 max-h-[60vh] overflow-y-auto space-y-3">
+          {attachments.length === 0 ? (
+            <p className="text-center text-gray-500">
+              No attachments available
+            </p>
+          ) : (
+            attachments.map((file, idx) => (
+              <div
+                key={idx}
+                className="flex items-center justify-between bg-gray-50 p-4 rounded-xl border"
+              >
+                <div>
+                  <p className="font-medium text-gray-800">{file.name}</p>
+                  <p className="text-xs text-gray-500">{file.size}</p>
+                </div>
+                <a
+                  href={file.url}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="px-3 py-1.5 text-sm bg-teal-100 text-teal-700 rounded-lg hover:bg-teal-200"
+                >
+                  View
+                </a>
+              </div>
+            ))
+          )}
+        </div>
+        {/* Footer */}
+        <div className="p-4 border-t bg-gray-50 text-right">
+          <button
+            onClick={onClose}
+            className="px-5 py-2 rounded-xl border font-semibold hover:bg-gray-100"
+          >
+            Close
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+};

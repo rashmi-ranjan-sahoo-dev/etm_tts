@@ -12,6 +12,7 @@ import SuperAdminAllProjects from './pages/SuperAdmin/Project/AllProjects.jsx'
 import SuperAdminAddProjects from './pages/SuperAdmin/Project/AddProjects.jsx'
 
 
+
 import EmployeeLayout from './layout/EmployeeLayout'
 import MyLeaves from './pages/Employee/MyLeaves/MyLeaves'
 import EmployeeDashboard from './pages/Employee/Dashboard'
@@ -23,6 +24,8 @@ import Expense from "./pages/Employee/Accounts/OtherExpenses/Expense.jsx"
 import Projects from './pages/Client/Projects.jsx'
 import Supports from './pages/Client/Supports.jsx'
 import Billing from './pages/Client/Billing.jsx'
+import PojectManagerTickets from './pages/Employee/ProjectManagerIssueTracker.jsx'
+import LeadTickets from './pages/Employee/EmployeeIssueTracker.jsx'
 
 
 
@@ -30,7 +33,7 @@ import ClientLayout from './layout/ClientLayout.jsx'
 import ClientDashboard from './pages/Client/Dashboard.jsx'
 import TeamLeaderAddTask from './pages/Employee/TeamLeader/TeamLeaderTasks.jsx'
 import AllTasks from './pages/Employee/TeamLeader/AllTasks.jsx'
-import EmployeeIssueTracker from './pages/Employee/EmployeeIssueTracker.jsx'
+
 
 
 import Settings from './pages/Settings.jsx'
@@ -64,11 +67,14 @@ const App = () => {
           <Route path='teamleader/addtask' element={<TeamLeaderAddTask />} />
           <Route path='teamleader/alltasks' element={<AllTasks />} />
           <Route path="myTasks" element={<MyTask />} />
-          <Route path="IssueTracker" element={<EmployeeIssueTracker/>}/>
+           <Route path="lead-issue-tracker" element={<LeadTickets/>}/>
+          <Route path="issue-tracker" element={<PojectManagerTickets/>}/>
           <Route path="settings" element={<Settings />} />
           <Route path="accounts/client-payments" element={<ClientPayments />} />
           <Route path="accounts/other-payments" element={<Expense />} />
         </Route>
+
+
         <Route path="/client" element={<ClientLayout />}>
           <Route index element={<ClientDashboard />} />
           <Route path="dashboard" element={<ClientDashboard />} />
@@ -77,11 +83,10 @@ const App = () => {
           <Route path="billing" element={<Billing />} />
           <Route path="settings" element={<Settings />} />
         </Route>
+
+
         <Route path="*" element={<div>404 page not found</div>} />
       </Routes>
-      {/* <Dashboard/> */}
-      {/* <EmployeeDetail/> */}
-      {/* <LeaveRequests/> */}
     </BrowserRouter>
   )
 }
