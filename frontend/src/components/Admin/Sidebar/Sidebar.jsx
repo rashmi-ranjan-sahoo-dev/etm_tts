@@ -153,7 +153,7 @@ const AdminSidebar = ({
             >
               <div className="flex items-center gap-3">
                 <div className="group-hover:scale-110 transition-transform">
-                  {/* <MessageSquare size={20} /> */}
+                  <LayoutDashboard size={20}/>
                 </div>
                 <span className="text-sm">Leaves</span>
               </div>
@@ -168,8 +168,8 @@ const AdminSidebar = ({
 
             {/* Leave Submenu */}
             <div
-              className={`ml-4 space-y-1 overflow-hidden transition-all duration-300 ease-in-out
-              ${openleave ? "max-h-40 opacity-100 mt-2" : "max-h-0 opacity-0"}`}
+              className={`ml-4 space-y-1 overflow-hidden transition-all duration-300 ease-in-out 
+              ${openleave ? "max-h-50 opacity-100 mt-2" : "max-h-0 opacity-0"}`}
             >
               <Link
                 to="/admin/leaverequest"
@@ -245,7 +245,7 @@ const AdminSidebar = ({
             >
               <div className="flex items-center gap-3">
                 <div className="group-hover:scale-110 transition-transform">
-                  {/* <MessageSquare size={20} /> */}
+                  <LayoutDashboard/>
                 </div>
                 <span className="text-sm">Attendance</span>
               </div>
@@ -282,7 +282,7 @@ const AdminSidebar = ({
                 onClick={() => setOpenattendance("/admin/employee-attendance")}
                 className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm transition-all duration-200 w-full text-left
                   ${
-                    openleave === "/admin/employee-attendance"
+                    openattendance === "/admin/employee-attendance"
                       ? "bg-gradient-to-r from-indigo-500 to-purple-500 text-white shadow-md"
                       : "hover:bg-white/80 hover:shadow-sm text-gray-600 hover:text-gray-900"
                   }`}
@@ -296,7 +296,7 @@ const AdminSidebar = ({
                 onClick={() => setOpenattendance("/admin/attendance-sheet")}
                 className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm transition-all duration-200 w-full text-left
                   ${
-                    openleave === "/admin/attendance-sheet"
+                    openattendance === "/admin/attendance-sheet"
                       ? "bg-gradient-to-r from-indigo-500 to-purple-500 text-white shadow-md"
                       : "hover:bg-white/80 hover:shadow-sm text-gray-600 hover:text-gray-900"
                   }`}
@@ -322,7 +322,7 @@ const AdminSidebar = ({
             >
               <div className="flex items-center gap-3">
                 <div className="group-hover:scale-110 transition-transform">
-                  {/* <MessageSquare size={20} /> */}
+                  <LayoutDashboard/>
                 </div>
                 <span className="text-sm">Training</span>
               </div>
@@ -342,7 +342,7 @@ const AdminSidebar = ({
             >
               <Link
                 to="/admin/training-list"
-                onClick={() => setOpenattendance("/admin/training-list")}
+                onClick={() => setOpentraining("/admin/training-list")}
                 className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm transition-all duration-200 w-full text-left
                   ${
                     opentraining === "/admin/training-list"
