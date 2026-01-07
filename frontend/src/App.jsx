@@ -92,6 +92,7 @@ const App = () => {
           <Route path='training-list' element={<AdminTrainingList/>} />
           <Route path='trainers' element={<AdminTrainers/>} />
           <Route path='training-type' element={<AdminTrainingType/>} />
+          <Route path="settings" element={<Settings />} />
         </Route>
 
         <Route path="/employee" element={<EmployeeLayout />}>

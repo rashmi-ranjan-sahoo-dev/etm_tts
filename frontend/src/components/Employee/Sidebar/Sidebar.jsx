@@ -256,7 +256,7 @@ const Sidebar = ({ isSidebarOpen = true, setIsSidebarOpen = () => { } }) => {
               </Link>
 
 
-              <Link
+              {/* <Link
                 to="/employee/IssueTracker"
                 onClick={() => setActiveRoute("/employee/IssueTracker")}
                 className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm transition-all duration-200 w-full text-left
@@ -267,7 +267,7 @@ const Sidebar = ({ isSidebarOpen = true, setIsSidebarOpen = () => { } }) => {
               >
                 <div className="w-1.5 h-1.5 rounded-full bg-current"></div>
                 Tickets
-              </Link>
+              </Link> */}
 
 
 

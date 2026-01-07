@@ -36,6 +36,7 @@ const AdminSidebar = ({
     // { name: "Attendance", icon: LayoutDashboard, to: "/admin/attendance" },
     { name: "Leader", icon: LayoutDashboard, to: "/admin/leader" },
     { name: "Department", icon: LayoutDashboard, to: "/admin/department" },
+    { name: "Settings", icon: Settings, to: "/admin/settings" },
     
   ];
 
