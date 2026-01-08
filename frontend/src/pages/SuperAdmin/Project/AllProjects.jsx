@@ -1,6 +1,7 @@
 /* eslint-disable no-unused-vars */
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+/* eslint-disable react-hooks/set-state-in-effect */
+import React, { useState, useEffect } from "react";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { Search, User, Calendar, Flag, FileText, Download, ChevronRight, BarChart3, Plus, Clock, CheckCircle, XCircle, AlertTriangle, Play, Pause } from 'lucide-react';
 
 const projectsData = [
@@ -72,12 +73,21 @@ const projectManagers = ["John Doe", "Bob Smith", "Alice Johnson", "Charlie Brow
 
 const AllProjects = () => {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
   const [projects, setProjects] = useState(projectsData);
   const [search, setSearch] = useState("");
   const [statusFilter, setStatusFilter] = useState("All");
   const [showAssignModal, setShowAssignModal] = useState(false);
   const [selectedProjectForAssign, setSelectedProjectForAssign] = useState(null);
   const [assignedPM, setAssignedPM] = useState("");
+
+  // Handle initial filter from URL parameters
+  useEffect(() => {
+    const filterParam = searchParams.get('filter');
+    if (filterParam && filterParam !== statusFilter) {
+      setStatusFilter(filterParam);
+    }
+  }, [searchParams]);
 
   const filteredProjects = projects.filter(
     (p) =>

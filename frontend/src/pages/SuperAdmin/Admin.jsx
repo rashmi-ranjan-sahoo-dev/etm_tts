@@ -1,4 +1,6 @@
+/* eslint-disable no-unused-vars */
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 // Reuse the same icon style as Client page
 const SearchIcon = () => (
@@ -243,6 +245,7 @@ const initialAdmins = [
 ];
 
 const Admin = () => {
+  const navigate = useNavigate();
   const [admins, setAdmins] = useState(initialAdmins);
   const [searchTerm, setSearchTerm] = useState("");
   const [statusFilter, setStatusFilter] = useState("All");
@@ -519,9 +522,12 @@ const Admin = () => {
                             alt={admin.name}
                             className="w-9 h-9 rounded-full border border-slate-200 object-cover"
                           />
-                          <span className="font-semibold text-slate-800">
+                          <button
+                            onClick={() => navigate(`/super-admin/admin/${admin.id}`)}
+                            className="font-semibold text-slate-800 hover:text-indigo-600 transition-colors cursor-pointer"
+                          >
                             {admin.name}
-                          </span>
+                          </button>
                         </div>
                       </td>
                       <td className="px-4 py-3">
