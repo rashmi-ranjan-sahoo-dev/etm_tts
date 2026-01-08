@@ -8,7 +8,7 @@ import { Link, useLocation } from "react-router-dom";
 const SuperAdminSidebar = ({ isSidebarOpen = true, setIsSidebarOpen = () => { } }) => {
   const location = useLocation();
   const [activeRoute, setActiveRoute] = useState(location.pathname);
-  const [openProjects, setOpenProjects] = useState(false);
+  // const [openProjects, setOpenProjects] = useState(false);
 
   const logo =
     "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Ccircle cx='50' cy='50' r='50' fill='%237C3AED'/%3E%3Ctext x='50' y='58' font-size='30' fill='white' text-anchor='middle'%3EK%3C/text%3E%3C/svg%3E";
@@ -20,6 +20,7 @@ const SuperAdminSidebar = ({ isSidebarOpen = true, setIsSidebarOpen = () => { } 
     { name: "Dashboard", icon: LayoutDashboard, to: "/super-admin/dashboard" },
     { name: "Client", icon: Users, to: "/super-admin/client" },
     { name: "Admin", icon: ShieldCheck, to: "/super-admin/admin" },
+    { name: "Projects", icon: FolderKanban, to: "/super-admin/projects" },
     { name: "Setting", icon: Settings, to: "/super-admin/setting" },
   ];
 
@@ -112,7 +113,7 @@ const SuperAdminSidebar = ({ isSidebarOpen = true, setIsSidebarOpen = () => { } 
               );
             })}
 
-            <button
+            {/* <button
               onClick={() => setOpenProjects(!openProjects)}
               className={`group flex items-center justify-between w-full px-4 py-3.5 rounded-xl font-medium transition-all duration-200 text-gray-700
     ${openProjects ? "bg-white/80 shadow-md" : "hover:bg-white/80 hover:shadow-md"}`}
@@ -158,7 +159,7 @@ const SuperAdminSidebar = ({ isSidebarOpen = true, setIsSidebarOpen = () => { } 
                 <div className="w-1.5 h-1.5 rounded-full bg-current"></div>
                 Add Project
               </Link>
-            </div>
+            </div> */}
 
 
 

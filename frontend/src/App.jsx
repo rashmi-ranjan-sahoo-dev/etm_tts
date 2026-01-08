@@ -8,8 +8,9 @@ import SuperAdminLayout from './layout/SuperAdmin.jsx'
 import SuperAdminDashboard from './pages/SuperAdmin/Dashboard.jsx'
 import SuperAdminAdminPage from './pages/SuperAdmin/Admin.jsx'
 import SuperAdminClientPage from './pages/SuperAdmin/Client.jsx'
-import SuperAdminAllProjects from './pages/SuperAdmin/Project/AllProjects.jsx'
-import SuperAdminAddProjects from './pages/SuperAdmin/Project/AddProjects.jsx'
+import SuperAdminProjects from './pages/SuperAdmin/Project/AllProjects.jsx'
+import SuperAdminProjectDetails from './pages/SuperAdmin/Project/ProjectDetails.jsx'
+// import SuperAdminAddProjects from './pages/SuperAdmin/Project/AddProjects.jsx'
 
 
 import AdminLayout from './layout/AdminLayout.jsx'
@@ -68,8 +69,9 @@ const App = () => {
         <Route path='/super-admin' element ={<SuperAdminLayout />}>
           <Route index element={<SuperAdminDashboard />} />
           <Route path="dashboard" element={<SuperAdminDashboard />} />
-          <Route path='allprojects' element={<SuperAdminAllProjects/>}/>
-          <Route path='addprojects' element={<SuperAdminAddProjects/>}/>
+          <Route path='projects' element={<SuperAdminProjects/>}/>
+          <Route path='projects/:id' element={<SuperAdminProjectDetails/>}/>
+          {/* <Route path='addprojects' element={<SuperAdminAddProjects/>}/> */}
           <Route path="client" element={<SuperAdminClientPage />} />
           <Route path="admin" element={<SuperAdminAdminPage />} />
           <Route path="setting" element={<Settings />} />

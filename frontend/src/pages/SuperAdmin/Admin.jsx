@@ -221,9 +221,11 @@ const initialAdmins = [
     avatar: "https://i.pravatar.cc/150?u=101",
     mobile: "1234567890",
     email: "admin1@example.com",
+    position: "Senior Admin",
     status: "Active",
     address: "123 Main St",
     notes: "",
+    documents: [],
   },
   {
     id: 2,
@@ -232,15 +234,18 @@ const initialAdmins = [
     avatar: "https://i.pravatar.cc/150?u=102",
     mobile: "1234567890",
     email: "admin2@example.com",
+    position: "Junior Admin",
     status: "Inactive",
     address: "456 Elm St",
     notes: "",
+    documents: [],
   },
 ];
 
 const Admin = () => {
   const [admins, setAdmins] = useState(initialAdmins);
   const [searchTerm, setSearchTerm] = useState("");
+  const [statusFilter, setStatusFilter] = useState("All");
   const [currentPage, setCurrentPage] = useState(1);
   const [showModal, setShowModal] = useState(false);
   const [editingAdmin, setEditingAdmin] = useState(null);
@@ -249,18 +254,22 @@ const Admin = () => {
     name: "",
     mobile: "",
     email: "",
+    position: "",
     status: "Active",
     address: "",
     notes: "",
-    contractDocument: "",
+    documents: [],
   });
 
   const itemsPerPage = 10;
 
   const filteredAdmins = admins.filter(
-    (admin) =>
-      admin.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      admin.email.toLowerCase().includes(searchTerm.toLowerCase())
+    (admin) => {
+      const matchesSearch = admin.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        admin.email.toLowerCase().includes(searchTerm.toLowerCase());
+      const matchesStatus = statusFilter === "All" || admin.status === statusFilter;
+      return matchesSearch && matchesStatus;
+    }
   );
 
   const totalPages = Math.ceil(filteredAdmins.length / itemsPerPage);
@@ -281,10 +290,11 @@ const Admin = () => {
       name: admin.name,
       mobile: admin.mobile,
       email: admin.email,
+      position: admin.position || "",
       status: admin.status,
       address: admin.address,
       notes: admin.notes || "",
-      contractDocument: admin.contractDocument || "",
+      documents: admin.documents || [],
     });
     setShowModal(true);
   };
@@ -298,10 +308,11 @@ const Admin = () => {
       name: "",
       mobile: "",
       email: "",
+      position: "",
       status: "Active",
       address: "",
       notes: "",
-      contractDocument: "",
+      documents: [],
     });
     setShowModal(true);
   };
@@ -314,10 +325,15 @@ const Admin = () => {
   };
 
   const handleFileChange = (e) => {
-    const file = e.target.files && e.target.files[0];
-    if (file) {
-      setFormData((prev) => ({ ...prev, contractDocument: file }));
-    }
+    const files = Array.from(e.target.files);
+    setFormData((prev) => ({ ...prev, documents: [...prev.documents, ...files] }));
+  };
+
+  const removeDocument = (index) => {
+    setFormData((prev) => ({
+      ...prev,
+      documents: prev.documents.filter((_, i) => i !== index),
+    }));
   };
 
   const handleSave = () => {
@@ -349,17 +365,37 @@ const Admin = () => {
     setShowModal(false);
   };
 
-  const handleViewDocument = (doc) => {
-    if (!doc) {
-      alert("No contract document uploaded");
+  const handleViewDocument = (docs) => {
+    if (!docs || docs.length === 0) {
+      alert("No documents uploaded");
       return;
     }
-    if (typeof doc === "string") {
-      window.open(doc, "_blank");
-    } else {
-      const url = URL.createObjectURL(doc);
-      window.open(url, "_blank");
-    }
+    docs.forEach((doc, index) => {
+      let url;
+      let filename;
+
+      if (typeof doc === "string") {
+        url = doc;
+        filename = `document_${index + 1}`;
+      } else {
+        url = URL.createObjectURL(doc);
+        filename = doc.name;
+      }
+
+      // Create a temporary anchor element for download
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = filename;
+      link.style.display = 'none';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+
+      // Clean up blob URL if it was created
+      if (typeof doc !== "string") {
+        URL.revokeObjectURL(url);
+      }
+    });
   };
 
   const handlePageChange = (pageNumber) => {
@@ -390,20 +426,38 @@ const Admin = () => {
                 Admins
               </span>
 
-              <div className="flex items-center bg-white border border-slate-200 rounded-lg px-3 py-2 w-full sm:w-72 focus-within:border-indigo-500 focus-within:ring-2 focus-within:ring-indigo-100">
-                <span className="text-slate-400 mr-2">
-                  <SearchIcon />
-                </span>
-                <input
-                  type="text"
-                  className="w-full outline-none text-sm text-slate-700 placeholder:text-slate-400"
-                  placeholder="Search by name, email..."
-                  value={searchTerm}
-                  onChange={(e) => {
-                    setSearchTerm(e.target.value);
-                    setCurrentPage(1);
-                  }}
-                />
+              <div className="flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
+                <div className="flex items-center bg-white border border-slate-200 rounded-lg px-3 py-2 w-full sm:w-72 focus-within:border-indigo-500 focus-within:ring-2 focus-within:ring-indigo-100">
+                  <span className="text-slate-400 mr-2">
+                    <SearchIcon />
+                  </span>
+                  <input
+                    type="text"
+                    className="w-full outline-none text-sm text-slate-700 placeholder:text-slate-400"
+                    placeholder="Search by name, email..."
+                    value={searchTerm}
+                    onChange={(e) => {
+                      setSearchTerm(e.target.value);
+                      setCurrentPage(1);
+                    }}
+                  />
+                </div>
+
+                <div className="flex items-center gap-2">
+                  <label className="text-sm font-medium text-slate-700 whitespace-nowrap">Status:</label>
+                  <select
+                    value={statusFilter}
+                    onChange={(e) => {
+                      setStatusFilter(e.target.value);
+                      setCurrentPage(1);
+                    }}
+                    className="border border-slate-200 rounded-lg px-3 py-2 text-sm text-slate-700 bg-white focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100"
+                  >
+                    <option value="All">All</option>
+                    <option value="Active">Active</option>
+                    <option value="Inactive">Inactive</option>
+                  </select>
+                </div>
               </div>
             </div>
 
@@ -428,7 +482,7 @@ const Admin = () => {
 
           {/* Table */}
           <div className="w-full overflow-x-auto">
-            <table className="min-w-[900px] w-full border-collapse text-sm">
+            <table className="min-w-[1000px] w-full border-collapse text-sm">
               <thead>
                 <tr className="bg-slate-100 text-slate-600 uppercase text-xs tracking-wide">
                   <th className="px-4 py-3 text-left">
@@ -436,11 +490,12 @@ const Admin = () => {
                   </th>
                   <th className="px-4 py-3 text-left">Admin ID</th>
                   <th className="px-4 py-3 text-left">Admin Name</th>
+                  <th className="px-4 py-3 text-left">Position</th>
                   <th className="px-4 py-3 text-left">Mobile</th>
                   <th className="px-4 py-3 text-left">Email</th>
                   <th className="px-4 py-3 text-left">Status</th>
-                  <th className="px-4 py-3 text-center">Contract</th>
-                  <th className="px-4 py-3 text-left">Address</th>
+                  <th className="px-4 py-3 text-center hidden md:table-cell">Documents</th>
+                  <th className="px-4 py-3 text-left hidden lg:table-cell">Address</th>
                   <th className="px-4 py-3 text-left">Actions</th>
                 </tr>
               </thead>
@@ -470,6 +525,9 @@ const Admin = () => {
                         </div>
                       </td>
                       <td className="px-4 py-3">
+                        <span className="text-slate-700">{admin.position || "N/A"}</span>
+                      </td>
+                      <td className="px-4 py-3">
                         <div className="flex items-center gap-2 text-slate-600">
                           <span className="text-indigo-500">
                             <PhoneIcon />
@@ -496,16 +554,17 @@ const Admin = () => {
                           {admin.status}
                         </span>
                       </td>
-                      <td className="px-4 py-3 text-center">
+                      <td className="px-4 py-3 text-center hidden md:table-cell">
                         <button
                           className="inline-flex items-center justify-center rounded-lg bg-amber-100 text-amber-700 px-3 py-2 text-xs font-semibold hover:bg-amber-200 transition"
-                          title="View Contract"
-                          onClick={() => handleViewDocument(admin.contractDocument)}
+                          title="Download Documents"
+                          onClick={() => handleViewDocument(admin.documents)}
                         >
                           <FileTextIcon />
+                          <span className="ml-1">{admin.documents?.length || 0}</span>
                         </button>
                       </td>
-                      <td className="px-4 py-3">
+                      <td className="px-4 py-3 hidden lg:table-cell">
                         <div className="flex items-center gap-2 text-slate-600">
                           <span className="text-indigo-500">
                             <MapPinIcon />
@@ -540,7 +599,7 @@ const Admin = () => {
                 ) : (
                   <tr>
                     <td
-                      colSpan={9}
+                      colSpan={10}
                       className="px-4 py-8 text-center text-slate-500"
                     >
                       No admins found
@@ -685,6 +744,23 @@ const Admin = () => {
                     </div>
                   </div>
 
+                  {/* Position */}
+                  <div className="space-y-1">
+                    <label className="text-sm font-medium text-slate-700 flex items-center gap-1">
+                      <UserIcon />
+                      Position
+                    </label>
+                    <div className="flex items-center gap-2 border-2 border-slate-200 rounded-lg px-3 py-2 focus-within:border-indigo-500 focus-within:ring-2 focus-within:ring-indigo-200">
+                      <input
+                        name="position"
+                        value={formData.position}
+                        onChange={handleChange}
+                        placeholder="e.g., Senior Admin, Junior Admin"
+                        className="w-full outline-none text-sm text-slate-800"
+                      />
+                    </div>
+                  </div>
+
                   {/* Status */}
                   <div className="space-y-1">
                     <label className="text-sm font-medium text-slate-700 flex items-center gap-1">
@@ -704,26 +780,37 @@ const Admin = () => {
                     </div>
                   </div>
 
-                  {/* Contract Document */}
-                  <div className="space-y-1">
+                  {/* Documents */}
+                  <div className="space-y-1 md:col-span-2">
                     <label className="text-sm font-medium text-slate-700 flex items-center gap-1">
                       <AttachmentIcon />
-                      Contract Document
+                      Documents
                     </label>
                     <div className="flex items-center gap-2 border-2 border-slate-200 rounded-lg px-3 py-2 focus-within:border-indigo-500 focus-within:ring-2 focus-within:ring-indigo-200">
                       <input
                         type="file"
-                        name="contractDocument"
+                        multiple
                         onChange={handleFileChange}
                         className="w-full text-sm text-slate-800"
                       />
                     </div>
-                    {formData.contractDocument &&
-                      typeof formData.contractDocument !== "string" && (
-                        <p className="text-xs text-slate-500 mt-1">
-                          {formData.contractDocument.name}
-                        </p>
-                      )}
+                    {formData.documents.length > 0 && (
+                      <div className="mt-2 space-y-1">
+                        <p className="text-xs text-slate-600">Selected files:</p>
+                        {formData.documents.map((doc, index) => (
+                          <div key={index} className="flex items-center justify-between bg-slate-50 px-2 py-1 rounded text-xs">
+                            <span className="truncate">{typeof doc === "string" ? doc : doc.name}</span>
+                            <button
+                              type="button"
+                              onClick={() => removeDocument(index)}
+                              className="text-rose-500 hover:text-rose-700 ml-2"
+                            >
+                              ×
+                            </button>
+                          </div>
+                        ))}
+                      </div>
+                    )}
                   </div>
 
                   {/* Notes */}
