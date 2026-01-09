@@ -225,7 +225,7 @@ const AdminSidebar = ({
                 Leave Types
               </Link>
 
-              <Link
+              {/* <Link
                 to="/admin/leave-setting"
                 onClick={() => setOpenleave("/admin/leave-setting")}
                 className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm transition-all duration-200 w-full text-left
@@ -237,7 +237,7 @@ const AdminSidebar = ({
               >
                 <div className="w-1.5 h-1.5 rounded-full bg-current"></div>
                 Leave Setting
-              </Link>
+              </Link> */}
             </div>
 
             {/* Attendance Section */}
@@ -289,7 +289,7 @@ const AdminSidebar = ({
                 Today Attendance
               </Link>
 
-              <Link
+              {/* <Link
                 to="/admin/employee-attendance"
                 onClick={() => setOpenattendance("/admin/employee-attendance")}
                 className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm transition-all duration-200 w-full text-left
@@ -301,7 +301,7 @@ const AdminSidebar = ({
               >
                 <div className="w-1.5 h-1.5 rounded-full bg-current"></div>
                 Employee Attendance
-              </Link>
+              </Link> */}
 
               <Link
                 to="/admin/attendance-sheet"

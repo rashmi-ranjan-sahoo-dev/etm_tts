@@ -184,7 +184,7 @@ const TodayAttendance = () => {
                                     <td className="p-4">
                                         <div
                                             className="flex items-center gap-3 cursor-pointer hover:bg-gray-100 p-2 rounded-lg transition-colors"
-                                            onClick={() => navigate('/employee-attendance', { state: { employee: emp } })}
+                                            onClick={() => navigate('/admin/employee-attendance', { state: { employee: emp } })}
                                         >
                                             <img src={emp.avatar} alt={emp.name} className="w-8 h-8 rounded-full bg-gray-200 object-cover" />
                                             <span className="font-medium text-blue-600 hover:underline">{emp.name}</span>

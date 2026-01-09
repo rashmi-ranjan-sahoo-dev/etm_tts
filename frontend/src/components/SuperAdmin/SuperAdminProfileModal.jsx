@@ -8,9 +8,9 @@ const SuperAdminProfileModal = ({ isOpen, onClose }) => {
     const [profile, setProfile] = useState({
         firstName: 'Sarah',
         lastName: 'Smith',
-        email: 'John@superadmin.com',
+        email: 'sarah.smith@admin.com',
         phone: '+1 234-567-8900',
-        role: 'Super Admin',
+        role: 'HR Admin',
         location: 'New York, USA',
         image: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?ixlib=rb-1.2.1&auto=format&fit=crop&w=100&h=100&q=80'
     });

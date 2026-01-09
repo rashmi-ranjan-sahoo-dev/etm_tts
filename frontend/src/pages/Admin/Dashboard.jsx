@@ -444,7 +444,7 @@ const Dashboard = () => {
                                         <Umbrella size={24} />
                                     </div>
                                     <div>
-                                        <span className="text-[28px] font-bold text-[#333] block leading-none mb-[5px]">View</span>
+                                        <span className="text-[28px] font-bold text-[#333] block leading-none mb-[5px]">50</span>
                                         <span className="text-[13px] text-[#666] font-medium">All Employees Leaves</span>
                                     </div>
                                 </div>
