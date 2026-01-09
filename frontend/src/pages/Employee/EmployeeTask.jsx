@@ -1,11 +1,18 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useSearchParams } from "react-router-dom";
 import { Search, CheckCircle2, Clock, AlertCircle, Paperclip, Download, FileText, Image, File, X } from "lucide-react";
 
 const EmployeeTask = () => {
+  const [searchParams] = useSearchParams();
   const [search, setSearch] = useState("");
   const [selectedIds, setSelectedIds] = useState([]);
   const [viewingAttachment, setViewingAttachment] = useState(null);
-  const [activeTab, setActiveTab] = useState("tasks");
+  
+  // Get initial tab from URL params, default to "tasks"
+  const urlTab = searchParams.get("tab") || "tasks";
+  const urlStatus = searchParams.get("status") || null;
+  const [activeTab, setActiveTab] = useState(urlTab);
+  const [statusFilter, setStatusFilter] = useState(urlStatus);
 
   const Tasks = [
     {
@@ -99,18 +106,27 @@ const EmployeeTask = () => {
 
   const currentData = activeTab === "tasks" ? Tasks : Tickets;
 
-  const filteredTasks = currentData.filter((t) => {
-    if (!search.trim()) return true;
-    const s = search.toLowerCase();
-    return (
-      t.TaskNumber.toLowerCase().includes(s) ||
-      t.ProjectManager.toLowerCase().includes(s) ||
-      t.Project.toLowerCase().includes(s) ||
-      t.Status.toLowerCase().includes(s) ||
-      t.Priority.toLowerCase().includes(s) ||
-      t.Type.toLowerCase().includes(s)
-    );
-  });
+  const filteredTasks = currentData
+    .filter((t) => {
+      // Apply status filter if on tickets tab and status is specified
+      if (activeTab === "tickets" && statusFilter) {
+        return t.Status === statusFilter;
+      }
+      return true;
+    })
+    .filter((t) => {
+      // Apply search filter
+      if (!search.trim()) return true;
+      const s = search.toLowerCase();
+      return (
+        t.TaskNumber.toLowerCase().includes(s) ||
+        t.ProjectManager.toLowerCase().includes(s) ||
+        t.Project.toLowerCase().includes(s) ||
+        t.Status.toLowerCase().includes(s) ||
+        t.Priority.toLowerCase().includes(s) ||
+        t.Type.toLowerCase().includes(s)
+      );
+    });
 
   const badge = (text, type) => {
     const statusMap = {
@@ -240,6 +256,7 @@ const EmployeeTask = () => {
               <button
                 onClick={() => {
                   setActiveTab("tasks");
+                  setStatusFilter(null);
                   setSearch("");
                   setSelectedIds([]);
                 }}
@@ -254,6 +271,7 @@ const EmployeeTask = () => {
               <button
                 onClick={() => {
                   setActiveTab("tickets");
+                  setStatusFilter(null);
                   setSearch("");
                   setSelectedIds([]);
                 }}
@@ -292,6 +310,42 @@ const EmployeeTask = () => {
                 />
               </div>
             </div>
+
+            {/* Status Filter Buttons - Only for Tickets Tab */}
+            {activeTab === "tickets" && (
+              <div className="flex flex-wrap gap-2">
+                <button
+                  onClick={() => setStatusFilter(null)}
+                  className={`px-4 py-2 rounded-lg font-medium text-sm transition-all ${
+                    statusFilter === null
+                      ? "bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-md"
+                      : "bg-gray-100 text-gray-600 hover:bg-gray-200"
+                  }`}
+                >
+                  All Tickets
+                </button>
+                <button
+                  onClick={() => setStatusFilter("Open")}
+                  className={`px-4 py-2 rounded-lg font-medium text-sm transition-all ${
+                    statusFilter === "Open"
+                      ? "bg-emerald-600 text-white shadow-md"
+                      : "bg-emerald-50 text-emerald-700 border border-emerald-200 hover:bg-emerald-100"
+                  }`}
+                >
+                  Open
+                </button>
+                <button
+                  onClick={() => setStatusFilter("Closed")}
+                  className={`px-4 py-2 rounded-lg font-medium text-sm transition-all ${
+                    statusFilter === "Closed"
+                      ? "bg-slate-600 text-white shadow-md"
+                      : "bg-slate-50 text-slate-700 border border-slate-200 hover:bg-slate-100"
+                  }`}
+                >
+                  Closed
+                </button>
+              </div>
+            )}
           </div>
         </div>
 

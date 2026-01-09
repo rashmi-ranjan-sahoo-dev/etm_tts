@@ -56,7 +56,7 @@ const Dashboard = () => {
 
     const handleStatsCardClick = (cardTitle) => {
         switch (cardTitle) {
-            case "New Projects":
+            case "All Projects":
                 navigate('/super-admin/projects');
                 break;
             case "New Customers":

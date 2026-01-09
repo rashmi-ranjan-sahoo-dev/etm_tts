@@ -28,6 +28,7 @@ import AdminEmployeeAttendanceSheet from './pages/Admin/Attendance/AttendanceShe
 import AdminLeaveBalances from './pages/Admin/Leaves/LeaveBalances.jsx'
 import AdminLeaveRequests from './pages/Admin/Leaves/LeaveRequests.jsx'
 import AdminLeaveTypes from './pages/Admin/Leaves/LeaveTypes.jsx'
+import AdminLeaveDetails from './pages/Admin/AdminLeaveDetails.jsx'
 // import AdminLeaveSetting from './pages/Admin/Leaves/LeaveSetting.jsx'
 import AdminLeave from './pages/Admin/Leaves/AdminLeave.jsx'
 import AdminLeader from './pages/Admin/Leader.jsx'
@@ -40,6 +41,7 @@ import AdminNotice from './pages/Admin/Notice.jsx'
 
 import EmployeeLayout from './layout/EmployeeLayout'
 import MyLeaves from './pages/Employee/MyLeaves/MyLeaves'
+import EmployeeLeaveDetails from './pages/Employee/EmployeeLeaveDetails.jsx'
 import EmployeeDashboard from './pages/Employee/Dashboard'
 import Tasks from './pages/Employee/ProjectManager/AddProjects.jsx'
 import AllProject from './pages/Employee/ProjectManager/Projects.jsx'
@@ -105,6 +107,7 @@ const App = () => {
           <Route path='leavebalances' element={<AdminLeaveBalances/>} />
           <Route path='leaverequest' element={<AdminLeaveRequests/>} />
           <Route path='leave-types' element={<AdminLeaveTypes/>} />
+          <Route path='all-employees-leave' element={<AdminLeaveDetails/>} />
           {/* <Route path='leave-setting' element={<AdminLeaveSetting/>} /> */}
           <Route path='notice' element={<AdminNotice/>}/>
           <Route path='adminleave' element={<AdminLeave/>} />
@@ -122,6 +125,7 @@ const App = () => {
           <Route index element={<EmployeeDashboard />} />
           <Route path="dashboard" element={<EmployeeDashboard />} />
           <Route path="myLeaves" element={<MyLeaves />} />
+          <Route path="leaveDetails" element={<EmployeeLeaveDetails />} />
           <Route path="projectmanager/tasks" element={<Tasks />} />
           <Route path='projectmanager/projects' element={<ProjectManagerAllProjects />} />
           <Route path='projectmanager/project/:id' element={<ProjectDetailsPage />} />
