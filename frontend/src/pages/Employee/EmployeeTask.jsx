@@ -1,5 +1,3 @@
-
-
 import React, { useState } from "react";
 import { Search, CheckCircle2, Clock, AlertCircle, Paperclip, Download, FileText, Image, File, X } from "lucide-react";
 
@@ -7,6 +5,7 @@ const EmployeeTask = () => {
   const [search, setSearch] = useState("");
   const [selectedIds, setSelectedIds] = useState([]);
   const [viewingAttachment, setViewingAttachment] = useState(null);
+  const [activeTab, setActiveTab] = useState("tasks");
 
   const Tasks = [
     {
@@ -53,7 +52,54 @@ const EmployeeTask = () => {
     },
   ];
 
-  const filteredTasks = Tasks.filter((t) => {
+  const Tickets = [
+    {
+      id: 1,
+      TaskNumber: "TICKET-101",
+      ProjectManager: "Amit Kumar",
+      Project: "Customer Portal",
+      Status: "Open",
+      Priority: "High",
+      Type: "Support",
+      TaskDate: "01/05/2026",
+      Attachments: [
+        { name: "customer-complaint.pdf", size: "1.2 MB", type: "pdf", url: "#" },
+        { name: "screenshot-issue.png", size: "2.1 MB", type: "image", url: "#" }
+      ]
+    },
+    {
+      id: 2,
+      TaskNumber: "TICKET-102",
+      ProjectManager: "Priya Sharma",
+      Project: "Mobile Banking App",
+      Status: "Closed",
+      Priority: "Medium",
+      Type: "Technical",
+      TaskDate: "01/03/2026",
+      Attachments: [
+        { name: "resolution-report.docx", size: "945 KB", type: "document", url: "#" }
+      ]
+    },
+    {
+      id: 3,
+      TaskNumber: "TICKET-103",
+      ProjectManager: "Rahul Verma",
+      Project: "E-commerce Platform",
+      Status: "Open",
+      Priority: "Low",
+      Type: "Query",
+      TaskDate: "12/28/2025",
+      Attachments: [
+        { name: "query-details.txt", size: "89 KB", type: "document", url: "#" },
+        { name: "product-screenshot.jpg", size: "1.7 MB", type: "image", url: "#" },
+        { name: "user-feedback.pdf", size: "780 KB", type: "pdf", url: "#" }
+      ]
+    },
+  ];
+
+  const currentData = activeTab === "tasks" ? Tasks : Tickets;
+
+  const filteredTasks = currentData.filter((t) => {
     if (!search.trim()) return true;
     const s = search.toLowerCase();
     return (
@@ -188,29 +234,63 @@ const EmployeeTask = () => {
       <div className="max-w-7xl mx-auto">
         {/* HEADER */}
         <div className="bg-white rounded-2xl shadow-lg shadow-blue-100/50 p-6 mb-6 border border-blue-100/50">
-          <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-            <div>
-              <h2 className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent mb-1">
-                Employee Tasks
-              </h2>
-              <p className="text-sm text-gray-500">
-                {filteredTasks.length} {filteredTasks.length === 1 ? 'task' : 'tasks'} found
-                {selectedIds.length > 0 && ` • ${selectedIds.length} selected`}
-              </p>
+          <div className="flex flex-col gap-4">
+            {/* Tab Buttons */}
+            <div className="flex gap-3">
+              <button
+                onClick={() => {
+                  setActiveTab("tasks");
+                  setSearch("");
+                  setSelectedIds([]);
+                }}
+                className={`px-6 py-2.5 rounded-lg font-semibold text-sm transition-all ${
+                  activeTab === "tasks"
+                    ? "bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-md"
+                    : "bg-gray-100 text-gray-600 hover:bg-gray-200"
+                }`}
+              >
+                Tasks
+              </button>
+              <button
+                onClick={() => {
+                  setActiveTab("tickets");
+                  setSearch("");
+                  setSelectedIds([]);
+                }}
+                className={`px-6 py-2.5 rounded-lg font-semibold text-sm transition-all ${
+                  activeTab === "tickets"
+                    ? "bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-md"
+                    : "bg-gray-100 text-gray-600 hover:bg-gray-200"
+                }`}
+              >
+                Tickets
+              </button>
             </div>
 
-            <div className="relative w-full md:w-80">
-              <Search
-                className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"
-                size={20}
-              />
-              <input
-                type="text"
-                placeholder="Search tasks, projects..."
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-                className="pl-12 pr-4 py-3 w-full rounded-xl border-2 border-gray-200 bg-white focus:outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition-all"
-              />
+            <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+              <div>
+                <h2 className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent mb-1">
+                  Employee {activeTab === "tasks" ? "Tasks" : "Tickets"}
+                </h2>
+                <p className="text-sm text-gray-500">
+                  {filteredTasks.length} {filteredTasks.length === 1 ? (activeTab === "tasks" ? 'task' : 'ticket') : (activeTab === "tasks" ? 'tasks' : 'tickets')} found
+                  {selectedIds.length > 0 && ` • ${selectedIds.length} selected`}
+                </p>
+              </div>
+
+              <div className="relative w-full md:w-80">
+                <Search
+                  className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"
+                  size={20}
+                />
+                <input
+                  type="text"
+                  placeholder={`Search ${activeTab}, projects...`}
+                  value={search}
+                  onChange={(e) => setSearch(e.target.value)}
+                  className="pl-12 pr-4 py-3 w-full rounded-xl border-2 border-gray-200 bg-white focus:outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition-all"
+                />
+              </div>
             </div>
           </div>
         </div>
@@ -238,14 +318,20 @@ const EmployeeTask = () => {
                       className="w-4 h-4 rounded border-gray-300 text-blue-600 focus:ring-2 focus:ring-blue-500/50 cursor-pointer"
                     />
                   </th>
-                  <th className="p-4 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">Task Number</th>
-                  <th className="p-4 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">Project Manager</th>
+                  <th className="p-4 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">
+                    {activeTab === "tasks" ? "Task Number" : "Ticket Number"}
+                  </th>
+                  <th className="p-4 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">Team Leader</th>
                   <th className="p-4 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">Project</th>
                   <th className="p-4 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">Attachments</th>
                   <th className="p-4 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">Status</th>
                   <th className="p-4 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">Priority</th>
-                  <th className="p-4 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">Task Type</th>
-                  <th className="p-4 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">Task Date</th>
+                  <th className="p-4 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">
+                    {activeTab === "tasks" ? "Task Type" : "Ticket Type"}
+                  </th>
+                  <th className="p-4 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">
+                    {activeTab === "tasks" ? "Task Date" : "Ticket Date"}
+                  </th>
                 </tr>
               </thead>
 
@@ -385,7 +471,9 @@ const EmployeeTask = () => {
             <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
               <Search className="w-8 h-8 text-gray-400" />
             </div>
-            <h3 className="text-lg font-semibold text-gray-900 mb-2">No tasks found</h3>
+            <h3 className="text-lg font-semibold text-gray-900 mb-2">
+              No {activeTab === "tasks" ? "tasks" : "tickets"} found
+            </h3>
             <p className="text-gray-500">Try adjusting your search criteria</p>
           </div>
         )}

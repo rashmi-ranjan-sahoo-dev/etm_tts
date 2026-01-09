@@ -8,24 +8,24 @@ const TrainerModal = ({ close, save, editData }) => {
             name: "",
             image: "",
             specialization: "",
-            technicalSkills: "",
+
             trainingArea: "",
             experience: "",
-            languages: "",
+
             phone: "",
             email: "",
         }
     );
 
     const handleSubmit = () => {
-        const { name, specialization, technicalSkills, trainingArea, experience, languages, phone, email } = formData;
+        const { name, specialization, trainingArea, experience, phone, email } = formData;
 
         if (!name.trim()) return alert("Name is required");
         if (!specialization.trim()) return alert("Specialization is required");
-        if (!technicalSkills.trim()) return alert("Technical Skills are required");
+
         if (!trainingArea.trim()) return alert("Training Area is required");
         if (!experience) return alert("Experience is required");
-        if (!languages.trim()) return alert("Languages are required");
+
         if (!phone.trim()) return alert("Phone Number is required");
         if (!email.trim()) return alert("Email is required");
 
@@ -107,17 +107,7 @@ const TrainerModal = ({ close, save, editData }) => {
                             />
                         </div>
 
-                        <div>
-                            <label className="block text-sm font-semibold text-gray-700 mb-2">Technical Skills</label>
-                            <input
-                                type="text"
-                                required
-                                value={formData.technicalSkills}
-                                onChange={(e) => setFormData({ ...formData, technicalSkills: e.target.value })}
-                                className="w-full px-4 py-3 rounded-xl border-2 border-gray-200 bg-gray-50 focus:outline-none focus:border-violet-500 focus:bg-white focus:ring-4 focus:ring-violet-500/10 transition-all"
-                                placeholder="e.g., AWS, Azure, Python"
-                            />
-                        </div>
+
 
                         <div>
                             <label className="block text-sm font-semibold text-gray-700 mb-2">Training Area</label>
@@ -143,17 +133,7 @@ const TrainerModal = ({ close, save, editData }) => {
                             />
                         </div>
 
-                        <div>
-                            <label className="block text-sm font-semibold text-gray-700 mb-2">Languages</label>
-                            <input
-                                type="text"
-                                required
-                                value={formData.languages}
-                                onChange={(e) => setFormData({ ...formData, languages: e.target.value })}
-                                className="w-full px-4 py-3 rounded-xl border-2 border-gray-200 bg-gray-50 focus:outline-none focus:border-violet-500 focus:bg-white focus:ring-4 focus:ring-violet-500/10 transition-all"
-                                placeholder="e.g., English, Spanish"
-                            />
-                        </div>
+
 
                         <div>
                             <label className="block text-sm font-semibold text-gray-700 mb-2">Phone</label>
@@ -208,10 +188,10 @@ const Trainers = () => {
             name: "Alex Johnson",
             image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
             specialization: "Full Stack",
-            technicalSkills: "React, Node.js, MongoDB",
+
             trainingArea: "Web Development",
             experience: "8 Years",
-            languages: "English, German",
+
             phone: "+1 555-0123",
             email: "alex.j@example.com",
         },
@@ -220,10 +200,10 @@ const Trainers = () => {
             name: "Maria Garcia",
             image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
             specialization: "Data Science",
-            technicalSkills: "Python, Pandas, TensorFlow",
+
             trainingArea: "AI & ML",
             experience: "5 Years",
-            languages: "English, Spanish",
+
             phone: "+1 555-0124",
             email: "maria.g@example.com",
         },
@@ -232,10 +212,10 @@ const Trainers = () => {
             name: "David Kim",
             image: "https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
             specialization: "Cybersecurity",
-            technicalSkills: "Ethical Hacking, Network Security",
+
             trainingArea: "Security",
             experience: "6 Years",
-            languages: "English, Korean",
+
             phone: "+1 555-0125",
             email: "david.kim@example.com",
         },
@@ -244,10 +224,10 @@ const Trainers = () => {
             name: "Sarah Conner",
             image: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
             specialization: "DevOps",
-            technicalSkills: "Docker, Kubernetes, AWS",
+
             trainingArea: "Cloud Infrastructure",
             experience: "10 Years",
-            languages: "English, French",
+
             phone: "+1 555-0126",
             email: "sarah.conner@example.com",
         },
@@ -256,10 +236,10 @@ const Trainers = () => {
             name: "Michael Chen",
             image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
             specialization: "Mobile Development",
-            technicalSkills: "React Native, Swift, Kotlin",
+
             trainingArea: "App Development",
             experience: "4 Years",
-            languages: "English, Mandarin",
+
             phone: "+1 555-0127",
             email: "michael.chen@example.com",
         },
@@ -329,10 +309,10 @@ const Trainers = () => {
                                 <tr>
                                     <th className="p-4 font-bold text-gray-700 uppercase tracking-wider">Name</th>
                                     <th className="p-4 font-bold text-gray-700 uppercase tracking-wider">Specialization</th>
-                                    <th className="p-4 font-bold text-gray-700 uppercase tracking-wider">Technical Skills</th>
+
                                     <th className="p-4 font-bold text-gray-700 uppercase tracking-wider">Training Area</th>
                                     <th className="p-4 font-bold text-gray-700 uppercase tracking-wider">Experience</th>
-                                    <th className="p-4 font-bold text-gray-700 uppercase tracking-wider">Languages</th>
+
                                     <th className="p-4 font-bold text-gray-700 uppercase tracking-wider">Phone No</th>
                                     <th className="p-4 font-bold text-gray-700 uppercase tracking-wider">Email</th>
                                     <th className="p-4 font-bold text-gray-700 uppercase tracking-wider text-center">Actions</th>
@@ -359,14 +339,10 @@ const Trainers = () => {
                                             </div>
                                         </td>
                                         <td className="p-4 text-gray-700">{t.specialization}</td>
-                                        <td className="p-4 text-gray-700">
-                                            <span className="line-clamp-2" title={t.technicalSkills}>
-                                                {t.technicalSkills}
-                                            </span>
-                                        </td>
+
                                         <td className="p-4 text-gray-700">{t.trainingArea}</td>
                                         <td className="p-4 text-gray-700">{t.experience}</td>
-                                        <td className="p-4 text-gray-700">{t.languages}</td>
+
                                         <td className="p-4 text-gray-700 whitespace-nowrap">
                                             <div className="flex items-center gap-2">
                                                 <Phone size={16} className="text-violet-500" />
@@ -437,11 +413,7 @@ const Trainers = () => {
                             <div className="h-px bg-gradient-to-r from-transparent via-gray-200 to-transparent"></div>
 
                             <div className="space-y-2.5 text-sm">
-                                <div className="flex items-center gap-2">
-                                    <Briefcase className="w-4 h-4 text-violet-400" />
-                                    <span className="text-gray-500 font-semibold w-24">Skills:</span>
-                                    <span className="text-gray-900 flex-1">{t.technicalSkills}</span>
-                                </div>
+
 
                                 <div className="flex items-center gap-2">
                                     <BookOpen className="w-4 h-4 text-violet-400" />
@@ -455,11 +427,7 @@ const Trainers = () => {
                                     <span className="text-gray-900 flex-1">{t.experience}</span>
                                 </div>
 
-                                <div className="flex items-center gap-2">
-                                    <Globe className="w-4 h-4 text-violet-400" />
-                                    <span className="text-gray-500 font-semibold w-24">Lang:</span>
-                                    <span className="text-gray-900 flex-1">{t.languages}</span>
-                                </div>
+
 
                                 <div className="flex items-center gap-2">
                                     <Phone className="w-4 h-4 text-violet-400" />

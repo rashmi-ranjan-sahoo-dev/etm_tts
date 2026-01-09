@@ -23,12 +23,14 @@ import AdminEmployeeAttendanceSheet from './pages/Admin/Attendance/AttendanceShe
 import AdminLeaveBalances from './pages/Admin/Leaves/LeaveBalances.jsx'
 import AdminLeaveRequests from './pages/Admin/Leaves/LeaveRequests.jsx'
 import AdminLeaveTypes from './pages/Admin/Leaves/LeaveTypes.jsx'
-import AdminLeaveSetting from './pages/Admin/Leaves/LeaveSetting.jsx'
+// import AdminLeaveSetting from './pages/Admin/Leaves/LeaveSetting.jsx'
+import AdminLeave from './pages/Admin/Leaves/AdminLeave.jsx'
 import AdminLeader from './pages/Admin/Leader.jsx'
 import AdminTrainingList from './pages/Admin/Training/TrainingList.jsx'
 import AdminTrainers from './pages/Admin/Training/Trainers.jsx'
 import AdminTrainingType from './pages/Admin/Training/TrainingType.jsx'
 import AdminHoliday from './pages/Admin/Holiday.jsx'
+import AdminNotice from './pages/Admin/Notice.jsx'
 
 
 import EmployeeLayout from './layout/EmployeeLayout'
@@ -86,7 +88,9 @@ const App = () => {
           <Route path='leavebalances' element={<AdminLeaveBalances/>} />
           <Route path='leaverequest' element={<AdminLeaveRequests/>} />
           <Route path='leave-types' element={<AdminLeaveTypes/>} />
-          <Route path='leave-setting' element={<AdminLeaveSetting/>} />
+          {/* <Route path='leave-setting' element={<AdminLeaveSetting/>} /> */}
+          <Route path='notice' element={<AdminNotice/>}/>
+          <Route path='adminleave' element={<AdminLeave/>} />
           <Route path='leader' element={<AdminLeader/>}/>
           <Route path='today-attendance' element={<AdminTodayAttendance/>} />
           <Route path='attendance-sheet' element={<AdminEmployeeAttendanceSheet/>} />
