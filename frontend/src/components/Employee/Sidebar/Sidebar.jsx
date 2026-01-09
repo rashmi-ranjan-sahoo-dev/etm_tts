@@ -1,15 +1,17 @@
 import React, { useState } from "react";
-import { LayoutDashboard, FileText, CheckSquare, Settings, MessageSquare, ChevronDown, X, Sparkles,FolderKanban } from "lucide-react";
+import { LayoutDashboard, FileText, CheckSquare, Settings, MessageSquare, ChevronDown, X, Sparkles, } from "lucide-react";
 import { Link } from "react-router-dom";
 import { LogOut } from "lucide-react";
 import {Ticket} from "lucide-react";
 
+import EmployeeProfileModal from "./EmployeeProfileModal";
 
 const Sidebar = ({ isSidebarOpen = true, setIsSidebarOpen = () => { } }) => {
   const [openAccounts, setOpenAccounts] = useState(false);
-  // const [openProjects, setOpenProjects] = useState(false);
+  const [openProjects, setOpenProjects] = useState(false);
   const [openTasks, setOpenTasks] = useState(false);
   const [activeRoute, setActiveRoute] = useState(window.location.pathname);
+  const [isProfileModalOpen, setIsProfileModalOpen] = useState(false);
 
   // Placeholder images
   const ttsimg = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%234F46E5'/%3E%3Ctext x='50' y='55' font-family='Arial' font-size='24' fill='white' text-anchor='middle'%3ETTS%3C/text%3E%3C/svg%3E";
@@ -18,7 +20,6 @@ const Sidebar = ({ isSidebarOpen = true, setIsSidebarOpen = () => { } }) => {
   const menuItems = [
     { name: "Dashboard", icon: LayoutDashboard, to: "/employee/dashboard" },
     { name: "My Leaves", icon: FileText, to: "/employee/myLeaves" },
-    { name: "Projects", icon: FolderKanban, to: "/employee/projectmanager/projects" },
     { name: "My Tasks", icon: CheckSquare, to: "/employee/myTasks" },
     // { name: "Tasks", icon: CheckSquare, to: "/employee/ProjectManagerTasks" },
     { name: "Settings", icon: Settings, to: "/employee/settings" },
@@ -28,6 +29,11 @@ const Sidebar = ({ isSidebarOpen = true, setIsSidebarOpen = () => { } }) => {
 
   return (
     <>
+      <EmployeeProfileModal 
+        isOpen={isProfileModalOpen} 
+        onClose={() => setIsProfileModalOpen(false)} 
+      />
+
       {/* Overlay with blur */}
       {isSidebarOpen && (
         <div
@@ -73,13 +79,16 @@ const Sidebar = ({ isSidebarOpen = true, setIsSidebarOpen = () => { } }) => {
 
           {/* Profile */}
           <div className="p-6 text-center">
-            <div className="relative inline-block">
+            <div 
+              className="relative inline-block cursor-pointer group"
+              onClick={() => setIsProfileModalOpen(true)}
+            >
               <img
                 src={employee}
                 alt="Employee"
-                className="w-24 h-24 rounded-2xl mx-auto shadow-lg ring-4 ring-white"
+                className="w-24 h-24 rounded-2xl mx-auto shadow-lg ring-4 ring-white group-hover:scale-105 transition-transform duration-300"
               />
-              <div className="absolute -bottom-2 -right-2 w-8 h-8 bg-gradient-to-br from-emerald-400 to-teal-500 rounded-full flex items-center justify-center shadow-lg">
+              <div className="absolute -bottom-2 -right-2 w-8 h-8 bg-gradient-to-br from-emerald-400 to-teal-500 rounded-full flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
                 <Sparkles className="text-white" size={16} />
               </div>
             </div>
@@ -117,7 +126,7 @@ const Sidebar = ({ isSidebarOpen = true, setIsSidebarOpen = () => { } }) => {
             })}
 
             {/* Projects Section */}
-            {/* <button
+            <button
               onClick={() => setOpenProjects(!openProjects)}
               className={`group flex items-center justify-between w-full px-4 py-3.5 rounded-xl font-medium transition-all duration-200 text-gray-700
     ${openProjects ? "bg-white/80 shadow-md" : "hover:bg-white/80 hover:shadow-md"}`}
@@ -132,18 +141,18 @@ const Sidebar = ({ isSidebarOpen = true, setIsSidebarOpen = () => { } }) => {
               <div className={`transition-transform duration-300 ${openProjects ? "rotate-180" : ""}`}>
                 <ChevronDown size={18} />
               </div>
-            </button> */}
+            </button>
 
             {/* Projects Submenu */}
-            {/* <div
+            <div
               className={`ml-4 space-y-1 overflow-hidden transition-all duration-300 ease-in-out
   ${openProjects ? "max-h-40 opacity-100 mt-2" : "max-h-0 opacity-0"}`}
             >
               <Link
-                to="/employee/projectmanager/projects"
-                onClick={() => setActiveRoute("/employee/projectmanager/projects")}
+                to="/employee/projectmanager/allprojects"
+                onClick={() => setActiveRoute("/employee/projectmanager/allprojects")}
                 className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm transition-all duration-200 w-full text-left
-      ${activeRoute === "/employee/projectmanager/projects"
+      ${activeRoute === "/employee/projectmanager/allprojects"
                     ? "bg-gradient-to-r from-indigo-500 to-purple-500 text-white shadow-md"
                     : "hover:bg-white/80 hover:shadow-sm text-gray-600 hover:text-gray-900"
                   }`}
@@ -164,7 +173,7 @@ const Sidebar = ({ isSidebarOpen = true, setIsSidebarOpen = () => { } }) => {
                 <div className="w-1.5 h-1.5 rounded-full bg-current"></div>
                 Add Project
               </Link>
-            </div> */}
+            </div>
 
 
             {/* Accounts Section */}

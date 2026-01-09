@@ -5,10 +5,13 @@ import {
 } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 
+import SperAdminProfileModal from "./SuperAdminProfileModal";
+
 const SuperAdminSidebar = ({ isSidebarOpen = true, setIsSidebarOpen = () => { } }) => {
   const location = useLocation();
   const [activeRoute, setActiveRoute] = useState(location.pathname);
-  // const [openProjects, setOpenProjects] = useState(false);
+  const [openProjects, setOpenProjects] = useState(false);
+  const [isProfileModalOpen, setIsProfileModalOpen] = useState(false);
 
   const logo =
     "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Ccircle cx='50' cy='50' r='50' fill='%237C3AED'/%3E%3Ctext x='50' y='58' font-size='30' fill='white' text-anchor='middle'%3EK%3C/text%3E%3C/svg%3E";
@@ -20,13 +23,16 @@ const SuperAdminSidebar = ({ isSidebarOpen = true, setIsSidebarOpen = () => { } 
     { name: "Dashboard", icon: LayoutDashboard, to: "/super-admin/dashboard" },
     { name: "Client", icon: Users, to: "/super-admin/client" },
     { name: "Admin", icon: ShieldCheck, to: "/super-admin/admin" },
-    { name: "Notice", icon: ShieldCheck, to: "/super-admin/notice" },
-    { name: "Projects", icon: FolderKanban, to: "/super-admin/projects" },
     { name: "Setting", icon: Settings, to: "/super-admin/setting" },
   ];
 
   return (
     <>
+      <SperAdminProfileModal 
+        isOpen={isProfileModalOpen} 
+        onClose={() => setIsProfileModalOpen(false)} 
+      />
+
       {/* Overlay with blur */}
       {isSidebarOpen && (
         <div
@@ -71,13 +77,16 @@ const SuperAdminSidebar = ({ isSidebarOpen = true, setIsSidebarOpen = () => { } 
 
           {/* Profile */}
           <div className="p-6 text-center">
-            <div className="relative inline-block">
+            <div 
+              className="relative inline-block cursor-pointer group"
+              onClick={() => setIsProfileModalOpen(true)}
+            >
               <img
                 src={profile}
                 alt="Super Admin"
-                className="w-24 h-24 rounded-2xl mx-auto shadow-lg ring-4 ring-white"
+                className="w-24 h-24 rounded-2xl mx-auto shadow-lg ring-4 ring-white group-hover:scale-105 transition-transform duration-300"
               />
-              <div className="absolute -bottom-2 -right-2 w-8 h-8 bg-gradient-to-br from-purple-400 to-indigo-500 rounded-full flex items-center justify-center shadow-lg">
+              <div className="absolute -bottom-2 -right-2 w-8 h-8 bg-gradient-to-br from-purple-400 to-indigo-500 rounded-full flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
                 <Crown className="text-white" size={16} />
               </div>
             </div>
@@ -114,7 +123,7 @@ const SuperAdminSidebar = ({ isSidebarOpen = true, setIsSidebarOpen = () => { } 
               );
             })}
 
-            {/* <button
+            <button
               onClick={() => setOpenProjects(!openProjects)}
               className={`group flex items-center justify-between w-full px-4 py-3.5 rounded-xl font-medium transition-all duration-200 text-gray-700
     ${openProjects ? "bg-white/80 shadow-md" : "hover:bg-white/80 hover:shadow-md"}`}
@@ -160,7 +169,7 @@ const SuperAdminSidebar = ({ isSidebarOpen = true, setIsSidebarOpen = () => { } 
                 <div className="w-1.5 h-1.5 rounded-full bg-current"></div>
                 Add Project
               </Link>
-            </div> */}
+            </div>
 
 
 
