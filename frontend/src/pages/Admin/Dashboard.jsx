@@ -385,7 +385,7 @@ const Dashboard = () => {
                             <div className="flex-1 grid grid-cols-2 gap-[15px]">
                                 {/* Total Employees */}
                                 <div
-                                    onClick={() => navigate('/employees')}
+                                    onClick={() => navigate('/admin/employee')}
                                     className="bg-[#fff] border border-[#f0f0f0] rounded-[10px] p-[15px] flex items-center gap-[20px] shadow-[0_2px_4px_rgba(0,0,0,0.02)] cursor-pointer hover:shadow-md transition-all"
                                 >
                                     <div className="w-[50px] h-[40px] rounded-full bg-[#2196f3] flex items-center justify-center text-white shadow-sm">
@@ -398,7 +398,7 @@ const Dashboard = () => {
                                 </div>
                                 {/* Active Employees */}
                                 <div
-                                    onClick={() => navigate('/employees', { state: { status: 'Active' } })}
+                                    onClick={() => navigate('/admin/employee', { state: { status: 'Active' } })}
                                     className="bg-[#fff] border border-[#f0f0f0] rounded-[10px] p-[15px] flex items-center gap-[20px] shadow-[0_2px_4px_rgba(0,0,0,0.02)] cursor-pointer hover:shadow-md transition-all"
                                 >
                                     <div className="w-[50px] h-[40px] rounded-full bg-[#4caf50] flex items-center justify-center text-white shadow-sm">
@@ -411,11 +411,11 @@ const Dashboard = () => {
                                 </div>
                                 {/* Inactive Employee */}
                                 <div
-                                    onClick={() => navigate('/employees', { state: { status: 'Inactive' } })}
+                                    onClick={() => navigate('/admin/employee', { state: { status: 'Inactive' } })}
                                     className="bg-[#fff] border border-[#f0f0f0] rounded-[10px] p-[15px] flex items-center gap-[20px] shadow-[0_2px_4px_rgba(0,0,0,0.02)] cursor-pointer hover:shadow-md transition-all"
                                 >
-                                    <div className="w-[55px] h-[40px] rounded-full bg-[#f44336] flex items-center justify-center text-white shadow-sm">
-                                        <UserX size={24} />
+                                    <div className="w-[55px] h-[35px] rounded-full bg-[#f44336] flex items-center justify-center text-white shadow-sm">
+                                        <UserX size={23} />
                                     </div>
                                     <div>
                                         <span className="text-[28px] font-bold text-[#333] block leading-none mb-[5px]">130</span>
@@ -424,11 +424,11 @@ const Dashboard = () => {
                                 </div>
                                 {/* Contractors */}
                                 <div
-                                    onClick={() => navigate('/employees', { state: { type: 'Contract' } })}
+                                    onClick={() => navigate('/admin/employee', { state: { type: 'Contract' } })}
                                     className="bg-[#fff] border border-[#f0f0f0] rounded-[10px] p-[15px] flex items-center gap-[20px] shadow-[0_2px_4px_rgba(0,0,0,0.02)] cursor-pointer hover:shadow-md transition-all"
                                 >
-                                    <div className="w-[40px] h-[40px] rounded-full bg-[#ff9800] flex items-center justify-center text-white shadow-sm">
-                                        <HardHat size={24} />
+                                    <div className="w-[55px] h-[35px] rounded-full bg-[#ff9800] flex items-center justify-center text-white shadow-sm">
+                                        <HardHat size={23} />
                                     </div>
                                     <div>
                                         <span className="text-[28px] font-bold text-[#333] block leading-none mb-[5px]">21</span>
@@ -581,7 +581,7 @@ const Dashboard = () => {
                             {/* Left Column: Key Stats */}
                             <div className="flex-1 flex flex-col justify-center gap-[30px]">
                                 <div
-                                    onClick={() => navigate('/employees')}
+                                    onClick={() => navigate('/admin/employee')}
                                     className="cursor-pointer hover:opacity-80 transition-opacity"
                                 >
                                     <span className="text-[28px] font-bold text-[#333] block mb-[5px]">156</span>
@@ -851,7 +851,7 @@ const Dashboard = () => {
                             <div className="grid grid-cols-2 gap-[10px]">
                                 {/* Present */}
                                 <div
-                                    onClick={() => navigate('/attendance', { state: { status: 'Present' } })}
+                                    onClick={() => navigate('/admin/today-attendance', { state: { status: 'Present' } })}
                                     className="bg-[#4caf50] rounded-[8px] p-[15px] flex flex-col items-center justify-center text-white shadow-sm cursor-pointer hover:opacity-90 transition-opacity"
                                 >
                                     <span className="text-[24px] font-bold mb-[2px]">215</span>
@@ -860,7 +860,7 @@ const Dashboard = () => {
                                 </div>
                                 {/* Absent */}
                                 <div
-                                    onClick={() => navigate('/attendance', { state: { status: 'Absent' } })}
+                                    onClick={() => navigate('/admin/today-attendance', { state: { status: 'Absent' } })}
                                     className="bg-[#f44336] rounded-[8px] p-[15px] flex flex-col items-center justify-center text-white shadow-sm cursor-pointer hover:opacity-90 transition-opacity"
                                 >
                                     <span className="text-[24px] font-bold mb-[2px]">12</span>
@@ -902,13 +902,13 @@ const Dashboard = () => {
                         {/* Action Buttons */}
                         <div className="flex flex-col gap-[10px] mt-auto">
                             <button
-                                onClick={() => navigate('/attendance')}
+                                onClick={() => navigate('/admin/today-attendance')}
                                 className="w-full p-[12px] border-none rounded-[30px] bg-[#e3f2fd] text-[#1976d2] font-semibold text-[13px] flex items-center justify-center gap-[10px] cursor-pointer transition-colors duration-200 hover:bg-[#bbdefb] shadow-sm"
                             >
                                 <History size={18} /> View Full Attendance History
                             </button>
                             <button
-                                onClick={() => navigate('/attendance', { state: { openAddModal: true } })}
+                                onClick={() => navigate('/admin/today-attendance', { state: { openAddModal: true } })}
                                 className="w-full p-[12px] border-none rounded-[30px] bg-[#e3f2fd] text-[#1976d2] font-semibold text-[13px] flex items-center justify-center gap-[10px] cursor-pointer transition-colors duration-200 hover:bg-[#bbdefb] shadow-sm"
                             >
                                 <BarChart2 size={18} /> Generate Attendance Report
