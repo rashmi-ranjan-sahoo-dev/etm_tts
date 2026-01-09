@@ -3,9 +3,12 @@ import {LayoutDashboard,FolderKanban,Headphones,CreditCard,Settings,LogOut,X,Spa
 } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 
+import ClientProfileModal from "./ClientProfileModal";
+
 const ClientSidebar = ({ isSidebarOpen = true, setIsSidebarOpen = () => {} }) => {
   const location = useLocation();
   const [activeRoute, setActiveRoute] = useState(location.pathname);
+  const [isProfileModalOpen, setIsProfileModalOpen] = useState(false);
 
   const logo =
     "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Ccircle cx='50' cy='50' r='50' fill='%236366F1'/%3E%3Ctext x='50' y='58' font-size='30' fill='white' text-anchor='middle'%3EK%3C/text%3E%3C/svg%3E";
@@ -23,6 +26,11 @@ const ClientSidebar = ({ isSidebarOpen = true, setIsSidebarOpen = () => {} }) =>
 
   return (
     <>
+      <ClientProfileModal 
+        isOpen={isProfileModalOpen} 
+        onClose={() => setIsProfileModalOpen(false)} 
+      />
+      
       {/* Overlay with blur */}
       {isSidebarOpen && (
         <div
@@ -67,13 +75,16 @@ const ClientSidebar = ({ isSidebarOpen = true, setIsSidebarOpen = () => {} }) =>
 
           {/* Profile */}
           <div className="p-6 text-center">
-            <div className="relative inline-block">
+            <div 
+              className="relative inline-block cursor-pointer group"
+              onClick={() => setIsProfileModalOpen(true)}
+            >
               <img
                 src={profile}
                 alt="Client"
-                className="w-24 h-24 rounded-2xl mx-auto shadow-lg ring-4 ring-white"
+                className="w-24 h-24 rounded-2xl mx-auto shadow-lg ring-4 ring-white group-hover:scale-105 transition-transform duration-300"
               />
-              <div className="absolute -bottom-2 -right-2 w-8 h-8 bg-gradient-to-br from-indigo-400 to-purple-500 rounded-full flex items-center justify-center shadow-lg">
+              <div className="absolute -bottom-2 -right-2 w-8 h-8 bg-gradient-to-br from-indigo-400 to-purple-500 rounded-full flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
                 <Sparkles className="text-white" size={16} />
               </div>
             </div>

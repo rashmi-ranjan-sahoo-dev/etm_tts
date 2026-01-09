@@ -12,6 +12,8 @@ import {
 } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 
+import AdminProfileModal from "./AdminProfileModal";
+
 const AdminSidebar = ({
   isSidebarOpen = true,
   setIsSidebarOpen = () => {},
@@ -20,7 +22,8 @@ const AdminSidebar = ({
   const [activeRoute, setActiveRoute] = useState(location.pathname);
   const [openattendance, setOpenattendance] = useState(false)
   const [openleave, setOpenleave] = useState(false);
-  const [opentraining, setOpentraining] = useState(false)
+  const [opentraining, setOpentraining] = useState(false);
+  const [isProfileModalOpen, setIsProfileModalOpen] = useState(false);
 
   const logo =
     "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Ccircle cx='50' cy='50' r='50' fill='%236366F1'/%3E%3Ctext x='50' y='58' font-size='30' fill='white' text-anchor='middle'%3EK%3C/text%3E%3C/svg%3E";
@@ -33,7 +36,7 @@ const AdminSidebar = ({
     { name: "All Employee", icon: LayoutDashboard, to: "/admin/employee" },
     { name: "Holidays", icon: LayoutDashboard, to: "/admin/holiday" },
     // { name: "leaves", icon: LayoutDashboard, to: "/admin/leave" },
-     { name: "Notice", icon: LayoutDashboard, to: "/admin/notice" },
+    // { name: "Attendance", icon: LayoutDashboard, to: "/admin/attendance" },
     { name: "Leader", icon: LayoutDashboard, to: "/admin/leader" },
     { name: "Department", icon: LayoutDashboard, to: "/admin/department" },
     { name: "Settings", icon: Settings, to: "/admin/settings" },
@@ -42,6 +45,11 @@ const AdminSidebar = ({
 
   return (
     <>
+      <AdminProfileModal 
+        isOpen={isProfileModalOpen} 
+        onClose={() => setIsProfileModalOpen(false)} 
+      />
+      
       {/* Overlay with blur */}
       {isSidebarOpen && (
         <div
@@ -90,13 +98,16 @@ const AdminSidebar = ({
 
           {/* Profile */}
           <div className="p-6 text-center">
-            <div className="relative inline-block">
+            <div 
+              className="relative inline-block cursor-pointer group"
+              onClick={() => setIsProfileModalOpen(true)}
+            >
               <img
                 src={profile}
                 alt="Client"
-                className="w-24 h-24 rounded-2xl mx-auto shadow-lg ring-4 ring-white"
+                className="w-24 h-24 rounded-2xl mx-auto shadow-lg ring-4 ring-white group-hover:scale-105 transition-transform duration-300"
               />
-              <div className="absolute -bottom-2 -right-2 w-8 h-8 bg-gradient-to-br from-indigo-400 to-purple-500 rounded-full flex items-center justify-center shadow-lg">
+              <div className="absolute -bottom-2 -right-2 w-8 h-8 bg-gradient-to-br from-indigo-400 to-purple-500 rounded-full flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
                 <Sparkles className="text-white" size={16} />
               </div>
             </div>
@@ -186,20 +197,6 @@ const AdminSidebar = ({
                 All Leaves
               </Link>
 
-              {/* <Link
-                to="/admin/adminleave"
-                onClick={() => setOpenleave("/admin/adminleave")}
-                className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm transition-all duration-200 w-full text-left
-                  ${
-                    openleave === "/admin/adminleave"
-                      ? "bg-gradient-to-r from-indigo-500 to-purple-500 text-white shadow-md"
-                      : "hover:bg-white/80 hover:shadow-sm text-gray-600 hover:text-gray-900"
-                  }`}
-              >
-                <div className="w-1.5 h-1.5 rounded-full bg-current"></div>
-                Apply Leave
-              </Link> */}
-
               <Link
                 to="/admin/leavebalances"
                 onClick={() => setOpenleave("/admin/leavebalances")}
@@ -228,7 +225,7 @@ const AdminSidebar = ({
                 Leave Types
               </Link>
 
-              {/* <Link
+              <Link
                 to="/admin/leave-setting"
                 onClick={() => setOpenleave("/admin/leave-setting")}
                 className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm transition-all duration-200 w-full text-left
@@ -240,7 +237,7 @@ const AdminSidebar = ({
               >
                 <div className="w-1.5 h-1.5 rounded-full bg-current"></div>
                 Leave Setting
-              </Link> */}
+              </Link>
             </div>
 
             {/* Attendance Section */}
@@ -292,7 +289,7 @@ const AdminSidebar = ({
                 Today Attendance
               </Link>
 
-              {/* <Link
+              <Link
                 to="/admin/employee-attendance"
                 onClick={() => setOpenattendance("/admin/employee-attendance")}
                 className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm transition-all duration-200 w-full text-left
@@ -304,7 +301,7 @@ const AdminSidebar = ({
               >
                 <div className="w-1.5 h-1.5 rounded-full bg-current"></div>
                 Employee Attendance
-              </Link> */}
+              </Link>
 
               <Link
                 to="/admin/attendance-sheet"
