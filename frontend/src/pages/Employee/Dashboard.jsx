@@ -307,17 +307,8 @@
 
 
 import React, { useState, useEffect } from "react";
-import {
-  BarChart,
-  Bar,
-  XAxis,
-  YAxis,
-  Tooltip,
-  CartesianGrid,
-  ResponsiveContainer,
-  RadialBarChart,
-  RadialBar,
-  Legend,
+import { useNavigate } from "react-router-dom";
+import {BarChart,Bar,XAxis,YAxis,Tooltip,CartesianGrid,ResponsiveContainer,RadialBarChart,RadialBar,Legend,
 } from "recharts";
 import { Ticket, CheckCircle, Briefcase, Umbrella } from "lucide-react";
 
@@ -325,7 +316,7 @@ import { Ticket, CheckCircle, Briefcase, Umbrella } from "lucide-react";
 const stats = [
   { title: "New Tickets", value: 23, change: "18% Higher Than Last Month", icon: Ticket, bg: "from-purple-500 to-indigo-500" },
   { title: "Ticket Resolved", value: 20, change: "21% Higher Than Last Month", icon: CheckCircle, bg: "from-green-500 to-emerald-500" },
-  { title: "Project Assigned", value: 13, change: "37% Higher Than Last Month", icon: Briefcase, bg: "from-orange-500 to-amber-500" },
+  { title: "Tasks Assigned", value: 13, change: "37% Higher Than Last Month", icon: Briefcase, bg: "from-orange-500 to-amber-500" },
   { title: "Available Leaves", value: 34, change: "10% Higher Than Last Month", icon: Umbrella, bg: "from-blue-500 to-sky-500" },
 ];
 
@@ -390,8 +381,17 @@ const attendanceData = Array.from({ length: 20 }).map((_, i) => ({
 
 /* ================= COMPONENT ================= */
 const Dashboard = () => {
+  const navigate = useNavigate();
   const [view, setView] = useState("week");
   const [search, setSearch] = useState("");
+
+  // Route mapping for stat cards with filters
+  const routeMap = {
+    "New Tickets": "/employee/myTasks?tab=tickets&status=Open",
+    "Ticket Resolved": "/employee/myTasks?tab=tickets&status=Closed",
+    "Tasks Assigned": "/employee/myTasks?tab=tasks",
+    "Available Leaves": "/employee/leaveDetails",
+  };
 
   useEffect(() => {
     localStorage.setItem("hours_view", view);
@@ -410,7 +410,11 @@ const Dashboard = () => {
         {stats.map((item, i) => {
           const Icon = item.icon;
           return (
-            <div key={i} className={`bg-linear-to-r ${item.bg} text-white p-4 rounded-xl flex justify-between`}>
+            <div
+              key={i}
+              onClick={() => navigate(routeMap[item.title])}
+              className={`bg-linear-to-r ${item.bg} text-white p-4 rounded-xl flex justify-between cursor-pointer hover:shadow-lg hover:scale-105 transition-all duration-200`}
+            >
               <div>
                 <p className="text-sm">{item.title}</p>
                 <h2 className="text-2xl font-bold">{item.value}</h2>

@@ -435,6 +435,19 @@ const Dashboard = () => {
                                         <span className="text-[13px] text-[#666] font-medium">Contractors</span>
                                     </div>
                                 </div>
+                                {/* All Employees Leaves */}
+                                <div
+                                    onClick={() => navigate('/admin/all-employees-leave')}
+                                    className="bg-[#fff] border border-[#f0f0f0] rounded-[10px] p-[15px] flex items-center gap-[20px] shadow-[0_2px_4px_rgba(0,0,0,0.02)] cursor-pointer hover:shadow-md transition-all"
+                                >
+                                    <div className="w-[40px] h-[40px] rounded-full bg-[#673ab7] flex items-center justify-center text-white shadow-sm">
+                                        <Umbrella size={24} />
+                                    </div>
+                                    <div>
+                                        <span className="text-[28px] font-bold text-[#333] block leading-none mb-[5px]">View</span>
+                                        <span className="text-[13px] text-[#666] font-medium">All Employees Leaves</span>
+                                    </div>
+                                </div>
                             </div>
 
                             {/* Right Column: Pie Chart */}

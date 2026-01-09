@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { LayoutDashboard, FileText, CheckSquare, Settings, MessageSquare, ChevronDown, X, Sparkles, } from "lucide-react";
+import { LayoutDashboard, FileText, CheckSquare, Settings, MessageSquare, ChevronDown, X, Sparkles,FolderKanban } from "lucide-react";
 import { Link } from "react-router-dom";
 import { LogOut } from "lucide-react";
 import {Ticket} from "lucide-react";
@@ -7,7 +7,7 @@ import {Ticket} from "lucide-react";
 
 const Sidebar = ({ isSidebarOpen = true, setIsSidebarOpen = () => { } }) => {
   const [openAccounts, setOpenAccounts] = useState(false);
-  const [openProjects, setOpenProjects] = useState(false);
+  // const [openProjects, setOpenProjects] = useState(false);
   const [openTasks, setOpenTasks] = useState(false);
   const [activeRoute, setActiveRoute] = useState(window.location.pathname);
 
@@ -18,6 +18,7 @@ const Sidebar = ({ isSidebarOpen = true, setIsSidebarOpen = () => { } }) => {
   const menuItems = [
     { name: "Dashboard", icon: LayoutDashboard, to: "/employee/dashboard" },
     { name: "My Leaves", icon: FileText, to: "/employee/myLeaves" },
+    { name: "Projects", icon: FolderKanban, to: "/employee/projectmanager/projects" },
     { name: "My Tasks", icon: CheckSquare, to: "/employee/myTasks" },
     // { name: "Tasks", icon: CheckSquare, to: "/employee/ProjectManagerTasks" },
     { name: "Settings", icon: Settings, to: "/employee/settings" },
@@ -116,7 +117,7 @@ const Sidebar = ({ isSidebarOpen = true, setIsSidebarOpen = () => { } }) => {
             })}
 
             {/* Projects Section */}
-            <button
+            {/* <button
               onClick={() => setOpenProjects(!openProjects)}
               className={`group flex items-center justify-between w-full px-4 py-3.5 rounded-xl font-medium transition-all duration-200 text-gray-700
     ${openProjects ? "bg-white/80 shadow-md" : "hover:bg-white/80 hover:shadow-md"}`}
@@ -131,10 +132,10 @@ const Sidebar = ({ isSidebarOpen = true, setIsSidebarOpen = () => { } }) => {
               <div className={`transition-transform duration-300 ${openProjects ? "rotate-180" : ""}`}>
                 <ChevronDown size={18} />
               </div>
-            </button>
+            </button> */}
 
             {/* Projects Submenu */}
-            <div
+            {/* <div
               className={`ml-4 space-y-1 overflow-hidden transition-all duration-300 ease-in-out
   ${openProjects ? "max-h-40 opacity-100 mt-2" : "max-h-0 opacity-0"}`}
             >
@@ -163,7 +164,7 @@ const Sidebar = ({ isSidebarOpen = true, setIsSidebarOpen = () => { } }) => {
                 <div className="w-1.5 h-1.5 rounded-full bg-current"></div>
                 Add Project
               </Link>
-            </div>
+            </div> */}
 
 
             {/* Accounts Section */}
