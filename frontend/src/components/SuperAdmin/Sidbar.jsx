@@ -20,6 +20,7 @@ const SuperAdminSidebar = ({ isSidebarOpen = true, setIsSidebarOpen = () => { } 
     { name: "Dashboard", icon: LayoutDashboard, to: "/super-admin/dashboard" },
     { name: "Client", icon: Users, to: "/super-admin/client" },
     { name: "Admin", icon: ShieldCheck, to: "/super-admin/admin" },
+    { name: "Notice", icon: ShieldCheck, to: "/super-admin/notice" },
     { name: "Projects", icon: FolderKanban, to: "/super-admin/projects" },
     { name: "Setting", icon: Settings, to: "/super-admin/setting" },
   ];

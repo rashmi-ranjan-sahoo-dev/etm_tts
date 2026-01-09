@@ -15,6 +15,7 @@ import SuperAdminInquiriesDetail from './pages/SuperAdmin/InquiriesDetail.jsx'
 import SuperAdminEarningsDetail from './pages/SuperAdmin/EarningsDetail.jsx'
 import AdminDetail from './pages/SuperAdmin/AdminDetail.jsx'
 import ClientDetail from './pages/SuperAdmin/ClientDetail.jsx'
+import SuperAdminNotice from './pages/SuperAdmin/Notice.jsx'
 
 
 import AdminLayout from './layout/AdminLayout.jsx'
@@ -91,6 +92,7 @@ const App = () => {
           <Route path="client/:id" element={<ClientDetail />} />
           <Route path="admin" element={<SuperAdminAdminPage />} />
           <Route path="admin/:id" element={<AdminDetail />} />
+          <Route path='notice' element={<SuperAdminNotice/>}/>
           <Route path="setting" element={<Settings />} />
         </Route>
 
