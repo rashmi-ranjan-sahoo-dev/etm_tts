@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate } from 'react-router-dom';
 import { ClipboardList, Clock, Users, CreditCard, TrendingUp, TrendingDown } from "lucide-react";
 import { CheckCircle, AlertCircle } from "lucide-react";
 import { FileText, Eye, Download, Upload } from "lucide-react";
@@ -9,7 +10,7 @@ import { Filter } from 'lucide-react';
 const dashboardCards = [
   {
     id: 1,
-    title: "Running Projects",
+    title: "All Projects",
     value: "70",
     icon: ClipboardList,
     iconColor: "text-orange-500",
@@ -19,7 +20,7 @@ const dashboardCards = [
   },
   {
     id: 2,
-    title: "Active Tickets",
+    title: "All Tickets",
     value: "650",
     icon: Clock,
     iconColor: "text-blue-500",
@@ -50,6 +51,7 @@ const dashboardCards = [
 ];
 
 const ClientDashboard = () => {
+  const navigate = useNavigate();
   return (
     <div className="p-3 sm:p-4 md:p-6 lg:p-8 bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 min-h-screen">
 
@@ -75,9 +77,25 @@ const ClientDashboard = () => {
 
       {/* Stats Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4 md:gap-6 mb-6 md:mb-8">
-        {dashboardCards.map((card) => (
-          <StatCard key={card.id} data={card} />
-        ))}
+        {(() => {
+          const routeMap = {
+            'All Projects': '/client/projects',
+            'All Tickets': '/client/supports',
+            'Assigned Employee': '/client/employees',
+            'Total Payments': '/client/billing',
+          };
+
+          return dashboardCards.map((card) => (
+            <StatCard
+              key={card.id}
+              data={card}
+              onClick={() => {
+                const path = routeMap[card.title];
+                if (path) navigate(path);
+              }}
+            />
+          ));
+        })()}
       </div>
 
       {/* ================= LOWER SECTION ================= */}
@@ -145,11 +163,11 @@ export default ClientDashboard;
 
 /* ================= Reusable Card ================= */
 
-const StatCard = ({ data }) => {
+const StatCard = ({ data, onClick }) => {
   const Icon = data.icon;
 
   return (
-    <div className="bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 p-5 md:p-6 flex flex-col gap-4 border border-gray-100 hover:-translate-y-1 cursor-pointer group relative overflow-hidden">
+    <div onClick={onClick} role={onClick ? 'button' : undefined} tabIndex={onClick ? 0 : undefined} className="bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 p-5 md:p-6 flex flex-col gap-4 border border-gray-100 hover:-translate-y-1 cursor-pointer group relative overflow-hidden">
       <div className={`absolute inset-0 bg-gradient-to-br ${data.bgGradient} opacity-0 group-hover:opacity-100 transition-opacity duration-300`}></div>
 
       <div className="flex items-center justify-between relative z-10">

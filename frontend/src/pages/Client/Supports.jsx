@@ -1,6 +1,7 @@
 /* eslint-disable react-hooks/set-state-in-effect */
 
 import React, { useState, useEffect } from "react";
+import { useNavigate } from 'react-router-dom';
 import {Pencil,Trash2,Search,CheckCircle2,Clock,AlertCircle,User,Calendar,Ticket,RotateCcw,Plus,PauseCircle,FileText,Download,Paperclip} from "lucide-react";
 
 /* ===================== STATUS BADGE ===================== */
@@ -269,7 +270,9 @@ const TicketModal = ({ close, save, editData }) => {
 
 /* ===================== MAIN ===================== */
 const Supports = () => {
+  const navigate = useNavigate();
   const [search, setSearch] = useState("");
+  const [statusFilter, setStatusFilter] = useState("All");
   const [openModal, setOpenModal] = useState(false);
   const [editData, setEditData] = useState(null);
 
@@ -279,6 +282,46 @@ const Supports = () => {
       ticketId: "TI1254",
       title: "HR Portal",
       status: "Closed",
+      assignedTo: "John Deo",
+      date: "2020-02-25",
+      detail: "Lorem Ipsum is simply",
+      attachment: null,
+    },
+     {
+      id: "TI1254",
+      ticketId: "TI1254",
+      title: "HR Portal",
+      status: "Pending",
+      assignedTo: "John Deo",
+      date: "2020-02-25",
+      detail: "Lorem Ipsum is simply",
+      attachment: null,
+    },
+     {
+      id: "TI1254",
+      ticketId: "TI1254",
+      title: "HR Portal",
+      status: "Holding",
+      assignedTo: "John Deo",
+      date: "2020-02-25",
+      detail: "Lorem Ipsum is simply",
+      attachment: null,
+    },
+     {
+      id: "TI1254",
+      ticketId: "TI1254",
+      title: "HR Portal",
+      status: "Closed",
+      assignedTo: "John Deo",
+      date: "2020-02-25",
+      detail: "Lorem Ipsum is simply",
+      attachment: null,
+    },
+     {
+      id: "TI1254",
+      ticketId: "TI1254",
+      title: "HR Portal",
+      status: "Pending",
       assignedTo: "John Deo",
       date: "2020-02-25",
       detail: "Lorem Ipsum is simply",
@@ -320,9 +363,15 @@ const Supports = () => {
     }
   };
 
-  const filtered = tickets.filter((t) =>
-    Object.values(t).join(" ").toLowerCase().includes(search.toLowerCase())
-  );
+  const filtered = tickets.filter((t) => {
+    const matchesStatus = statusFilter === "All" || t.status === statusFilter;
+    const matchesSearch = Object.values(t).join(" ").toLowerCase().includes(search.toLowerCase());
+    return matchesStatus && matchesSearch;
+  });
+
+  const handleCardClick = (status) => {
+    setStatusFilter((prev) => (prev === status ? "All" : status));
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 p-8">
@@ -341,30 +390,54 @@ const Supports = () => {
         </div>
 
         {/* ===================== CARDS ===================== */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+        <div className="grid grid-cols-1 md:grid-cols-6 gap-6 mb-8">
           <Card
             title="Total Tickets"
             value={tickets.length}
             color="bg-gradient-to-br from-blue-500 to-blue-600"
             icon={<Ticket className="w-6 h-6" />}
+            onClick={() => handleCardClick("All")}
+            active={statusFilter === "All"}
           />
           <Card
             title="Reply"
             value="865"
             color="bg-gradient-to-br from-emerald-500 to-green-600"
             icon={<RotateCcw className="w-6 h-6" />}
+            onClick={() => handleCardClick("Open")}
+            active={statusFilter === "Open"}
           />
           <Card
             title="Resolve"
             value="457"
             color="bg-gradient-to-br from-amber-500 to-orange-600"
             icon={<CheckCircle2 className="w-6 h-6" />}
+            onClick={() => handleCardClick("Closed")}
+            active={statusFilter === "Closed"}
           />
           <Card
             title="Pending"
             value="239"
             color="bg-gradient-to-br from-rose-500 to-red-600"
             icon={<Clock className="w-6 h-6" />}
+            onClick={() => handleCardClick("Pending")}
+            active={statusFilter === "Pending"}
+          />
+          <Card
+            title="In Progress"
+            value={12}
+            color="bg-gradient-to-br from-yellow-500 to-amber-600"
+            icon={<AlertCircle className="w-6 h-6" />}
+            onClick={() => setStatusFilter("In Progress")}
+            active={statusFilter === "In Progress"}
+          />
+          <Card
+            title="Completed"
+            value={34}
+            color="bg-gradient-to-br from-emerald-600 to-teal-500"
+            icon={<CheckCircle2 className="w-6 h-6" />}
+            onClick={() => setStatusFilter("Completed")}
+            active={statusFilter === "Completed"}
           />
         </div>
 
@@ -425,12 +498,22 @@ const Supports = () => {
                     className="border-b border-gray-100 hover:bg-gray-50"
                   >
                     <td className="p-5 font-bold whitespace-nowrap">
-                      <span className="inline-flex items-center gap-2 px-3 py-1 bg-blue-100 text-blue-700 rounded-lg font-semibold">
+                      <button
+                        onClick={() => navigate(`/client/supports/${t.ticketId}`)}
+                        className="inline-flex items-center gap-2 px-3 py-1 bg-blue-100 text-blue-700 hover:bg-blue-200 rounded-lg font-semibold transition-colors cursor-pointer"
+                      >
                         <Ticket className="w-4 h-4" />
                         {t.id}
-                      </span>
+                      </button>
                     </td>
-                    <td className="p-5 whitespace-nowrap">{t.title}</td>
+                    <td className="p-5 whitespace-nowrap">
+                      <button
+                        onClick={() => navigate(`/client/supports/${t.ticketId}`)}
+                        className="text-blue-600 hover:text-blue-700 hover:underline font-medium transition-colors cursor-pointer"
+                      >
+                        {t.title}
+                      </button>
+                    </td>
                     <td className="p-5 whitespace-nowrap">
                       <StatusBadge status={t.status} />
                     </td>
@@ -489,11 +572,12 @@ const Supports = () => {
             {filtered.map((t) => (
               <div
                 key={t.id}
-                className="bg-gray-50 rounded-2xl p-4 shadow-sm border border-gray-100"
+                onClick={() => navigate(`/client/supports/${t.ticketId}`)}
+                className="bg-gray-50 rounded-2xl p-4 shadow-sm border border-gray-100 cursor-pointer hover:shadow-md transition-shadow"
               >
                 <div className="flex justify-between items-center mb-2">
                   <span className="font-bold">Ticket ID:</span>
-                  <span>{t.id}</span>
+                  <button className="text-blue-600 hover:text-blue-700 font-semibold">{t.id}</button>
                 </div>
                 <div className="flex justify-between items-center mb-2">
                   <span className="font-bold">Created By:</span>
@@ -501,7 +585,7 @@ const Supports = () => {
                 </div>
                 <div className="flex justify-between items-center mb-2">
                   <span className="font-bold">Subject:</span>
-                  <span>{t.title}</span>
+                  <button className="text-blue-600 hover:text-blue-700 font-semibold">{t.title}</button>
                 </div>
                 <div className="flex justify-between items-center mb-2">
                   <span className="font-bold">Status:</span>
@@ -579,9 +663,10 @@ const Supports = () => {
 };
 
 /* ===================== CARD ===================== */
-const Card = ({ title, value, color, icon }) => (
+const Card = ({ title, value, color, icon, onClick, active }) => (
   <div
-    className={`${color} text-white rounded-2xl p-6 shadow-lg hover:shadow-2xl transform hover:scale-105 transition-all duration-300`}
+    onClick={onClick}
+    className={`${color} text-white rounded-2xl p-6 shadow-lg transform transition-all duration-300 ${onClick ? 'cursor-pointer hover:shadow-2xl hover:scale-105' : 'hover:shadow-2xl hover:scale-105'} ${active ? 'ring-4 ring-white/30' : ''}`}
   >
     <div className="flex justify-between items-start">
       <div>

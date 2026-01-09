@@ -13,7 +13,7 @@ const Dashboard = () => {
 
     const statsCards = [
         {
-            title: "New Projects",
+            title: "All Projects",
             value: "102",
             change: "10%",
             trend: "up",
@@ -57,7 +57,7 @@ const Dashboard = () => {
     const handleStatsCardClick = (cardTitle) => {
         switch (cardTitle) {
             case "New Projects":
-                navigate('/super-admin/projects?filter=New');
+                navigate('/super-admin/projects');
                 break;
             case "New Customers":
                 navigate('/super-admin/new-customers');

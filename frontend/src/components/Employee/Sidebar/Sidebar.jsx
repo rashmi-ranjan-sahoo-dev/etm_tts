@@ -139,10 +139,10 @@ const Sidebar = ({ isSidebarOpen = true, setIsSidebarOpen = () => { } }) => {
   ${openProjects ? "max-h-40 opacity-100 mt-2" : "max-h-0 opacity-0"}`}
             >
               <Link
-                to="/employee/projectmanager/allprojects"
-                onClick={() => setActiveRoute("/employee/projectmanager/allprojects")}
+                to="/employee/projectmanager/projects"
+                onClick={() => setActiveRoute("/employee/projectmanager/projects")}
                 className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm transition-all duration-200 w-full text-left
-      ${activeRoute === "/employee/projectmanager/allprojects"
+      ${activeRoute === "/employee/projectmanager/projects"
                     ? "bg-gradient-to-r from-indigo-500 to-purple-500 text-white shadow-md"
                     : "hover:bg-white/80 hover:shadow-sm text-gray-600 hover:text-gray-900"
                   }`}

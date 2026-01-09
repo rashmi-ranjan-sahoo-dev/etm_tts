@@ -1,5 +1,6 @@
 /* eslint-disable react-hooks/set-state-in-effect */
 import React, { useState, useEffect } from "react";
+import { useNavigate } from 'react-router-dom';
 import { Plus, Pencil, Trash2, Search, CheckCircle2, Clock, Calendar, AlertCircle, User, PauseCircle, } from "lucide-react";
 import { FileText, Image, FileArchive, FileSpreadsheet, File, } from "lucide-react";
 
@@ -346,6 +347,7 @@ const ProjectModal = ({ close, save, editData }) => {
 
 /* ===================== MAIN COMPONENT ===================== */
 const Projects = () => {
+  const navigate = useNavigate();
   const [projects, setProjects] = useState([
     {
       id: 1,
@@ -364,6 +366,7 @@ const Projects = () => {
   const [openModal, setOpenModal] = useState(false);
   const [editData, setEditData] = useState(null);
   const [search, setSearch] = useState("");
+  const [statusFilter, setStatusFilter] = useState("All");
 
   const [showAttachments, setShowAttachments] = useState(false);
   const [selectedAttachments, setSelectedAttachments] = useState([]);
@@ -377,9 +380,11 @@ const Projects = () => {
     }
   };
 
-  const filtered = projects.filter((p) =>
-    Object.values(p).join(" ").toLowerCase().includes(search.toLowerCase())
-  );
+  const filtered = projects.filter((p) => {
+    const matchesSearch = Object.values(p).join(" ").toLowerCase().includes(search.toLowerCase());
+    const matchesStatus = statusFilter === "All" || p.status === statusFilter;
+    return matchesSearch && matchesStatus;
+  });
 
   const getStatusBadge = (status) => {
     const styles = {
@@ -431,6 +436,24 @@ const Projects = () => {
               className="w-full pl-12 pr-4 py-4 border-2 border-gray-200 rounded-2xl focus:border-teal-500 focus:ring-4 focus:ring-teal-100 outline-none transition-all bg-white shadow-sm"
             />
           </div>
+          {/* Status Filter Buttons */}
+          <div className="flex items-center gap-2">
+            {[
+              { key: 'All', label: 'All' },
+              { key: 'Pending', label: 'Pending' },
+              { key: 'Hold', label: 'Hold' },
+              { key: 'In Progress', label: 'In Progress' },
+              { key: 'Completed', label: 'Completed' },
+            ].map((s) => (
+              <button
+                key={s.key}
+                onClick={() => setStatusFilter((prev) => (prev === s.key ? 'All' : s.key))}
+                className={`px-4 py-2 rounded-full text-sm font-semibold transition-all border ${statusFilter === s.key ? 'bg-teal-600 text-white border-teal-600' : 'bg-white text-gray-700 border-gray-200 hover:bg-gray-50'}`}
+              >
+                {s.label}
+              </button>
+            ))}
+          </div>
           <button
             onClick={() => {
               setEditData(null);
@@ -481,9 +504,12 @@ const Projects = () => {
                       }`}
                   >
                     <td className="p-5">
-                      <div className="font-semibold text-gray-800">
+                      <button
+                        onClick={() => navigate(`/client/projects/${row.id}`)}
+                        className="font-semibold text-teal-600 hover:text-teal-700 hover:underline cursor-pointer transition-colors"
+                      >
                         {row.projectName}
-                      </div>
+                      </button>
                     </td>
                     <td className="p-5">
                       <span className="inline-flex items-center px-3 py-1 rounded-lg text-sm font-medium bg-purple-100 text-purple-700">

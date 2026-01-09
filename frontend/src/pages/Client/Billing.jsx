@@ -136,6 +136,7 @@
 // export default Billing;
 
 import React from "react";
+import { useNavigate } from 'react-router-dom';
 import { Download, FileText } from "lucide-react";
 
 // NOTE:
@@ -144,31 +145,54 @@ import { Download, FileText } from "lucide-react";
 const billingData = [
   {
     id: 201,
-    clientId: "C101",
+    invoiceNo: "#IN7865",
+    invoiceId: "#IN7865",
     clientName: "Alisha Jain",
-    invoiceId: "INV001.pdf",
+    generatedBy: "John Doe",
     date: "2023-09-01",
-    amount: 150,
-    tax: 0,
+    dueDate: "2023-09-20",
+    amount: 500,
+    tax: 50,
     discount: 0,
-    total: 150,
+    total: 550,
     method: "Credit Card",
     transactionId: "TXN12345",
-    status: "Completed",
+    status: "Paid",
+    description: "Frontend Development Services",
   },
   {
     id: 202,
-    clientId: "C102",
+    invoiceNo: "#IN2301",
+    invoiceId: "#IN2301",
     clientName: "Bobby Ghosh",
-    invoiceId: "INV002.pdf",
+    generatedBy: "Sarah Smith",
     date: "2023-09-02",
-    amount: 200,
-    tax: 0,
+    dueDate: "2023-09-22",
+    amount: 372,
+    tax: 37,
     discount: 0,
-    total: 200,
+    total: 409,
     method: "Bank Transfer",
     transactionId: "TXN12346",
-    status: "Pending",
+    status: "Not Paid",
+    description: "Backend API Development",
+  },
+  {
+    id: 203,
+    invoiceNo: "#IN7239",
+    invoiceId: "#IN7239",
+    clientName: "Cara Stevens",
+    generatedBy: "Airi Satou",
+    date: "2023-09-03",
+    dueDate: "2023-09-23",
+    amount: 1038,
+    tax: 104,
+    discount: 104,
+    total: 1038,
+    method: "Credit Card",
+    transactionId: "TXN12347",
+    status: "Partially Paid",
+    description: "QA Testing and Quality Assurance",
   },
 ];
 
@@ -189,6 +213,7 @@ const handleDownload = (invoiceId) => {
 };
 
 const ClientBilling = () => {
+  const navigate = useNavigate();
   return (
     <div className="p-8 bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 min-h-screen">
       {/* Page Header */}
@@ -216,9 +241,7 @@ const ClientBilling = () => {
                 <th className="py-4 px-6 text-left text-sm font-semibold text-slate-700">
                   Invoice No
                 </th>
-                <th className="py-4 px-6 text-left text-sm font-semibold text-slate-700">
-                  Client
-                </th>
+                {/* Client column removed as requested */}
                 <th className="py-4 px-6 text-left text-sm font-semibold text-slate-700">
                   Date
                 </th>
@@ -253,23 +276,14 @@ const ClientBilling = () => {
                     className="py-4 px-6 font-semibold"
                     data-label="Invoice No"
                   >
-                    <span className="bg-slate-100 text-slate-700 px-3 py-1 rounded-full text-xs font-bold">
+                    <button
+                      onClick={() => navigate(`/client/billing/${item.invoiceId}`)}
+                      className="bg-slate-100 text-slate-700 hover:bg-slate-200 hover:text-blue-600 px-3 py-1 rounded-full text-xs font-bold transition-colors cursor-pointer"
+                    >
                       {item.invoiceId}
-                    </span>
+                    </button>
                   </td>
-                  <td
-                    className="py-4 px-6 cursor-pointer font-medium hover:text-indigo-800 transition-colors"
-                    data-label="Client"
-                  >
-                    <div className="flex flex-col">
-                      <span className="font-semibold text-slate-800">
-                        {item.clientName}
-                      </span>
-                      <span className="text-xs text-slate-500">
-                        {item.clientId}
-                      </span>
-                    </div>
-                  </td>
+                  {/* client info hidden per request */}
                   <td className="py-4 px-6 text-slate-600" data-label="Date">
                     {item.date}
                   </td>
