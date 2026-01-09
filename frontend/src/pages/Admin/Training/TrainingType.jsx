@@ -506,7 +506,7 @@ const TrainingTypeModal = ({ close, save, editData }) => {
             deliveryMethod: "Online",
 
             status: "Active",
-            status: "Active",
+            // status: "Active",
             cost: "",
             certification: "Yes",
         }
