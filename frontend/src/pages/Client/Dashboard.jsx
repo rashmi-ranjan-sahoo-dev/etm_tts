@@ -155,6 +155,56 @@ const ClientDashboard = () => {
 
       </div>
 
+      {/* Notice Section */}
+      <div className="bg-white rounded-2xl md:rounded-3xl shadow-xl border border-gray-100 p-6 mt-6 hover:shadow-2xl transition-shadow duration-300">
+        <div className="flex items-center gap-4 mb-6">
+          <div className="p-3 bg-blue-100 rounded-lg">
+            <svg className="w-6 h-6 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M10.894 2.553a1 1 0 00-1.788 0l-7 14a1 1 0 001.169 1.409l5.951-1.429 5.951 1.429a1 1 0 001.169-1.409l-7-14z"></path>
+            </svg>
+          </div>
+          <div>
+            <h2 className="text-lg md:text-xl font-bold text-gray-800">📢 Important Notices</h2>
+            <p className="text-xs md:text-sm text-gray-500">Stay updated with the latest company announcements</p>
+          </div>
+        </div>
+
+        <div className="space-y-3 max-h-[300px] overflow-y-auto">
+          <div className="bg-amber-50 rounded-xl p-4 border border-amber-200 hover:shadow-md transition-shadow">
+            <div className="flex gap-3">
+              <span className="text-xl flex-shrink-0">⚠️</span>
+              <div className="flex-1 min-w-0">
+                <p className="font-semibold text-gray-900 text-sm md:text-base mb-1">Project Update: Deadline Extension</p>
+                <p className="text-xs md:text-sm text-gray-700 mb-2">Your project deadline has been extended by 2 weeks. Please check your project dashboard for more details.</p>
+                <span className="text-xs text-gray-500">3 days ago</span>
+              </div>
+            </div>
+          </div>
+
+          <div className="bg-green-50 rounded-xl p-4 border border-green-200 hover:shadow-md transition-shadow">
+            <div className="flex gap-3">
+              <span className="text-xl flex-shrink-0">✅</span>
+              <div className="flex-1 min-w-0">
+                <p className="font-semibold text-gray-900 text-sm md:text-base mb-1">Invoice Payment Reminder</p>
+                <p className="text-xs md:text-sm text-gray-700 mb-2">Your invoice INV-2026-001 is due on January 20, 2026. Please make the payment to avoid late fees.</p>
+                <span className="text-xs text-gray-500">4 days ago</span>
+              </div>
+            </div>
+          </div>
+
+          <div className="bg-blue-50 rounded-xl p-4 border border-blue-200 hover:shadow-md transition-shadow">
+            <div className="flex gap-3">
+              <span className="text-xl flex-shrink-0">🎯</span>
+              <div className="flex-1 min-w-0">
+                <p className="font-semibold text-gray-900 text-sm md:text-base mb-1">Service Maintenance Scheduled</p>
+                <p className="text-xs md:text-sm text-gray-700 mb-2">Scheduled maintenance on our platform on February 5, 2026 from 2 AM to 4 AM. Some services may be unavailable.</p>
+                <span className="text-xs text-gray-500">1 week ago</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
     </div>
   );
 };

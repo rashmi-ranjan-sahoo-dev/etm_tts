@@ -186,11 +186,6 @@ const Dashboard = () => {
                     <TopPerformingEmployee />
                 </div>
 
-                {/* Upcoming Events */}
-                <div className="mb-6">
-                    <UpcomingEvents />
-                </div>
-
                 {/* Gender Diversity */}
                 <div className="mb-6">
                     <GenderDiversity />
@@ -204,6 +199,54 @@ const Dashboard = () => {
                 {/* Client Payment */}
                 <div className="mb-6">
                     <ClientPayment />
+                </div>
+
+                {/* Notice Section */}
+                <div className="bg-white rounded-2xl md:rounded-3xl shadow-xl border border-gray-100 p-6 mb-6 hover:shadow-2xl transition-shadow duration-300">
+                    <div className="flex items-center gap-4 mb-6">
+                        <div className="p-3 bg-blue-100 rounded-lg">
+                            <Bell className="text-blue-600" size={24} />
+                        </div>
+                        <div>
+                            <h2 className="text-lg md:text-xl font-bold text-gray-800">📢 Important Notices</h2>
+                            <p className="text-xs md:text-sm text-gray-500">Stay updated with the latest company announcements</p>
+                        </div>
+                    </div>
+
+                    <div className="space-y-3 max-h-[300px] overflow-y-auto">
+                        <div className="bg-amber-50 rounded-xl p-4 border border-amber-200 hover:shadow-md transition-shadow">
+                            <div className="flex gap-3">
+                                <span className="text-xl flex-shrink-0">⚠️</span>
+                                <div className="flex-1 min-w-0">
+                                    <p className="font-semibold text-gray-900 text-sm md:text-base mb-1">Policy Update: Remote Work Guidelines</p>
+                                    <p className="text-xs md:text-sm text-gray-700 mb-2">New hybrid work policy effective from January 15, 2026. Please review the guidelines in the company portal.</p>
+                                    <span className="text-xs text-gray-500">2 days ago</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="bg-green-50 rounded-xl p-4 border border-green-200 hover:shadow-md transition-shadow">
+                            <div className="flex gap-3">
+                                <span className="text-xl flex-shrink-0">✅</span>
+                                <div className="flex-1 min-w-0">
+                                    <p className="font-semibold text-gray-900 text-sm md:text-base mb-1">Announcement: Holiday Schedule 2026</p>
+                                    <p className="text-xs md:text-sm text-gray-700 mb-2">The annual holiday schedule for 2026 has been finalized. Check the calendar for company holidays and plan accordingly.</p>
+                                    <span className="text-xs text-gray-500">5 days ago</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="bg-blue-50 rounded-xl p-4 border border-blue-200 hover:shadow-md transition-shadow">
+                            <div className="flex gap-3">
+                                <span className="text-xl flex-shrink-0">📚</span>
+                                <div className="flex-1 min-w-0">
+                                    <p className="font-semibold text-gray-900 text-sm md:text-base mb-1">Training Program: Leadership Development</p>
+                                    <p className="text-xs md:text-sm text-gray-700 mb-2">Enroll now for the new leadership development program starting February 1, 2026. Limited seats available.</p>
+                                    <span className="text-xs text-gray-500">1 week ago</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

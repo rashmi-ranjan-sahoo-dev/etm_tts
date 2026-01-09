@@ -1135,6 +1135,59 @@ const Dashboard = () => {
                     onClose={() => setSelectedMember(null)}
                 />
             )}
+
+            {/* Notice Section */}
+            <div className="mt-[25px] mb-[20px] w-full max-w-[100vw] overflow-x-hidden">
+                <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-[10px] p-[20px_40px] shadow-[0_2px_5px_rgba(0,0,0,0.03)] max-[480px]:p-[15px] border border-blue-200">
+                    <div className="flex gap-[15px] items-start mb-[15px]">
+                        <div className="w-[40px] h-[40px] rounded-[10px] bg-blue-600 flex items-center justify-center flex-shrink-0 shadow-md">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                                <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                            </svg>
+                        </div>
+                        <div className="flex-1 min-w-0">
+                            <h3 className="text-[16px] font-bold text-gray-900 mb-[5px]">📢 Important Notices</h3>
+                            <p className="text-[13px] text-gray-600">Stay updated with the latest HR announcements and policies</p>
+                        </div>
+                    </div>
+                    
+                    <div className="space-y-[12px] max-h-[300px] overflow-y-auto">
+                        <div className="bg-white rounded-[8px] p-[15px] border border-amber-200 bg-amber-50 hover:shadow-md transition-shadow">
+                            <div className="flex gap-[12px]">
+                                <span className="text-[18px] flex-shrink-0">⚠️</span>
+                                <div className="flex-1 min-w-0">
+                                    <p className="text-[14px] font-semibold text-gray-900 mb-[3px]">Policy Update: Remote Work Guidelines</p>
+                                    <p className="text-[12px] text-gray-700 mb-[5px]">New hybrid work policy effective from January 15, 2026. Please review the guidelines in the HR portal.</p>
+                                    <span className="text-[11px] text-gray-500">2 days ago</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="bg-white rounded-[8px] p-[15px] border border-green-200 bg-green-50 hover:shadow-md transition-shadow">
+                            <div className="flex gap-[12px]">
+                                <span className="text-[18px] flex-shrink-0">✅</span>
+                                <div className="flex-1 min-w-0">
+                                    <p className="text-[14px] font-semibold text-gray-900 mb-[3px]">Announcement: Holiday Schedule 2026</p>
+                                    <p className="text-[12px] text-gray-700 mb-[5px]">The annual holiday schedule for 2026 has been finalized. Check the calendar for company holidays.</p>
+                                    <span className="text-[11px] text-gray-500">5 days ago</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="bg-white rounded-[8px] p-[15px] border border-blue-200 bg-blue-50 hover:shadow-md transition-shadow">
+                            <div className="flex gap-[12px]">
+                                <span className="text-[18px] flex-shrink-0">📚</span>
+                                <div className="flex-1 min-w-0">
+                                    <p className="text-[14px] font-semibold text-gray-900 mb-[3px]">Training Program: Leadership Development</p>
+                                    <p className="text-[12px] text-gray-700 mb-[5px]">Enroll now for the new leadership development program starting February 1, 2026. Limited seats available.</p>
+                                    <span className="text-[11px] text-gray-500">1 week ago</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div >
     );
 };
