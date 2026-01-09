@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 // Icons (same look as Kuber template)
 const SearchIcon = () => (
@@ -284,6 +285,7 @@ const initialClients = [
 ];
 
 const Client = () => {
+  const navigate = useNavigate();
   const [clients, setClients] = useState(initialClients);
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
@@ -530,9 +532,12 @@ const Client = () => {
                             alt={client.name}
                             className="w-9 h-9 rounded-full border border-slate-200 object-cover"
                           />
-                          <span className="font-semibold text-slate-800">
+                          <button
+                            onClick={() => navigate(`/super-admin/client/${client.id}`)}
+                            className="font-semibold text-slate-800 hover:text-indigo-600 transition-colors cursor-pointer"
+                          >
                             {client.name}
-                          </span>
+                          </button>
                         </div>
                       </td>
                       <td className="px-4 py-3">

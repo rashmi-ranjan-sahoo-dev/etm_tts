@@ -1,5 +1,6 @@
 
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Users, DollarSign, Crown, Briefcase, Globe, ArrowUp, ArrowDown, Search, Eye, Pencil, Trash2, } from "lucide-react";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell } from "recharts";
 import { Settings } from 'lucide-react';
@@ -7,11 +8,12 @@ import { Legend } from 'recharts';
 import { Gift, Bell, Trophy, Cake, Download, CheckCircle, Clock, FileText, TrendingUp, TrendingDown, X } from "lucide-react";
 
 const Dashboard = () => {
+    const navigate = useNavigate();
     const [timeFilter, setTimeFilter] = useState("month");
 
     const statsCards = [
         {
-            title: "New Projects",
+            title: "All Projects",
             value: "102",
             change: "10%",
             trend: "up",
@@ -51,6 +53,25 @@ const Dashboard = () => {
             iconColor: "text-orange-600",
         },
     ];
+
+    const handleStatsCardClick = (cardTitle) => {
+        switch (cardTitle) {
+            case "New Projects":
+                navigate('/super-admin/projects');
+                break;
+            case "New Customers":
+                navigate('/super-admin/new-customers');
+                break;
+            case "Inquiry":
+                navigate('/super-admin/inquiries');
+                break;
+            case "Earning":
+                navigate('/super-admin/earnings');
+                break;
+            default:
+                break;
+        }
+    };
 
     return (
         <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50/30 to-indigo-50/30">
@@ -92,6 +113,7 @@ const Dashboard = () => {
                         return (
                             <div
                                 key={index}
+                                onClick={() => handleStatsCardClick(card.title)}
                                 className={`group relative overflow-hidden rounded-2xl md:rounded-3xl p-5 md:p-6 text-white shadow-2xl bg-gradient-to-br ${card.bg} hover:scale-[1.02] transition-all duration-300 cursor-pointer border border-white/20`}
                             >
                                 {/* Animated background pattern */}
