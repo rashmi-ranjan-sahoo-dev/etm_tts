@@ -409,12 +409,12 @@ const Client = () => {
       );
     } else {
       const newId = Math.max(0, ...clients.map((c) => c.id)) + 1;
-      const newAvatar = `https://i.pravatar.cc/150?u=${newId}`;
+      // const newAvatar = `https://i.pravatar.cc/150?u=${newId}`;
       setClients((prev) => [
         ...prev,
         {
           id: newId,
-          avatar: newAvatar,
+          // avatar: newAvatar,
           ...formData,
         },
       ]);
@@ -538,11 +538,11 @@ const Client = () => {
                       </td>
                       <td className="px-4 py-3">
                         <div className="flex items-center gap-3">
-                          <img
+                          {/* <img
                             src={client.avatar}
                             alt={client.name}
                             className="w-9 h-9 rounded-full border border-slate-200 object-cover"
-                          />
+                          /> */}
                           <span
                             className="font-semibold text-slate-800 hover:text-indigo-600 transition-colors"
                           >

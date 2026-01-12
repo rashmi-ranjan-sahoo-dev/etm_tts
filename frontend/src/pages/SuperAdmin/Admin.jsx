@@ -220,7 +220,7 @@ const initialAdmins = [
     id: 1,
     adminId: "AD-0001",
     name: "Ashton Cox",
-    avatar: "https://i.pravatar.cc/150?u=101",
+    // avatar: "https://i.pravatar.cc/150?u=101",
     mobile: "1234567890",
     email: "admin1@example.com",
     position: "Senior Admin",
@@ -233,7 +233,7 @@ const initialAdmins = [
     id: 2,
     adminId: "AD-0002",
     name: "Sarah Smith",
-    avatar: "https://i.pravatar.cc/150?u=102",
+    // avatar: "https://i.pravatar.cc/150?u=102",
     mobile: "1234567890",
     email: "admin2@example.com",
     position: "Junior Admin",
@@ -355,12 +355,12 @@ const Admin = () => {
       );
     } else {
       const newId = Math.max(0, ...admins.map((a) => a.id)) + 1;
-      const newAvatar = `https://i.pravatar.cc/150?u=admin-${newId}`;
+      // const newAvatar = `https://i.pravatar.cc/150?u=admin-${newId}`;
       setAdmins((prev) => [
         ...prev,
         {
           id: newId,
-          avatar: newAvatar,
+          // avatar: newAvatar,
           ...formData,
         },
       ]);
@@ -532,11 +532,11 @@ const Admin = () => {
                       </td> */}
                       <td className="px-4 py-3">
                         <div className="flex items-center gap-3">
-                          <img
+                          {/* <img
                             src={admin.avatar}
                             alt={admin.name}
                             className="w-9 h-9 rounded-full border border-slate-200 object-cover"
-                          />
+                          /> */}
 
                           <button
                             className="font-semibold text-slate-800 hover:text-indigo-600 transition-colors"
