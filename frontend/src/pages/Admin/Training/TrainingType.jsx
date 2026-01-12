@@ -1,3 +1,5 @@
+
+
 // import React, { useState } from "react";
 // import { Search, Plus, Pencil, Trash2, BookOpen, Clock, DollarSign, Award, Users, Monitor, CheckCircle2, X } from "lucide-react";
 
@@ -9,21 +11,22 @@
 //             category: "",
 //             duration: "",
 //             deliveryMethod: "Online",
-//             targetAudience: "",
+
 //             status: "Active",
-//             isMandatory: false,
 //             cost: "",
 //             certification: "Yes",
+//             targetAudience: "",
+//             isMandatory: "No",
 //         }
 //     );
 
 //     const handleSubmit = () => {
-//         const { trainingType, category, duration, targetAudience, cost } = formData;
+//         const { trainingType, category, duration, cost } = formData;
 
 //         if (!trainingType.trim()) return alert("Training Type is required");
 //         if (!category.trim()) return alert("Category is required");
 //         if (!duration.trim()) return alert("Duration is required");
-//         if (!targetAudience.trim()) return alert("Target Audience is required");
+
 //         if (!cost.trim()) return alert("Cost is required");
 
 //         save(formData);
@@ -112,9 +115,24 @@
 //                                 value={formData.targetAudience}
 //                                 onChange={(e) => setFormData({ ...formData, targetAudience: e.target.value })}
 //                                 className="w-full px-4 py-3 rounded-xl border-2 border-gray-200 bg-gray-50 focus:outline-none focus:border-violet-500 focus:bg-white focus:ring-4 focus:ring-violet-500/10 transition-all"
-//                                 placeholder="e.g., Junior Developers"
+//                                 placeholder="e.g., All Employees"
 //                             />
 //                         </div>
+
+//                         {/* Is Mandatory? */}
+//                         <div>
+//                             <label className="block text-sm font-semibold text-gray-700 mb-2">Is Mandatory?</label>
+//                             <select
+//                                 value={formData.isMandatory}
+//                                 onChange={(e) => setFormData({ ...formData, isMandatory: e.target.value })}
+//                                 className="w-full px-4 py-3 rounded-xl border-2 border-gray-200 bg-gray-50 focus:outline-none focus:border-violet-500 focus:bg-white focus:ring-4 focus:ring-violet-500/10 transition-all"
+//                             >
+//                                 <option value="Yes">Yes</option>
+//                                 <option value="No">No</option>
+//                             </select>
+//                         </div>
+
+
 
 //                         {/* Cost */}
 //                         <div>
@@ -158,19 +176,7 @@
 //                             </select>
 //                         </div>
 
-//                         {/* Is Mandatory Checkbox */}
-//                         <div className="flex items-center gap-3 pt-4 md:col-span-2">
-//                             <input
-//                                 type="checkbox"
-//                                 id="isMandatory"
-//                                 checked={formData.isMandatory}
-//                                 onChange={(e) => setFormData({ ...formData, isMandatory: e.target.checked })}
-//                                 className="w-5 h-5 text-violet-600 rounded border-gray-300 focus:ring-violet-500"
-//                             />
-//                             <label htmlFor="isMandatory" className="text-sm font-semibold text-gray-700 select-none cursor-pointer">
-//                                 This training is Mandatory for all employees
-//                             </label>
-//                         </div>
+
 
 //                     </div>
 
@@ -204,9 +210,10 @@
 //             category: "Technical",
 //             duration: "10 Hours",
 //             deliveryMethod: "Online",
-//             targetAudience: "Senior Developers",
+//             targetAudience: "Developers",
+//             isMandatory: "No",
+
 //             status: "Active",
-//             isMandatory: false,
 //             cost: "200",
 //             certification: "Yes",
 //         },
@@ -217,8 +224,9 @@
 //             duration: "2 Hours",
 //             deliveryMethod: "Online",
 //             targetAudience: "All Employees",
+//             isMandatory: "Yes",
+
 //             status: "Active",
-//             isMandatory: true,
 //             cost: "0",
 //             certification: "Yes",
 //         },
@@ -229,8 +237,9 @@
 //             duration: "1 Day",
 //             deliveryMethod: "In-Person",
 //             targetAudience: "Managers",
+//             isMandatory: "No",
+
 //             status: "Inactive",
-//             isMandatory: false,
 //             cost: "500",
 //             certification: "No",
 //         },
@@ -241,8 +250,9 @@
 //             duration: "5 Hours",
 //             deliveryMethod: "Hybrid",
 //             targetAudience: "IT Staff",
+//             isMandatory: "Yes",
+
 //             status: "Active",
-//             isMandatory: true,
 //             cost: "150",
 //             certification: "Yes",
 //         },
@@ -322,9 +332,10 @@
 //                                     <th className="p-4 font-bold text-gray-700 uppercase tracking-wider">Category</th>
 //                                     <th className="p-4 font-bold text-gray-700 uppercase tracking-wider">Duration</th>
 //                                     <th className="p-4 font-bold text-gray-700 uppercase tracking-wider">Delivery</th>
-//                                     <th className="p-4 font-bold text-gray-700 uppercase tracking-wider">Audience</th>
+//                                     <th className="p-4 font-bold text-gray-700 uppercase tracking-wider">Target</th>
+//                                     <th className="p-4 font-bold text-gray-700 uppercase tracking-wider">Mandatory</th>
+
 //                                     <th className="p-4 font-bold text-gray-700 uppercase tracking-wider">Status</th>
-//                                     <th className="p-4 font-bold text-gray-700 uppercase tracking-wider text-center">Mandatory</th>
 //                                     <th className="p-4 font-bold text-gray-700 uppercase tracking-wider">Cost</th>
 //                                     <th className="p-4 font-bold text-gray-700 uppercase tracking-wider text-center">Cert.</th>
 //                                     <th className="p-4 font-bold text-gray-700 uppercase tracking-wider text-center">Actions</th>
@@ -336,22 +347,23 @@
 //                                         key={t.id}
 //                                         className="hover:bg-violet-50/50 transition-colors duration-150 cursor-pointer group"
 //                                     >
-//                                         <td className="p-4 font-semibold text-gray-900">{t.trainingType}</td>
+//                                         <td className="p-4 font-semibold text-gray-900 group-hover:text-violet-600 transition-colors"
+//                                             onClick={() => navigate('/admin/all-trainees', { state: { trainingType: t.trainingType } })}>
+//                                             {t.trainingType}
+//                                         </td>
 //                                         <td className="p-4 text-gray-700">{t.category}</td>
 //                                         <td className="p-4 text-gray-700">{t.duration}</td>
 //                                         <td className="p-4 text-gray-700">{t.deliveryMethod}</td>
 //                                         <td className="p-4 text-gray-700">{t.targetAudience}</td>
 //                                         <td className="p-4">
-//                                             <span className={`px-2 py-1 rounded-full text-xs font-semibold ${getStatusColor(t.status)}`}>
-//                                                 {t.status}
+//                                             <span className={`px-2 py-1 rounded text-xs font-semibold ${t.isMandatory === "Yes" ? "bg-red-100 text-red-700" : "bg-green-100 text-green-700"}`}>
+//                                                 {t.isMandatory}
 //                                             </span>
 //                                         </td>
-//                                         <td className="p-4 text-center">
-//                                             <span className={`px-2 py-1 rounded text-xs font-semibold ${t.isMandatory
-//                                                     ? "bg-red-100 text-red-600"
-//                                                     : "bg-gray-100 text-gray-500"
-//                                                 }`}>
-//                                                 {t.isMandatory ? "Yes" : "No"}
+
+//                                         <td className="p-4">
+//                                             <span className={`px-2 py-1 rounded-full text-xs font-semibold ${getStatusColor(t.status)}`}>
+//                                                 {t.status}
 //                                             </span>
 //                                         </td>
 //                                         <td className="p-4 text-gray-700 font-medium">${t.cost}</td>
@@ -427,15 +439,16 @@
 //                                     <span className="text-gray-900">{t.deliveryMethod}</span>
 //                                 </div>
 //                                 <div className="flex justify-between">
-//                                     <span className="text-gray-500 font-medium">Audience</span>
+//                                     <span className="text-gray-500 font-medium">Target</span>
 //                                     <span className="text-gray-900">{t.targetAudience}</span>
 //                                 </div>
 //                                 <div className="flex justify-between">
 //                                     <span className="text-gray-500 font-medium">Mandatory</span>
-//                                     <span className="text-gray-900 font-medium">
-//                                         {t.isMandatory ? "Yes" : "No"}
+//                                     <span className={`font-semibold ${t.isMandatory === "Yes" ? "text-red-600" : "text-green-600"}`}>
+//                                         {t.isMandatory}
 //                                     </span>
 //                                 </div>
+
 //                                 <div className="flex justify-between items-center">
 //                                     <span className="text-gray-500 font-medium">Certification</span>
 //                                     <span className="text-gray-900 font-medium">
@@ -490,11 +503,11 @@
 // };
 
 // export default TrainingType;
-
-//-------------------------------------------------------------------------------------
+//----------------------------------------------------------------
 
 import React, { useState } from "react";
 import { Search, Plus, Pencil, Trash2, BookOpen, Clock, DollarSign, Award, Users, Monitor, CheckCircle2, X } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 // TrainingTypeModal Component
 const TrainingTypeModal = ({ close, save, editData }) => {
@@ -673,53 +686,130 @@ const TrainingType = () => {
     const [trainingTypes, setTrainingTypes] = useState([
         {
             id: 1,
-            trainingType: "Advanced React Patterns",
+            trainingType: "Web Development Bootcamp",
             category: "Technical",
-            duration: "10 Hours",
+            duration: "3 Months",
             deliveryMethod: "Online",
-
             status: "Active",
-            cost: "200",
+            cost: "1200",
             certification: "Yes",
         },
         {
             id: 2,
-            trainingType: "Workplace Safety 2024",
-            category: "Compliance",
-            duration: "2 Hours",
+            trainingType: "Data Analytics",
+            category: "Technical",
+            duration: "4 Weeks",
             deliveryMethod: "Online",
-
             status: "Active",
-            cost: "0",
+            cost: "800",
             certification: "Yes",
         },
         {
             id: 3,
-            trainingType: "Effective Communication",
-            category: "Soft Skills",
-            duration: "1 Day",
-            deliveryMethod: "In-Person",
-
-            status: "Inactive",
-            cost: "500",
-            certification: "No",
+            trainingType: "Cloud Architecture (AWS)",
+            category: "Technical",
+            duration: "6 Weeks",
+            deliveryMethod: "Hybrid",
+            status: "Active",
+            cost: "1500",
+            certification: "Yes",
         },
         {
             id: 4,
-            trainingType: "Cyber Security Fundamentals",
+            trainingType: "Cybersecurity Basics",
             category: "Technical",
-            duration: "5 Hours",
-            deliveryMethod: "Hybrid",
-
+            duration: "2 Weeks",
+            deliveryMethod: "Online",
             status: "Active",
-            cost: "150",
+            cost: "500",
             certification: "Yes",
+        },
+        {
+            id: 5,
+            trainingType: "Backend Development",
+            category: "Technical",
+            duration: "10 Hours",
+            deliveryMethod: "Online",
+            status: "Active",
+            cost: "600",
+            certification: "Yes",
+        },
+        {
+            id: 6,
+            trainingType: "UX/UI Design",
+            category: "Technical",
+            duration: "1 Day",
+            deliveryMethod: "In-Person",
+            status: "Active",
+            cost: "400",
+            certification: "No",
+        },
+        {
+            id: 7,
+            trainingType: "Testing & QA",
+            category: "Technical",
+            duration: "3 Weeks",
+            deliveryMethod: "Online",
+            status: "Active",
+            cost: "700",
+            certification: "Yes",
+        },
+        {
+            id: 8,
+            trainingType: "Agile & Scrum",
+            category: "Management",
+            duration: "2 Days",
+            deliveryMethod: "In-Person",
+            status: "Active",
+            cost: "350",
+            certification: "Yes",
+        },
+        {
+            id: 9,
+            trainingType: "Product Management",
+            category: "Management",
+            duration: "4 Weeks",
+            deliveryMethod: "Hybrid",
+            status: "Active",
+            cost: "900",
+            certification: "Yes",
+        },
+        {
+            id: 10,
+            trainingType: "Design Fundamentals",
+            category: "Soft Skills",
+            duration: "1 Week",
+            deliveryMethod: "Online",
+            status: "Active",
+            cost: "300",
+            certification: "No",
         },
     ]);
 
     const [search, setSearch] = useState("");
     const [openModal, setOpenModal] = useState(false);
     const [editData, setEditData] = useState(null);
+    const navigate = useNavigate();
+
+    const mapTrainingType = (type) => {
+        const lowerType = type.toLowerCase();
+        if (lowerType.includes("web") || lowerType.includes("react")) return "Web Development";
+        if (lowerType.includes("data")) return "Data Analytics";
+        if (lowerType.includes("cloud")) return "Cloud Architecture";
+        if (lowerType.includes("security")) return "Cybersecurity";
+        if (lowerType.includes("backend")) return "Backend Development";
+        if (lowerType.includes("ui") || lowerType.includes("ux")) return "UX/UI Design";
+        if (lowerType.includes("test") || lowerType.includes("qa")) return "Testing & QA";
+        if (lowerType.includes("agile") || lowerType.includes("scrum")) return "Agile & Scrum";
+        if (lowerType.includes("product")) return "Product Management";
+        if (lowerType.includes("fundamental")) return "Design Fundamentals";
+        return type;
+    };
+
+    const handleRowClick = (type) => {
+        const mappedType = mapTrainingType(type.trainingType);
+        navigate("/admin/all-trainees", { state: { trainingType: mappedType } });
+    };
 
     const filteredTrainingTypes = trainingTypes.filter((t) =>
         Object.values(t).join(" ").toLowerCase().includes(search.toLowerCase())
@@ -802,6 +892,7 @@ const TrainingType = () => {
                                 {filteredTrainingTypes.map((t) => (
                                     <tr
                                         key={t.id}
+                                        onClick={() => handleRowClick(t)}
                                         className="hover:bg-violet-50/50 transition-colors duration-150 cursor-pointer group"
                                     >
                                         <td className="p-4 font-semibold text-gray-900">{t.trainingType}</td>
@@ -826,7 +917,8 @@ const TrainingType = () => {
                                         <td className="p-4 text-center">
                                             <div className="flex items-center justify-center gap-2">
                                                 <button
-                                                    onClick={() => {
+                                                    onClick={(e) => {
+                                                        e.stopPropagation();
                                                         setEditData(t);
                                                         setOpenModal(true);
                                                     }}
@@ -835,9 +927,10 @@ const TrainingType = () => {
                                                     <Pencil size={18} />
                                                 </button>
                                                 <button
-                                                    onClick={() =>
-                                                        setTrainingTypes(trainingTypes.filter((x) => x.id !== t.id))
-                                                    }
+                                                    onClick={(e) => {
+                                                        e.stopPropagation();
+                                                        setTrainingTypes(trainingTypes.filter((x) => x.id !== t.id));
+                                                    }}
                                                     className="p-2 rounded-lg text-red-600 hover:bg-red-50 transition-colors"
                                                 >
                                                     <Trash2 size={18} />
@@ -856,11 +949,17 @@ const TrainingType = () => {
                     {filteredTrainingTypes.map((t) => (
                         <div
                             key={t.id}
-                            className="bg-white rounded-2xl shadow-lg shadow-violet-100/50 p-5 space-y-3 border border-violet-100/50 hover:shadow-xl "
+                            onClick={() => handleRowClick(t)}
+                            className="bg-white rounded-2xl shadow-lg shadow-violet-100/50 p-5 space-y-3 border border-violet-100/50 hover:shadow-xl cursor-pointer"
                         >
                             <div className="flex items-start justify-between gap-3">
                                 <div>
-                                    <h3 className="font-bold text-lg text-violet-600">{t.trainingType}</h3>
+                                    <h3
+                                        className="font-bold text-lg text-violet-600 cursor-pointer hover:underline"
+                                        onClick={() => navigate('/admin/all-trainees', { state: { trainingType: t.trainingType } })}
+                                    >
+                                        {t.trainingType}
+                                    </h3>
                                     <div className="flex gap-2 mt-1">
                                         <span className={`px-2 py-0.5 rounded-md text-xs font-semibold ${getStatusColor(t.status)}`}>
                                             {t.status}
@@ -897,7 +996,8 @@ const TrainingType = () => {
 
                             <div className="flex gap-3 pt-3 border-t border-gray-100">
                                 <button
-                                    onClick={() => {
+                                    onClick={(e) => {
+                                        e.stopPropagation();
                                         setEditData(t);
                                         setOpenModal(true);
                                     }}
@@ -906,9 +1006,10 @@ const TrainingType = () => {
                                     <Pencil size={16} /> Edit
                                 </button>
                                 <button
-                                    onClick={() =>
-                                        setTrainingTypes(trainingTypes.filter((x) => x.id !== t.id))
-                                    }
+                                    onClick={(e) => {
+                                        e.stopPropagation();
+                                        setTrainingTypes(trainingTypes.filter((x) => x.id !== t.id));
+                                    }}
                                     className="flex-1 flex items-center justify-center gap-2 px-4 py-2 rounded-xl text-red-600 bg-red-50 hover:bg-red-100 font-semibold text-sm"
                                 >
                                     <Trash2 size={16} /> Delete

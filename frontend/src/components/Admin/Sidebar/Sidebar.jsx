@@ -16,7 +16,7 @@ import AdminProfileModal from "./AdminProfileModal";
 
 const AdminSidebar = ({
   isSidebarOpen = true,
-  setIsSidebarOpen = () => {},
+  setIsSidebarOpen = () => { },
 }) => {
   const location = useLocation();
   const [activeRoute, setActiveRoute] = useState(location.pathname);
@@ -24,6 +24,7 @@ const AdminSidebar = ({
   const [openleave, setOpenleave] = useState(false);
   const [opentraining, setOpentraining] = useState(false);
   const [isProfileModalOpen, setIsProfileModalOpen] = useState(false);
+  const [openSettings, setOpenSettings] = useState(false);
 
   const logo =
     "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Ccircle cx='50' cy='50' r='50' fill='%236366F1'/%3E%3Ctext x='50' y='58' font-size='30' fill='white' text-anchor='middle'%3EK%3C/text%3E%3C/svg%3E";
@@ -35,21 +36,22 @@ const AdminSidebar = ({
     { name: "Dashboard", icon: LayoutDashboard, to: "/admin/dashboard" },
     { name: "All Employee", icon: LayoutDashboard, to: "/admin/employee" },
     { name: "Holidays", icon: LayoutDashboard, to: "/admin/holiday" },
+    { name: "Notice", icon: LayoutDashboard, to: "/admin/notice" },
+
     // { name: "leaves", icon: LayoutDashboard, to: "/admin/leave" },
     // { name: "Attendance", icon: LayoutDashboard, to: "/admin/attendance" },
     { name: "Leader", icon: LayoutDashboard, to: "/admin/leader" },
     { name: "Department", icon: LayoutDashboard, to: "/admin/department" },
-    { name: "Settings", icon: Settings, to: "/admin/settings" },
-    
+
   ];
 
   return (
     <>
-      <AdminProfileModal 
-        isOpen={isProfileModalOpen} 
-        onClose={() => setIsProfileModalOpen(false)} 
+      <AdminProfileModal
+        isOpen={isProfileModalOpen}
+        onClose={() => setIsProfileModalOpen(false)}
       />
-      
+
       {/* Overlay with blur */}
       {isSidebarOpen && (
         <div
@@ -98,7 +100,7 @@ const AdminSidebar = ({
 
           {/* Profile */}
           <div className="p-6 text-center">
-            <div 
+            <div
               className="relative inline-block cursor-pointer group"
               onClick={() => setIsProfileModalOpen(true)}
             >
@@ -130,16 +132,14 @@ const AdminSidebar = ({
                   onClick={() => setActiveRoute(item.to)}
                   to={item.to}
                   className={`group flex items-center gap-3 px-4 py-3.5 rounded-xl font-medium transition-all duration-200 w-full
-                  ${
-                    isActive
+                  ${isActive
                       ? "bg-gradient-to-r from-indigo-500 to-purple-500 text-white shadow-lg shadow-indigo-300/50 scale-105"
                       : "hover:bg-white/80 hover:shadow-md hover:scale-102 text-gray-700"
-                  }`}
+                    }`}
                 >
                   <div
-                    className={`${
-                      isActive ? "scale-110" : "group-hover:scale-110"
-                    } transition-transform`}
+                    className={`${isActive ? "scale-110" : "group-hover:scale-110"
+                      } transition-transform`}
                   >
                     <item.icon size={20} />
                   </div>
@@ -157,22 +157,20 @@ const AdminSidebar = ({
             <button
               onClick={() => setOpenleave(!openleave)}
               className={`group flex items-center justify-between w-full px-4 py-3.5 rounded-xl font-medium transition-all duration-200 text-gray-700
-                ${
-                  openleave
-                    ? "bg-white/80 shadow-md"
-                    : "hover:bg-white/80 hover:shadow-md"
+                ${openleave
+                  ? "bg-white/80 shadow-md"
+                  : "hover:bg-white/80 hover:shadow-md"
                 }`}
             >
               <div className="flex items-center gap-3">
                 <div className="group-hover:scale-110 transition-transform">
-                  <LayoutDashboard size={20}/>
+                  <LayoutDashboard size={20} />
                 </div>
                 <span className="text-sm">Leaves</span>
               </div>
               <div
-                className={`transition-transform duration-300 ${
-                  openleave ? "rotate-180" : ""
-                }`}
+                className={`transition-transform duration-300 ${openleave ? "rotate-180" : ""
+                  }`}
               >
                 <ChevronDown size={18} />
               </div>
@@ -187,24 +185,34 @@ const AdminSidebar = ({
                 to="/admin/leaverequest"
                 onClick={() => setOpenleave("/admin/leaverequest")}
                 className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm transition-all duration-200 w-full text-left
-                  ${
-                    openleave === "/admin/leaverequest"
-                      ? "bg-gradient-to-r from-indigo-500 to-purple-500 text-white shadow-md"
-                      : "hover:bg-white/80 hover:shadow-sm text-gray-600 hover:text-gray-900"
+                  ${openleave === "/admin/leaverequest"
+                    ? "bg-gradient-to-r from-indigo-500 to-purple-500 text-white shadow-md"
+                    : "hover:bg-white/80 hover:shadow-sm text-gray-600 hover:text-gray-900"
                   }`}
               >
                 <div className="w-1.5 h-1.5 rounded-full bg-current"></div>
-                All Leaves
+                All Leaves(HR)
+              </Link>
+              <Link
+                to="/admin/managerleave"
+                onClick={() => setOpenleave("/admin/managerleave")}
+                className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm transition-all duration-200 w-full text-left
+                  ${openleave === "/admin/managerleave"
+                    ? "bg-gradient-to-r from-indigo-500 to-purple-500 text-white shadow-md"
+                    : "hover:bg-white/80 hover:shadow-sm text-gray-600 hover:text-gray-900"
+                  }`}
+              >
+                <div className="w-1.5 h-1.5 rounded-full bg-current"></div>
+                All Leaves(Manager)
               </Link>
 
               <Link
                 to="/admin/leavebalances"
                 onClick={() => setOpenleave("/admin/leavebalances")}
                 className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm transition-all duration-200 w-full text-left
-                  ${
-                    openleave === "/admin/leavebalances"
-                      ? "bg-gradient-to-r from-indigo-500 to-purple-500 text-white shadow-md"
-                      : "hover:bg-white/80 hover:shadow-sm text-gray-600 hover:text-gray-900"
+                  ${openleave === "/admin/leavebalances"
+                    ? "bg-gradient-to-r from-indigo-500 to-purple-500 text-white shadow-md"
+                    : "hover:bg-white/80 hover:shadow-sm text-gray-600 hover:text-gray-900"
                   }`}
               >
                 <div className="w-1.5 h-1.5 rounded-full bg-current"></div>
@@ -215,10 +223,9 @@ const AdminSidebar = ({
                 to="/admin/leave-types"
                 onClick={() => setOpenleave("/admin/leave-types")}
                 className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm transition-all duration-200 w-full text-left
-                  ${
-                    openleave === "/admin/leave-types"
-                      ? "bg-gradient-to-r from-indigo-500 to-purple-500 text-white shadow-md"
-                      : "hover:bg-white/80 hover:shadow-sm text-gray-600 hover:text-gray-900"
+                  ${openleave === "/admin/leave-types"
+                    ? "bg-gradient-to-r from-indigo-500 to-purple-500 text-white shadow-md"
+                    : "hover:bg-white/80 hover:shadow-sm text-gray-600 hover:text-gray-900"
                   }`}
               >
                 <div className="w-1.5 h-1.5 rounded-full bg-current"></div>
@@ -229,10 +236,9 @@ const AdminSidebar = ({
                 to="/admin/leave-setting"
                 onClick={() => setOpenleave("/admin/leave-setting")}
                 className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm transition-all duration-200 w-full text-left
-                  ${
-                    openleave === "/admin/leave-setting"
-                      ? "bg-gradient-to-r from-indigo-500 to-purple-500 text-white shadow-md"
-                      : "hover:bg-white/80 hover:shadow-sm text-gray-600 hover:text-gray-900"
+                  ${openleave === "/admin/leave-setting"
+                    ? "bg-gradient-to-r from-indigo-500 to-purple-500 text-white shadow-md"
+                    : "hover:bg-white/80 hover:shadow-sm text-gray-600 hover:text-gray-900"
                   }`}
               >
                 <div className="w-1.5 h-1.5 rounded-full bg-current"></div>
@@ -243,28 +249,26 @@ const AdminSidebar = ({
             {/* Attendance Section */}
             <button
               onClick={() => {
-                
+
                 setOpenattendance(!openattendance)
                 console.log(openattendance)
               }}
-            
+
               className={`group flex items-center justify-between w-full px-4 py-3.5 rounded-xl font-medium transition-all duration-200 text-gray-700
-                ${
-                  openattendance
-                    ? "bg-white/80 shadow-md"
-                    : "hover:bg-white/80 hover:shadow-md"
+                ${openattendance
+                  ? "bg-white/80 shadow-md"
+                  : "hover:bg-white/80 hover:shadow-md"
                 }`}
             >
               <div className="flex items-center gap-3">
                 <div className="group-hover:scale-110 transition-transform">
-                  <LayoutDashboard/>
+                  <LayoutDashboard />
                 </div>
                 <span className="text-sm">Attendance</span>
               </div>
               <div
-                className={`transition-transform duration-300 ${
-                  openattendance ? "rotate-180" : ""
-                }`}
+                className={`transition-transform duration-300 ${openattendance ? "rotate-180" : ""
+                  }`}
               >
                 <ChevronDown size={18} />
               </div>
@@ -279,10 +283,9 @@ const AdminSidebar = ({
                 to="/admin/today-attendance"
                 onClick={() => setOpenattendance("/admin/today-attendance")}
                 className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm transition-all duration-200 w-full text-left
-                  ${
-                    openattendance === "/admin/today-attendance"
-                      ? "bg-gradient-to-r from-indigo-500 to-purple-500 text-white shadow-md"
-                      : "hover:bg-white/80 hover:shadow-sm text-gray-600 hover:text-gray-900"
+                  ${openattendance === "/admin/today-attendance"
+                    ? "bg-gradient-to-r from-indigo-500 to-purple-500 text-white shadow-md"
+                    : "hover:bg-white/80 hover:shadow-sm text-gray-600 hover:text-gray-900"
                   }`}
               >
                 <div className="w-1.5 h-1.5 rounded-full bg-current"></div>
@@ -307,41 +310,38 @@ const AdminSidebar = ({
                 to="/admin/attendance-sheet"
                 onClick={() => setOpenattendance("/admin/attendance-sheet")}
                 className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm transition-all duration-200 w-full text-left
-                  ${
-                    openattendance === "/admin/attendance-sheet"
-                      ? "bg-gradient-to-r from-indigo-500 to-purple-500 text-white shadow-md"
-                      : "hover:bg-white/80 hover:shadow-sm text-gray-600 hover:text-gray-900"
+                  ${openattendance === "/admin/attendance-sheet"
+                    ? "bg-gradient-to-r from-indigo-500 to-purple-500 text-white shadow-md"
+                    : "hover:bg-white/80 hover:shadow-sm text-gray-600 hover:text-gray-900"
                   }`}
               >
                 <div className="w-1.5 h-1.5 rounded-full bg-current"></div>
                 Attendance Sheet
               </Link>
             </div>
-              
-              {/* Training Section */}
+
+            {/* Training Section */}
             <button
               onClick={() => {
-                
+
                 setOpentraining(!opentraining)
               }}
-            
+
               className={`group flex items-center justify-between w-full px-4 py-3.5 rounded-xl font-medium transition-all duration-200 text-gray-700
-                ${
-                  opentraining
-                    ? "bg-white/80 shadow-md"
-                    : "hover:bg-white/80 hover:shadow-md"
+                ${opentraining
+                  ? "bg-white/80 shadow-md"
+                  : "hover:bg-white/80 hover:shadow-md"
                 }`}
             >
               <div className="flex items-center gap-3">
                 <div className="group-hover:scale-110 transition-transform">
-                  <LayoutDashboard/>
+                  <LayoutDashboard />
                 </div>
                 <span className="text-sm">Training</span>
               </div>
               <div
-                className={`transition-transform duration-300 ${
-                  opentraining ? "rotate-180" : ""
-                }`}
+                className={`transition-transform duration-300 ${opentraining ? "rotate-180" : ""
+                  }`}
               >
                 <ChevronDown size={18} />
               </div>
@@ -352,14 +352,26 @@ const AdminSidebar = ({
               className={`ml-4 space-y-1 overflow-hidden transition-all duration-300 ease-in-out
               ${opentraining ? "max-h-40 opacity-100 mt-2" : "max-h-0 opacity-0"}`}
             >
+                <Link
+                to="/admin/all-trainees"
+                onClick={() => setOpentraining("/admin/all-trainees")}
+                className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm transition-all duration-200 w-full text-left
+                  ${opentraining === "/admin/all-trainees"
+                    ? "bg-gradient-to-r from-indigo-500 to-purple-500 text-white shadow-md"
+                    : "hover:bg-white/80 hover:shadow-sm text-gray-600 hover:text-gray-900"
+                  }`}
+              >
+                <div className="w-1.5 h-1.5 rounded-full bg-current"></div>
+                All Trainee
+              </Link>
+
               <Link
                 to="/admin/training-list"
                 onClick={() => setOpentraining("/admin/training-list")}
                 className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm transition-all duration-200 w-full text-left
-                  ${
-                    opentraining === "/admin/training-list"
-                      ? "bg-gradient-to-r from-indigo-500 to-purple-500 text-white shadow-md"
-                      : "hover:bg-white/80 hover:shadow-sm text-gray-600 hover:text-gray-900"
+                  ${opentraining === "/admin/training-list"
+                    ? "bg-gradient-to-r from-indigo-500 to-purple-500 text-white shadow-md"
+                    : "hover:bg-white/80 hover:shadow-sm text-gray-600 hover:text-gray-900"
                   }`}
               >
                 <div className="w-1.5 h-1.5 rounded-full bg-current"></div>
@@ -370,10 +382,9 @@ const AdminSidebar = ({
                 to="/admin/trainers"
                 onClick={() => setOpentraining("/admin/trainers")}
                 className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm transition-all duration-200 w-full text-left
-                  ${
-                    opentraining === "/admin/trainers"
-                      ? "bg-gradient-to-r from-indigo-500 to-purple-500 text-white shadow-md"
-                      : "hover:bg-white/80 hover:shadow-sm text-gray-600 hover:text-gray-900"
+                  ${opentraining === "/admin/trainers"
+                    ? "bg-gradient-to-r from-indigo-500 to-purple-500 text-white shadow-md"
+                    : "hover:bg-white/80 hover:shadow-sm text-gray-600 hover:text-gray-900"
                   }`}
               >
                 <div className="w-1.5 h-1.5 rounded-full bg-current"></div>
@@ -384,14 +395,68 @@ const AdminSidebar = ({
                 to="/admin/training-type"
                 onClick={() => setOpentraining("/admin/training-type")}
                 className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm transition-all duration-200 w-full text-left
-                  ${
-                    opentraining === "/admin/training-type"
-                      ? "bg-gradient-to-r from-indigo-500 to-purple-500 text-white shadow-md"
-                      : "hover:bg-white/80 hover:shadow-sm text-gray-600 hover:text-gray-900"
+                  ${opentraining === "/admin/training-type"
+                    ? "bg-gradient-to-r from-indigo-500 to-purple-500 text-white shadow-md"
+                    : "hover:bg-white/80 hover:shadow-sm text-gray-600 hover:text-gray-900"
                   }`}
               >
                 <div className="w-1.5 h-1.5 rounded-full bg-current"></div>
                 Training Type
+              </Link>
+            </div>
+
+            {/* Settings Section */}
+            <button
+              onClick={() => setOpenSettings(!openSettings)}
+              className={`group flex items-center justify-between w-full px-4 py-3.5 rounded-xl font-medium transition-all duration-200 text-gray-700
+                ${openSettings
+                  ? "bg-white/80 shadow-md"
+                  : "hover:bg-white/80 hover:shadow-md"
+                }`}
+            >
+              <div className="flex items-center gap-3">
+                <div className="group-hover:scale-110 transition-transform">
+                  <Settings size={20} />
+                </div>
+                <span className="text-sm">Settings</span>
+              </div>
+              <div
+                className={`transition-transform duration-300 ${openSettings ? "rotate-180" : ""
+                  }`}
+              >
+                <ChevronDown size={18} />
+              </div>
+            </button>
+
+            {/* Settings Submenu */}
+            <div
+              className={`ml-4 space-y-1 overflow-hidden transition-all duration-300 ease-in-out
+              ${openSettings ? "max-h-40 opacity-100 mt-2" : "max-h-0 opacity-0"}`}
+            >
+              {/* <Link
+                to="/admin/profile"
+                onClick={() => setActiveRoute("/admin/profile")}
+                className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm transition-all duration-200 w-full text-left
+                  ${activeRoute === "/admin/profile"
+                    ? "bg-gradient-to-r from-indigo-500 to-purple-500 text-white shadow-md"
+                    : "hover:bg-white/80 hover:shadow-sm text-gray-600 hover:text-gray-900"
+                  }`}
+              >
+                <div className="w-1.5 h-1.5 rounded-full bg-current"></div>
+                Profile
+              </Link> */}
+
+              <Link
+                to="/admin/security"
+                onClick={() => setActiveRoute("/admin/security")}
+                className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm transition-all duration-200 w-full text-left
+                  ${activeRoute === "/admin/security"
+                    ? "bg-gradient-to-r from-indigo-500 to-purple-500 text-white shadow-md"
+                    : "hover:bg-white/80 hover:shadow-sm text-gray-600 hover:text-gray-900"
+                  }`}
+              >
+                <div className="w-1.5 h-1.5 rounded-full bg-current"></div>
+                Security
               </Link>
             </div>
 

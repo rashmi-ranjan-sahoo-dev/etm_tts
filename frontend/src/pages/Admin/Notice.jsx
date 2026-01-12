@@ -50,7 +50,7 @@
 
 // //   const handleSubmit = (e) => {
 // //     e.preventDefault();
-    
+
 // //     if (editingId) {
 // //       setNotices(prev => prev.map(notice => 
 // //         notice.id === editingId ? { ...formData, id: editingId } : notice
@@ -449,7 +449,7 @@
 
 //   const handleSubmit = (e) => {
 //     e.preventDefault();
-    
+
 //     if (editingId) {
 //       setNotices(prev => prev.map(notice => 
 //         notice.id === editingId ? { ...formData, id: editingId } : notice
@@ -530,7 +530,7 @@
 //                          notice.description.toLowerCase().includes(searchTerm.toLowerCase());
 //     const matchesStatus = filterStatus === 'All' || notice.status === filterStatus;
 //     const matchesAudience = filterAudience === 'All' || notice.audience === filterAudience;
-    
+
 //     return matchesSearch && matchesStatus && matchesAudience;
 //   });
 
@@ -763,7 +763,7 @@
 //                 </button>
 //               </div>
 //             </div>
-            
+
 //             <div className="p-8">
 //               <div className="mb-6">
 //                 <span className={`inline-flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm font-semibold border ${getStatusColor(selectedNotice.status)}`}>
@@ -968,7 +968,7 @@
 
 //   const handleSubmit = (e) => {
 //     e.preventDefault();
-    
+
 //     if (editingId) {
 //       setNotices(prev => prev.map(notice => 
 //         notice.id === editingId ? { ...formData, id: editingId } : notice
@@ -1366,9 +1366,9 @@ const Notice = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    
+
     if (editingId) {
-      setNotices(prev => prev.map(notice => 
+      setNotices(prev => prev.map(notice =>
         notice.id === editingId ? { ...formData, id: editingId } : notice
       ));
       setEditingId(null);
@@ -1420,7 +1420,7 @@ const Notice = () => {
   };
 
   const getStatusColor = (status) => {
-    switch(status) {
+    switch (status) {
       case 'Published': return 'bg-emerald-500/10 text-emerald-700 border-emerald-500/20';
       case 'Draft': return 'bg-slate-500/10 text-slate-700 border-slate-500/20';
       case 'Scheduled': return 'bg-blue-500/10 text-blue-700 border-blue-500/20';
@@ -1429,7 +1429,7 @@ const Notice = () => {
   };
 
   const getStatusIcon = (status) => {
-    switch(status) {
+    switch (status) {
       case 'Published': return <CheckCircle className="w-4 h-4" />;
       case 'Draft': return <FileText className="w-4 h-4" />;
       case 'Scheduled': return <Clock className="w-4 h-4" />;
@@ -1444,93 +1444,152 @@ const Notice = () => {
 
   const filteredNotices = notices.filter(notice => {
     const matchesSearch = notice.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         notice.description.toLowerCase().includes(searchTerm.toLowerCase());
+      notice.description.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesStatus = filterStatus === 'All' || notice.status === filterStatus;
     const matchesAudience = filterAudience === 'All' || notice.audience === filterAudience;
-    
+
     return matchesSearch && matchesStatus && matchesAudience;
   });
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 p-4 md:p-8">
 
-        <div className="max-w-7xl mx-auto">
-          <div className="bg-white rounded-2xl shadow-lg shadow-blue-100/50 p-6 mb-6 border border-blue-100/50">
-            <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-              <div>
-                <h1 className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent mb-1">
-                  Notice Board
-                </h1>
-                <p className="text-sm text-gray-500">
-                  {filteredNotices.length} {filteredNotices.length === 1 ? 'notice' : 'notices'} found
-                </p>
-              </div>
-              <button
-                onClick={() => setShowCreateModal(true)}
-                className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-6 py-3 rounded-xl hover:shadow-lg hover:scale-105 transition-all flex items-center gap-2 font-semibold"
-              >
-                <span className="text-xl">+</span>
-                Create Notice
-              </button>
+      <div className="max-w-7xl mx-auto">
+        <div className="bg-white rounded-2xl shadow-lg shadow-blue-100/50 p-6 mb-6 border border-blue-100/50">
+          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+            <div>
+              <h1 className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent mb-1">
+                Notice Board
+              </h1>
+              <p className="text-sm text-gray-500">
+                {filteredNotices.length} {filteredNotices.length === 1 ? 'notice' : 'notices'} found
+              </p>
             </div>
-
-            <div className="mt-6 grid grid-cols-1 md:grid-cols-3 gap-4">
-              <div className="relative">
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={20} />
-                <input
-                  type="text"
-                  placeholder="Search notices..."
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                  className="w-full pl-10 pr-4 py-2.5 border-2 border-gray-200 rounded-xl focus:ring-4 focus:ring-blue-500/10 focus:border-blue-500 outline-none transition-all"
-                />
-              </div>
-
-              <div className="relative">
-                <Filter className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={20} />
-                <select
-                  value={filterStatus}
-                  onChange={(e) => setFilterStatus(e.target.value)}
-                  className="w-full pl-10 pr-10 py-2.5 border-2 border-gray-200 rounded-xl focus:ring-4 focus:ring-blue-500/10 focus:border-blue-500 outline-none appearance-none bg-white transition-all"
-                >
-                  <option value="All">All Status</option>
-                  <option value="Published">Published</option>
-                  <option value="Draft">Draft</option>
-                  <option value="Scheduled">Scheduled</option>
-                </select>
-                <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none" size={20} />
-              </div>
-
-              <div className="relative">
-                <Filter className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={20} />
-                <select
-                  value={filterAudience}
-                  onChange={(e) => setFilterAudience(e.target.value)}
-                  className="w-full pl-10 pr-10 py-2.5 border-2 border-gray-200 rounded-xl focus:ring-4 focus:ring-blue-500/10 focus:border-blue-500 outline-none appearance-none bg-white transition-all"
-                >
-                  <option value="All">All Departments</option>
-                  {audiences.map(audience => (
-                    <option key={audience} value={audience}>{audience}</option>
-                  ))}
-                </select>
-                <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none" size={20} />
-              </div>
-            </div>
+            <button
+              onClick={() => setShowCreateModal(true)}
+              className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-6 py-3 rounded-xl hover:shadow-lg hover:scale-105 transition-all flex items-center gap-2 font-semibold"
+            >
+              <span className="text-xl">+</span>
+              Create Notice
+            </button>
           </div>
 
-          {filteredNotices.length === 0 ? (
-            <div className="bg-white rounded-2xl shadow-lg shadow-blue-100/50 p-12 text-center border border-blue-100/50">
-              <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Bell className="w-8 h-8 text-gray-400" />
-              </div>
-              <h3 className="text-lg font-semibold text-gray-900 mb-2">No notices found</h3>
-              <p className="text-gray-500">Try adjusting your filters or create a new notice</p>
+          <div className="mt-6 grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div className="relative">
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={20} />
+              <input
+                type="text"
+                placeholder="Search notices..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="w-full pl-10 pr-4 py-2.5 border-2 border-gray-200 rounded-xl focus:ring-4 focus:ring-blue-500/10 focus:border-blue-500 outline-none transition-all"
+              />
             </div>
-          ) : (
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+
+            <div className="relative">
+              <Filter className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={20} />
+              <select
+                value={filterStatus}
+                onChange={(e) => setFilterStatus(e.target.value)}
+                className="w-full pl-10 pr-10 py-2.5 border-2 border-gray-200 rounded-xl focus:ring-4 focus:ring-blue-500/10 focus:border-blue-500 outline-none appearance-none bg-white transition-all"
+              >
+                <option value="All">All Status</option>
+                <option value="Published">Published</option>
+                <option value="Draft">Draft</option>
+                <option value="Scheduled">Scheduled</option>
+              </select>
+              <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none" size={20} />
+            </div>
+
+            <div className="relative">
+              <Filter className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={20} />
+              <select
+                value={filterAudience}
+                onChange={(e) => setFilterAudience(e.target.value)}
+                className="w-full pl-10 pr-10 py-2.5 border-2 border-gray-200 rounded-xl focus:ring-4 focus:ring-blue-500/10 focus:border-blue-500 outline-none appearance-none bg-white transition-all"
+              >
+                <option value="All">All Departments</option>
+                {audiences.map(audience => (
+                  <option key={audience} value={audience}>{audience}</option>
+                ))}
+              </select>
+              <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none" size={20} />
+            </div>
+          </div>
+        </div>
+
+        {filteredNotices.length === 0 ? (
+          <div className="bg-white rounded-2xl shadow-lg shadow-blue-100/50 p-12 text-center border border-blue-100/50">
+            <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
+              <Bell className="w-8 h-8 text-gray-400" />
+            </div>
+            <h3 className="text-lg font-semibold text-gray-900 mb-2">No notices found</h3>
+            <p className="text-gray-500">Try adjusting your filters or create a new notice</p>
+          </div>
+        ) : (
+          <>
+            {/* Desktop Table View */}
+            <div className="hidden lg:block bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden mb-6">
+              <div className="overflow-x-auto">
+                <table className="w-full text-left border-collapse">
+                  <thead>
+                    <tr className="bg-gray-50/50 border-b border-gray-100">
+                      <th className="p-4 text-sm font-semibold text-gray-600">Title</th>
+                      <th className="p-4 text-sm font-semibold text-gray-600">Audience</th>
+                      <th className="p-4 text-sm font-semibold text-gray-600">Publish Date</th>
+                      <th className="p-4 text-sm font-semibold text-gray-600">Status</th>
+                      <th className="p-4 text-right text-sm font-semibold text-gray-600">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-gray-100">
+                    {filteredNotices.map(notice => (
+                      <tr key={notice.id} className="hover:bg-gray-50/50 transition-colors">
+                        <td className="p-4">
+                          <div className="font-semibold text-gray-900">{notice.title}</div>
+                          <div className="text-xs text-gray-500 line-clamp-1 max-w-xs">{notice.description}</div>
+                        </td>
+                        <td className="p-4">
+                          <span className="px-2.5 py-1 bg-purple-50 text-purple-700 rounded-md text-xs font-semibold border border-purple-100">
+                            {notice.audience}
+                          </span>
+                        </td>
+                        <td className="p-4 text-sm text-gray-600">
+                          <div className="flex items-center gap-2">
+                            <Calendar size={14} className="text-gray-400" />
+                            {formatDate(notice.publishDate)}
+                          </div>
+                        </td>
+                        <td className="p-4">
+                          <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium border ${getStatusColor(notice.status)}`}>
+                            {getStatusIcon(notice.status)}
+                            {notice.status}
+                          </span>
+                        </td>
+                        <td className="p-4 text-right">
+                          <div className="flex items-center justify-end gap-2">
+                            <button onClick={() => handleViewDetails(notice)} className="p-2 text-blue-600 hover:bg-blue-50 rounded-lg transition-colors" title="View">
+                              <Eye size={18} />
+                            </button>
+                            <button onClick={() => handleEdit(notice)} className="p-2 text-green-600 hover:bg-green-50 rounded-lg transition-colors" title="Edit">
+                              <Edit2 size={18} />
+                            </button>
+                            <button onClick={() => handleDelete(notice.id)} className="p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors" title="Delete">
+                              <Trash2 size={18} />
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            {/* Mobile/Tablet Card View */}
+            <div className="block lg:hidden grid grid-cols-1 md:grid-cols-2 gap-6">
               {filteredNotices.map(notice => (
-                <div 
-                  key={notice.id} 
+                <div
+                  key={notice.id}
                   className="bg-white rounded-2xl shadow-lg shadow-blue-100/50 p-6 border border-blue-100/50 hover:shadow-xl hover:shadow-blue-200/50 transition-all duration-300 group"
                 >
                   <div className="flex items-start justify-between mb-4">
@@ -1586,180 +1645,185 @@ const Notice = () => {
                 </div>
               ))}
             </div>
-          )}
-        </div>
+          </>
+        )}
+      </div>
 
-      {showDetailsModal && selectedNotice && (
-        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4 z-50">
-          <div className="bg-white rounded-2xl shadow-2xl max-w-3xl w-full max-h-[90vh] overflow-y-auto">
-            <div className="bg-gradient-to-r from-blue-600 to-indigo-600 p-6 text-white">
-              <div className="flex items-center justify-between">
-                <div>
-                  <h3 className="text-2xl font-bold mb-2">{selectedNotice.title}</h3>
-                  <div className="flex flex-wrap items-center gap-3">
-                    <span className="px-3 py-1 bg-white/20 backdrop-blur-sm rounded-lg text-sm font-medium">
-                      {selectedNotice.audience}
-                    </span>
-                    <span className="flex items-center gap-1.5 text-sm">
-                      <Calendar size={16} />
-                      {formatDate(selectedNotice.publishDate)}
-                    </span>
+      {
+        showDetailsModal && selectedNotice && (
+          <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4 z-50">
+            <div className="bg-white rounded-2xl shadow-2xl max-w-3xl w-full max-h-[90vh] overflow-y-auto">
+              <div className="bg-gradient-to-r from-blue-600 to-indigo-600 p-6 text-white">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <h3 className="text-2xl font-bold mb-2">{selectedNotice.title}</h3>
+                    <div className="flex flex-wrap items-center gap-3">
+                      <span className="px-3 py-1 bg-white/20 backdrop-blur-sm rounded-lg text-sm font-medium">
+                        {selectedNotice.audience}
+                      </span>
+                      <span className="flex items-center gap-1.5 text-sm">
+                        <Calendar size={16} />
+                        {formatDate(selectedNotice.publishDate)}
+                      </span>
+                    </div>
                   </div>
+                  <button
+                    onClick={() => setShowDetailsModal(false)}
+                    className="text-white hover:bg-white/20 rounded-lg p-2 transition-colors"
+                  >
+                    <X size={24} />
+                  </button>
                 </div>
-                <button 
-                  onClick={() => setShowDetailsModal(false)} 
-                  className="text-white hover:bg-white/20 rounded-lg p-2 transition-colors"
-                >
-                  <X size={24} />
-                </button>
               </div>
-            </div>
-            
-            <div className="p-8">
-              <div className="mb-6">
-                <span className={`inline-flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm font-semibold border ${getStatusColor(selectedNotice.status)}`}>
-                  {getStatusIcon(selectedNotice.status)}
-                  {selectedNotice.status}
-                </span>
-              </div>
-              <div>
-                <h4 className="text-lg font-semibold text-gray-900 mb-3">Description</h4>
-                <p className="text-gray-700 leading-relaxed whitespace-pre-wrap">
-                  {selectedNotice.description}
-                </p>
+
+              <div className="p-8">
+                <div className="mb-6">
+                  <span className={`inline-flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm font-semibold border ${getStatusColor(selectedNotice.status)}`}>
+                    {getStatusIcon(selectedNotice.status)}
+                    {selectedNotice.status}
+                  </span>
+                </div>
+                <div>
+                  <h4 className="text-lg font-semibold text-gray-900 mb-3">Description</h4>
+                  <p className="text-gray-700 leading-relaxed whitespace-pre-wrap">
+                    {selectedNotice.description}
+                  </p>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      )}
+        )
+      }
 
-      {showCreateModal && (
-        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4 z-50">
-          <div className="bg-white rounded-2xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
-            <div className="bg-gradient-to-r from-blue-600 to-indigo-600 p-6 text-white">
-              <div className="flex items-center justify-between">
-                <h2 className="text-2xl font-bold">
-                  {editingId ? 'Edit Notice' : 'Create Notice'}
-                </h2>
-                <button
-                  onClick={handleCancel}
-                  className="text-white hover:bg-white/20 rounded-lg p-2 transition-colors"
-                >
-                  <X size={24} />
-                </button>
+      {
+        showCreateModal && (
+          <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4 z-50">
+            <div className="bg-white rounded-2xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+              <div className="bg-gradient-to-r from-blue-600 to-indigo-600 p-6 text-white">
+                <div className="flex items-center justify-between">
+                  <h2 className="text-2xl font-bold">
+                    {editingId ? 'Edit Notice' : 'Create Notice'}
+                  </h2>
+                  <button
+                    onClick={handleCancel}
+                    className="text-white hover:bg-white/20 rounded-lg p-2 transition-colors"
+                  >
+                    <X size={24} />
+                  </button>
+                </div>
               </div>
-            </div>
 
-            <div className="p-6">
-              <div className="space-y-4">
-                <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-2">
-                    Notice Title <span className="text-red-500">*</span>
-                  </label>
-                  <input
-                    type="text"
-                    name="title"
-                    value={formData.title}
-                    onChange={handleInputChange}
-                    className="w-full px-4 py-2.5 border-2 border-gray-200 rounded-xl focus:ring-4 focus:ring-blue-500/10 focus:border-blue-500 outline-none transition-all"
-                    placeholder="Holiday Announcement"
-                    required
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-2">
-                    Notice Description <span className="text-red-500">*</span>
-                  </label>
-                  <textarea
-                    name="description"
-                    value={formData.description}
-                    onChange={handleInputChange}
-                    rows={6}
-                    className="w-full px-4 py-2.5 border-2 border-gray-200 rounded-xl focus:ring-4 focus:ring-blue-500/10 focus:border-blue-500 outline-none resize-none transition-all"
-                    placeholder="Office will remain closed on..."
-                    required
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-2">
-                    Target Audience <span className="text-red-500">*</span>
-                  </label>
-                  <div className="relative">
-                    <select
-                      name="audience"
-                      value={formData.audience}
-                      onChange={handleInputChange}
-                      className="w-full px-4 py-2.5 border-2 border-gray-200 rounded-xl focus:ring-4 focus:ring-blue-500/10 focus:border-blue-500 outline-none appearance-none bg-white transition-all"
-                      required
-                    >
-                      {audiences.map(audience => (
-                        <option key={audience} value={audience}>{audience}</option>
-                      ))}
-                    </select>
-                    <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none" size={20} />
-                  </div>
-                </div>
-
-                <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-2">
-                    Publish Date <span className="text-red-500">*</span>
-                  </label>
-                  <div className="relative">
+              <div className="p-6">
+                <div className="space-y-4">
+                  <div>
+                    <label className="block text-sm font-semibold text-gray-700 mb-2">
+                      Notice Title <span className="text-red-500">*</span>
+                    </label>
                     <input
-                      type="date"
-                      name="publishDate"
-                      value={formData.publishDate}
+                      type="text"
+                      name="title"
+                      value={formData.title}
                       onChange={handleInputChange}
                       className="w-full px-4 py-2.5 border-2 border-gray-200 rounded-xl focus:ring-4 focus:ring-blue-500/10 focus:border-blue-500 outline-none transition-all"
+                      placeholder="Holiday Announcement"
                       required
                     />
-                    <Calendar className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none" size={20} />
                   </div>
-                </div>
 
-                <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-2">
-                    Status <span className="text-red-500">*</span>
-                  </label>
-                  <div className="relative">
-                    <select
-                      name="status"
-                      value={formData.status}
+                  <div>
+                    <label className="block text-sm font-semibold text-gray-700 mb-2">
+                      Notice Description <span className="text-red-500">*</span>
+                    </label>
+                    <textarea
+                      name="description"
+                      value={formData.description}
                       onChange={handleInputChange}
-                      className="w-full px-4 py-2.5 border-2 border-gray-200 rounded-xl focus:ring-4 focus:ring-blue-500/10 focus:border-blue-500 outline-none appearance-none bg-white transition-all"
+                      rows={6}
+                      className="w-full px-4 py-2.5 border-2 border-gray-200 rounded-xl focus:ring-4 focus:ring-blue-500/10 focus:border-blue-500 outline-none resize-none transition-all"
+                      placeholder="Office will remain closed on..."
                       required
-                    >
-                      <option value="Published">Published</option>
-                      <option value="Draft">Draft</option>
-                      <option value="Scheduled">Scheduled</option>
-                    </select>
-                    <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none" size={20} />
+                    />
                   </div>
-                </div>
 
-                <div className="flex justify-end gap-3 pt-4 border-t">
-                  <button
-                    type="button"
-                    onClick={handleCancel}
-                    className="px-6 py-2.5 border-2 border-gray-300 rounded-xl text-gray-700 hover:bg-gray-50 transition-all font-semibold"
-                  >
-                    Cancel
-                  </button>
-                  <button
-                    onClick={handleSubmit}
-                    className="px-6 py-2.5 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-xl hover:shadow-lg transition-all font-semibold"
-                  >
-                    {editingId ? 'Update Notice' : 'Publish Notice'}
-                  </button>
+                  <div>
+                    <label className="block text-sm font-semibold text-gray-700 mb-2">
+                      Target Audience <span className="text-red-500">*</span>
+                    </label>
+                    <div className="relative">
+                      <select
+                        name="audience"
+                        value={formData.audience}
+                        onChange={handleInputChange}
+                        className="w-full px-4 py-2.5 border-2 border-gray-200 rounded-xl focus:ring-4 focus:ring-blue-500/10 focus:border-blue-500 outline-none appearance-none bg-white transition-all"
+                        required
+                      >
+                        {audiences.map(audience => (
+                          <option key={audience} value={audience}>{audience}</option>
+                        ))}
+                      </select>
+                      <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none" size={20} />
+                    </div>
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-semibold text-gray-700 mb-2">
+                      Publish Date <span className="text-red-500">*</span>
+                    </label>
+                    <div className="relative">
+                      <input
+                        type="date"
+                        name="publishDate"
+                        value={formData.publishDate}
+                        onChange={handleInputChange}
+                        className="w-full px-4 py-2.5 border-2 border-gray-200 rounded-xl focus:ring-4 focus:ring-blue-500/10 focus:border-blue-500 outline-none transition-all"
+                        required
+                      />
+                      <Calendar className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none" size={20} />
+                    </div>
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-semibold text-gray-700 mb-2">
+                      Status <span className="text-red-500">*</span>
+                    </label>
+                    <div className="relative">
+                      <select
+                        name="status"
+                        value={formData.status}
+                        onChange={handleInputChange}
+                        className="w-full px-4 py-2.5 border-2 border-gray-200 rounded-xl focus:ring-4 focus:ring-blue-500/10 focus:border-blue-500 outline-none appearance-none bg-white transition-all"
+                        required
+                      >
+                        <option value="Published">Published</option>
+                        <option value="Draft">Draft</option>
+                        <option value="Scheduled">Scheduled</option>
+                      </select>
+                      <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none" size={20} />
+                    </div>
+                  </div>
+
+                  <div className="flex justify-end gap-3 pt-4 border-t">
+                    <button
+                      type="button"
+                      onClick={handleCancel}
+                      className="px-6 py-2.5 border-2 border-gray-300 rounded-xl text-gray-700 hover:bg-gray-50 transition-all font-semibold"
+                    >
+                      Cancel
+                    </button>
+                    <button
+                      onClick={handleSubmit}
+                      className="px-6 py-2.5 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-xl hover:shadow-lg transition-all font-semibold"
+                    >
+                      {editingId ? 'Update Notice' : 'Publish Notice'}
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-      )}
-    </div>
+        )
+      }
+    </div >
   );
 };
 

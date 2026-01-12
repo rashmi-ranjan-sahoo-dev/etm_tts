@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { LayoutDashboard, FileText, CheckSquare, Settings, MessageSquare, ChevronDown, X, Sparkles, } from "lucide-react";
 import { Link } from "react-router-dom";
 import { LogOut } from "lucide-react";
-import {Ticket} from "lucide-react";
+import { Ticket } from "lucide-react";
 
 import EmployeeProfileModal from "./EmployeeProfileModal";
 
@@ -23,15 +23,15 @@ const Sidebar = ({ isSidebarOpen = true, setIsSidebarOpen = () => { } }) => {
     { name: "My Tasks", icon: CheckSquare, to: "/employee/myTasks" },
     // { name: "Tasks", icon: CheckSquare, to: "/employee/ProjectManagerTasks" },
     { name: "Settings", icon: Settings, to: "/employee/settings" },
-    { name: "LeadTickets", icon:Ticket, to: "/employee/lead-issue-tracker" },
-    { name: "ManagerTickets", icon:Ticket, to: "/employee/issue-tracker" },
+    { name: "LeadTickets", icon: Ticket, to: "/employee/lead-issue-tracker" },
+    { name: "ManagerTickets", icon: Ticket, to: "/employee/issue-tracker" },
   ];
 
   return (
     <>
-      <EmployeeProfileModal 
-        isOpen={isProfileModalOpen} 
-        onClose={() => setIsProfileModalOpen(false)} 
+      <EmployeeProfileModal
+        isOpen={isProfileModalOpen}
+        onClose={() => setIsProfileModalOpen(false)}
       />
 
       {/* Overlay with blur */}
@@ -79,7 +79,7 @@ const Sidebar = ({ isSidebarOpen = true, setIsSidebarOpen = () => { } }) => {
 
           {/* Profile */}
           <div className="p-6 text-center">
-            <div 
+            <div
               className="relative inline-block cursor-pointer group"
               onClick={() => setIsProfileModalOpen(true)}
             >
@@ -149,10 +149,10 @@ const Sidebar = ({ isSidebarOpen = true, setIsSidebarOpen = () => { } }) => {
   ${openProjects ? "max-h-40 opacity-100 mt-2" : "max-h-0 opacity-0"}`}
             >
               <Link
-                to="/employee/projectmanager/allprojects"
-                onClick={() => setActiveRoute("/employee/projectmanager/allprojects")}
+                to="/employee/projectmanager/projects"
+                onClick={() => setActiveRoute("/employee/projectmanager/projects")}
                 className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm transition-all duration-200 w-full text-left
-      ${activeRoute === "/employee/projectmanager/allprojects"
+      ${activeRoute === "/employee/projectmanager/projects"
                     ? "bg-gradient-to-r from-indigo-500 to-purple-500 text-white shadow-md"
                     : "hover:bg-white/80 hover:shadow-sm text-gray-600 hover:text-gray-900"
                   }`}

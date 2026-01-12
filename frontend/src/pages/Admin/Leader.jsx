@@ -1,6 +1,7 @@
 /* eslint-disable react-hooks/purity */
 /* eslint-disable no-unused-vars */
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
     ClipboardList,
     Search,
@@ -23,6 +24,7 @@ import {
 
 
 const Leader = () => {
+    const navigate = useNavigate();
     // Available Projects List
     const availableProjects = [
         "Hospital Management",
@@ -322,8 +324,8 @@ const Leader = () => {
                 </div>
             </div>
 
-            {/* Table Container */}
-            <div className="bg-white rounded-2xl p-5 shadow-[0_4px_20px_rgba(0,0,0,0.02)] overflow-x-auto">
+            {/* Table Container - Hidden on Mobile/Tablet */}
+            <div className="hidden lg:block bg-white rounded-2xl p-5 shadow-[0_4px_20px_rgba(0,0,0,0.02)] overflow-x-auto">
                 <table className="w-full border-separate border-spacing-y-[15px] min-w-[1000px]">
                     <thead>
                         <tr>
@@ -342,7 +344,7 @@ const Leader = () => {
                             <tr key={leader.id} className="transition-transform duration-200 hover:transform-none">
                                 <td className="w-10 text-center bg-white p-[15px] text-[13px] text-[#444] align-middle relative"><input type="checkbox" className="w-4 h-4 rounded border-[#ccc] cursor-pointer accent-[#9c27b0]" /></td>
                                 <td className="bg-white p-[15px] text-[13px] text-[#444] align-middle relative">
-                                    <div className="flex items-center cursor-pointer hover:opacity-80 transition-opacity" onClick={() => setSelectedLeaderDetail(leader)}>
+                                    <div className="flex items-center cursor-pointer hover:opacity-80 transition-opacity" onClick={() => navigate('/admin/employee', { state: { leader, hideSensitiveInfo: true } })}>
                                         <img src={leader.avatar} alt={leader.name} className="w-8 h-8 rounded-full object-cover mr-[10px]" />
                                         <span className="font-semibold text-[#8e24aa]">{leader.name}</span>
                                     </div>
@@ -383,6 +385,52 @@ const Leader = () => {
                     </div>
                     <div>1 - 10 of 16</div>
                 </div>
+            </div>
+
+            {/* Mobile/Tablet Card View */}
+            <div className="lg:hidden grid grid-cols-1 md:grid-cols-2 gap-4">
+                {filteredLeaders.map((leader) => (
+                    <div key={leader.id} className="bg-white rounded-xl p-5 shadow-sm border border-gray-100 flex flex-col gap-4">
+                        <div className="flex justify-between items-start">
+                            <div className="flex items-center gap-3" onClick={() => navigate('/admin/employee', { state: { leader, hideSensitiveInfo: true } })}>
+                                <img src={leader.avatar} alt={leader.name} className="w-12 h-12 rounded-full object-cover border-2 border-purple-100" />
+                                <div>
+                                    <h3 className="font-bold text-gray-800 text-base">{leader.name}</h3>
+                                    <p className="text-sm text-purple-600 font-medium">{leader.role}</p>
+                                </div>
+                            </div>
+                            <div className="flex gap-2">
+                                <button
+                                    className="p-2 text-blue-500 hover:bg-blue-50 rounded-lg transition-colors"
+                                    onClick={(e) => { e.stopPropagation(); handleEdit(leader); }}
+                                >
+                                    <Pencil size={18} />
+                                </button>
+                                <button
+                                    className="p-2 text-red-500 hover:bg-red-50 rounded-lg transition-colors"
+                                    onClick={(e) => { e.stopPropagation(); handleDelete(leader.id); }}
+                                >
+                                    <Trash2 size={18} />
+                                </button>
+                            </div>
+                        </div>
+
+                        <div className="grid grid-cols-1 gap-2 text-sm text-gray-600">
+                            <div className="flex items-center gap-2">
+                                <Briefcase size={16} className="text-gray-400" />
+                                <span>{leader.department}</span>
+                            </div>
+                            <div className="flex items-center gap-2">
+                                <Mail size={16} className="text-gray-400" />
+                                <span className="break-all">{leader.email}</span>
+                            </div>
+                            <div className="flex items-center gap-2">
+                                <Phone size={16} className="text-gray-400" />
+                                <span>{leader.mobile}</span>
+                            </div>
+                        </div>
+                    </div>
+                ))}
             </div>
 
             {/* Add Modal - Project Removed, Auto-fill Added */}

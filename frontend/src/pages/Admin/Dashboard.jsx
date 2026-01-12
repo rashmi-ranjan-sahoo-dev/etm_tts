@@ -175,7 +175,6 @@ const projectsData = [
 
 const Dashboard = () => {
     const navigate = useNavigate();
-    const [selectedTeamProject, setSelectedTeamProject] = useState(null);
     const [selectedDepartment, setSelectedDepartment] = useState(null);
     const [leaveSearch, setLeaveSearch] = useState('');
     const [selectedEmployeeId, setSelectedEmployeeId] = useState(3);
@@ -251,6 +250,13 @@ const Dashboard = () => {
 
         return allEmployees;
     }, []);
+
+    const handleNavigateToEmployee = (employeeName) => {
+        const employee = allEmployeesLeaveData.find(e => e.name === employeeName);
+        if (employee) {
+            navigate('/admin/employee', { state: { leader: employee } });
+        }
+    };
 
     const selectedEmployee = allEmployeesLeaveData.find(emp => emp.id === selectedEmployeeId) || allEmployeesLeaveData[0];
 
@@ -380,9 +386,9 @@ const Dashboard = () => {
                             </div>
                         </div>
 
-                        <div className="flex grid-cols-2 md:grid-cols-2 gap-[40px] max-[768px]:flex-col">
+                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-[40px]">
                             {/* Left Column: Stats Cards */}
-                            <div className="flex-1 grid grid-cols-2 gap-[15px]">
+                            <div className="flex-1 grid grid-cols-1 sm:grid-cols-2 gap-[15px]">
                                 {/* Total Employees */}
                                 <div
                                     onClick={() => navigate('/admin/employee')}
@@ -427,7 +433,7 @@ const Dashboard = () => {
                                     onClick={() => navigate('/admin/employee', { state: { type: 'Contract' } })}
                                     className="bg-[#fff] border border-[#f0f0f0] rounded-[10px] p-[15px] flex items-center gap-[20px] shadow-[0_2px_4px_rgba(0,0,0,0.02)] cursor-pointer hover:shadow-md transition-all"
                                 >
-                                    <div className="w-[55px] h-[35px] rounded-full bg-[#ff9800] flex items-center justify-center text-white shadow-sm">
+                                    <div className="w-[40px] h-[40px] rounded-full bg-[#ff9800] flex items-center justify-center text-white shadow-sm">
                                         <HardHat size={23} />
                                     </div>
                                     <div>
@@ -440,7 +446,7 @@ const Dashboard = () => {
                                     onClick={() => navigate('/admin/all-employees-leave')}
                                     className="bg-[#fff] border border-[#f0f0f0] rounded-[10px] p-[15px] flex items-center gap-[20px] shadow-[0_2px_4px_rgba(0,0,0,0.02)] cursor-pointer hover:shadow-md transition-all"
                                 >
-                                    <div className="w-[40px] h-[40px] rounded-full bg-[#673ab7] flex items-center justify-center text-white shadow-sm">
+                                    <div className="w-[45px] h-[35px] rounded-full bg-[#673ab7] flex items-center justify-center text-white shadow-sm">
                                         <Umbrella size={24} />
                                     </div>
                                     <div>
@@ -481,7 +487,7 @@ const Dashboard = () => {
 
                             {/* HR */}
                             <div
-                                onClick={() => setSelectedDepartment('HR')}
+                                onClick={() => navigate('/admin/employee', { state: { dept: 'HR' } })}
                                 className="bg-[#fafafa] rounded-[8px] p-[12px_15px] border-l-[4px] border-[#4caf50] flex justify-between items-center cursor-pointer hover:bg-[#f0f0f0] transition-colors group"
                             >
                                 <span className="text-[13px] font-semibold text-[#333] group-hover:text-[#4caf50] transition-colors">HR</span>
@@ -492,7 +498,7 @@ const Dashboard = () => {
                             </div>
                             {/* Engineering */}
                             <div
-                                onClick={() => setSelectedDepartment('Engineering')}
+                                onClick={() => navigate('/admin/employee', { state: { dept: 'Engineering' } })}
                                 className="bg-[#fafafa] rounded-[8px] p-[12px_15px] border-l-[4px] border-[#2196f3] flex justify-between items-center cursor-pointer hover:bg-[#f0f0f0] transition-colors group"
                             >
                                 <span className="text-[13px] font-semibold text-[#333] group-hover:text-[#2196f3] transition-colors">Engineering</span>
@@ -504,7 +510,7 @@ const Dashboard = () => {
 
                             {/* Marketing */}
                             <div
-                                onClick={() => setSelectedDepartment('Marketing')}
+                                onClick={() => navigate('/admin/employee', { state: { dept: 'Marketing' } })}
                                 className="bg-[#fafafa] rounded-[8px] p-[12px_15px] border-l-[4px] border-[#ffc107] flex justify-between items-center cursor-pointer hover:bg-[#f0f0f0] transition-colors group"
                             >
                                 <span className="text-[13px] font-semibold text-[#333] group-hover:text-[#ffc107] transition-colors">Marketing</span>
@@ -515,7 +521,7 @@ const Dashboard = () => {
                             </div>
                             {/* Finance */}
                             <div
-                                onClick={() => setSelectedDepartment('Finance')}
+                                onClick={() => navigate('/admin/employee', { state: { dept: 'Finance' } })}
                                 className="bg-[#fafafa] rounded-[8px] p-[12px_15px] border-l-[4px] border-[#9c27b0] flex justify-between items-center cursor-pointer hover:bg-[#f0f0f0] transition-colors group"
                             >
                                 <span className="text-[13px] font-semibold text-[#333] group-hover:text-[#9c27b0] transition-colors">Finance</span>
@@ -526,7 +532,7 @@ const Dashboard = () => {
                             </div>
                             {/* Operations */}
                             <div
-                                onClick={() => setSelectedDepartment('Operations')}
+                                onClick={() => navigate('/admin/employee', { state: { dept: 'Operations' } })}
                                 className="bg-[#fafafa] rounded-[8px] p-[12px_15px] border-l-[4px] border-[#ff9800] flex justify-between items-center cursor-pointer hover:bg-[#f0f0f0] transition-colors group"
                             >
                                 <span className="text-[13px] font-semibold text-[#333] group-hover:text-[#ff9800] transition-colors">Operations</span>
@@ -537,7 +543,7 @@ const Dashboard = () => {
                             </div>
                             {/* Others */}
                             <div
-                                onClick={() => setSelectedDepartment('Others')}
+                                onClick={() => navigate('/admin/employee', { state: { dept: 'Others' } })}
                                 className="bg-[#fafafa] rounded-[8px] p-[12px_15px] border-l-[4px] border-[#9e9e9e] flex justify-between items-center cursor-pointer hover:bg-[#f0f0f0] transition-colors group"
                             >
                                 <span className="text-[13px] font-semibold text-[#333] group-hover:text-[#9e9e9e] transition-colors">Others</span>
@@ -577,7 +583,7 @@ const Dashboard = () => {
                             </div>
                         </div>
 
-                        <div className="flex grid-cols-1 md:grid-cols-2 gap-[40px] max-[768px]:flex-col">
+                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-[40px]">
                             {/* Left Column: Key Stats */}
                             <div className="flex-1 flex flex-col justify-center gap-[30px]">
                                 <div
@@ -654,12 +660,12 @@ const Dashboard = () => {
 
                     {/* Recent Activities Section */}
                     <div className="bg-white rounded-[10px] p-[20px] shadow-[0_2px_5px_rgba(0,0,0,0.03)] h-[400px] flex flex-col">
-                        <div className="flex justify-between items-start mb-[20px] shrink-0">
+                        <div className="flex justify-between items-start mb-[20px] shrink-0 max-[480px]:flex-col max-[480px]:gap-[10px]">
                             <div>
                                 <h3 className="text-[16px] font-semibold text-[#333] mb-[2px]">Recent Activities</h3>
                                 <p className="text-[12px] text-[#888]">Latest HR activities and notifications</p>
                             </div>
-                            <div className="flex gap-[10px] items-center">
+                            <div className="flex gap-[10px] items-center max-[480px]:self-end">
                                 <div className="relative group">
                                     <div className="w-[30px] h-[30px] rounded-full bg-[#f5f5f5] flex items-center justify-center cursor-pointer hover:bg-[#e0e0e0] transition-colors">
                                         <CheckCheck size={16} className="text-[#555]" />
@@ -1052,12 +1058,13 @@ const Dashboard = () => {
                         <span className="text-[13px] font-semibold text-[#2196f3] cursor-pointer hover:underline">View All</span>
                     </div>
 
-                    <div className="overflow-x-auto w-full touch-pan-x">
+                    <div className="hidden lg:block overflow-x-auto w-full touch-pan-x">
                         <table className="w-full border-collapse min-w-[900px]">
                             <thead>
                                 <tr>
                                     <th className="text-left text-[13px] font-semibold text-[#444] p-[15px_10px] border-b border-[#eee]">Project Name</th>
                                     <th className="text-left text-[13px] font-semibold text-[#444] p-[15px_10px] border-b border-[#eee]">Employee Team</th>
+
                                     <th className="text-left text-[13px] font-semibold text-[#444] p-[15px_10px] border-b border-[#eee]">Team Leaders</th>
                                     <th className="text-center text-[13px] font-semibold text-[#444] p-[15px_10px] border-b border-[#eee]">Priority</th>
                                     <th className="text-center text-[13px] font-semibold text-[#444] p-[15px_10px] border-b border-[#eee]">Open Task</th>
@@ -1068,28 +1075,41 @@ const Dashboard = () => {
                             <tbody>
                                 {projectsData.map((project) => (
                                     <tr key={project.id} className="hover:bg-[#fafafa] border-b border-[#fcfcfc]">
-                                        <td className="p-[15px_10px] text-[13px] text-[#333] font-medium">{project.name}</td>
+                                        <td
+                                            className="p-[15px_10px] text-[13px] text-[#333] font-medium cursor-pointer hover:text-[#2196f3] transition-colors"
+                                            onClick={() => {
+                                                const { priorityIcon, ...safeProject } = project;
+                                                navigate('/admin/project-details', { state: { project: safeProject } });
+                                            }}
+                                        >
+                                            {project.name}
+                                        </td>
                                         <td className="p-[15px_10px] text-[13px] align-middle">
-                                            <div
-                                                className="flex items-center cursor-pointer hover:opacity-80 transition-opacity"
-                                                onClick={() => setSelectedTeamProject(project)}
-                                            >
+                                            <div className="flex items-center relative z-10">
                                                 {project.team.slice(0, 3).map((member, idx) => (
                                                     <img
                                                         key={idx}
                                                         src={member.image}
                                                         alt="Team"
-                                                        className={`w-[30px] h-[30px] rounded-full border-[2px] border-white ${idx !== 0 ? '-ml-[10px]' : ''}`}
+                                                        className={`w-[30px] h-[30px] rounded-full border-[2px] border-white ${idx !== 0 ? '-ml-[10px]' : ''} pointer-events-none`}
+                                                        title={member.name}
                                                     />
                                                 ))}
                                                 {project.team.length > 3 && (
-                                                    <div className="w-[30px] h-[30px] rounded-full bg-[#7986cb] text-white text-[10px] font-semibold flex items-center justify-center border-[2px] border-white -ml-[10px]">
+                                                    <div className="w-[30px] h-[30px] rounded-full bg-[#7986cb] text-white text-[10px] font-semibold flex items-center justify-center border-[2px] border-white -ml-[10px] pointer-events-none">
                                                         +{project.team.length - 3}
                                                     </div>
                                                 )}
                                             </div>
                                         </td>
-                                        <td className="p-[15px_10px] text-[13px] text-[#333] align-middle">{project.leader}</td>
+                                        <td className="p-[15px_10px] text-[13px] text-[#333] align-middle">
+                                            <span
+                                                className="cursor-pointer hover:text-[#2196f3] hover:underline font-medium transition-colors"
+                                                onClick={() => handleNavigateToEmployee(project.leader)}
+                                            >
+                                                {project.leader}
+                                            </span>
+                                        </td>
                                         <td className="p-[15px_10px] text-[13px] text-[#333] align-middle text-center">
                                             <div className={`flex items-center justify-center gap-[5px] ${project.priorityColor}`}>
                                                 <project.priorityIcon size={14} /> <span>{project.priority}</span>
@@ -1107,6 +1127,73 @@ const Dashboard = () => {
                             </tbody>
                         </table>
                     </div>
+
+                    {/* Mobile/Tablet Card View */}
+                    <div className="lg:hidden flex flex-col gap-[15px]">
+                        {projectsData.map((project) => (
+                            <div
+                                key={project.id}
+                                className="bg-[#f8f9fa] rounded-[10px] p-[15px] border border-[#f0f0f0] cursor-pointer hover:shadow-md transition-shadow"
+                                onClick={() => {
+                                    const { priorityIcon, ...safeProject } = project;
+                                    navigate('/admin/project-details', { state: { project: safeProject } });
+                                }}
+                            >
+                                <div className="flex justify-between items-start mb-[10px]">
+                                    <div>
+                                        <h4 className="text-[14px] font-bold text-[#333] mb-[2px]">{project.name}</h4>
+                                        <div className="flex items-center gap-[5px]">
+                                            <span className="text-[12px] text-[#666]">Leader:</span>
+                                            <span className="text-[12px] font-medium text-[#2196f3]" onClick={(e) => {
+                                                e.stopPropagation();
+                                                handleNavigateToEmployee(project.leader);
+                                            }}>{project.leader}</span>
+                                        </div>
+                                    </div>
+                                    <span className={`p-[4px_10px] rounded-[6px] text-[11px] font-medium ${project.statusClass}`}>
+                                        {project.status}
+                                    </span>
+                                </div>
+
+                                <div className="flex justify-between items-center mb-[12px]">
+                                    <div className="flex items-center relative z-0">
+                                        {project.team.slice(0, 4).map((member, idx) => (
+                                            <img
+                                                key={idx}
+                                                src={member.image}
+                                                alt="Team"
+                                                className={`w-[28px] h-[28px] rounded-full border-[2px] border-white ${idx !== 0 ? '-ml-[8px]' : ''} object-cover`}
+                                            />
+                                        ))}
+                                        {project.team.length > 4 && (
+                                            <div className="w-[28px] h-[28px] rounded-full bg-[#7986cb] text-white text-[9px] font-semibold flex items-center justify-center border-[2px] border-white -ml-[8px]">
+                                                +{project.team.length - 4}
+                                            </div>
+                                        )}
+                                    </div>
+                                    <div className={`flex items-center gap-[4px] text-[12px] font-medium ${project.priorityColor}`}>
+                                        <project.priorityIcon size={14} />
+                                        <span>{project.priority}</span>
+                                    </div>
+                                </div>
+
+                                <div className="flex justify-between items-center pt-[10px] border-t border-[#eee]">
+                                    <div className="text-center">
+                                        <span className="text-[16px] font-bold text-[#333] block leading-none mb-[2px]">{project.openTask}</span>
+                                        <span className="text-[10px] text-[#888] uppercase">Open</span>
+                                    </div>
+                                    <div className="text-center">
+                                        <span className="text-[16px] font-bold text-[#333] block leading-none mb-[2px]">{project.completedTask}</span>
+                                        <span className="text-[10px] text-[#888] uppercase">Done</span>
+                                    </div>
+                                    <div className="text-center">
+                                        <span className="text-[16px] font-bold text-[#333] block leading-none mb-[2px]">{Math.round((project.completedTask / (project.openTask + project.completedTask)) * 100)}%</span>
+                                        <span className="text-[10px] text-[#888] uppercase">Rate</span>
+                                    </div>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
                 </div>
             </div>
 
@@ -1122,10 +1209,7 @@ const Dashboard = () => {
                 }}
             />
 
-            {/* Team Members Modal */}
-            {selectedTeamProject && (
-                <TeamMembersModal project={selectedTeamProject} onClose={() => setSelectedTeamProject(null)} />
-            )}
+
 
             {/* Employee Detail Modal for Department Members */}
             {selectedMember && (
@@ -1151,7 +1235,7 @@ const Dashboard = () => {
                             <p className="text-[13px] text-gray-600">Stay updated with the latest HR announcements and policies</p>
                         </div>
                     </div>
-                    
+
                     <div className="space-y-[12px] max-h-[300px] overflow-y-auto">
                         <div className="bg-white rounded-[8px] p-[15px] border border-amber-200 bg-amber-50 hover:shadow-md transition-shadow">
                             <div className="flex gap-[12px]">
@@ -1289,50 +1373,7 @@ const DepartmentMembersModal = ({ isOpen, onClose, departmentName, employees, on
 
 export default Dashboard;
 
-const TeamMembersModal = ({ project, onClose }) => {
-    const [selectedMember, setSelectedMember] = useState(null);
 
-    if (!project) return null;
-
-    return (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-[100] animate-in fade-in duration-200" onClick={onClose}>
-            <div className="bg-white rounded-[12px] p-[25px] w-[90%] max-w-[400px] shadow-2xl relative animate-in zoom-in-95 duration-200" onClick={e => e.stopPropagation()}>
-                <div className="flex justify-between items-center mb-[20px]">
-                    <h3 className="text-[18px] font-bold text-[#333]">{project.name} Team</h3>
-                    <button onClick={onClose} className="p-[0] w-[32px] h-[32px] rounded-full bg-white border border-gray-100 flex items-center justify-center shadow-md hover:bg-gray-50 transition-colors">
-                        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M13 1L1 13M1 1L13 13" stroke="black" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                        </svg>
-                    </button>
-                </div>
-                <div className="flex flex-col gap-[15px] max-h-[60vh] overflow-y-auto custom-scrollbar">
-                    {project.team.filter(member => member.name !== project.leader).map((member, index) => (
-                        <div
-                            key={index}
-                            className="flex items-center gap-[15px] p-[10px] rounded-[8px] hover:bg-[#fafafa] transition-colors border border-transparent hover:border-[#f0f0f0] cursor-pointer group"
-                            onClick={() => setSelectedMember(member)}
-                        >
-                            <img src={member.image} alt={member.name} className="w-[40px] h-[40px] rounded-full object-cover shadow-sm group-hover:scale-105 transition-transform" />
-                            <div>
-                                <h4 className="text-[14px] font-semibold text-[#333] group-hover:text-[#2196f3] transition-colors">{member.name}</h4>
-                                <span className="text-[12px] text-[#666]">{member.role}</span>
-                            </div>
-                        </div>
-                    ))}
-                </div>
-            </div>
-
-            {/* Employee Detail Modal - Nested or Overlaid */}
-            {selectedMember && (
-                <EmployeeDetailModal
-                    member={selectedMember}
-                    projectName={project.name}
-                    onClose={() => setSelectedMember(null)}
-                />
-            )}
-        </div>
-    );
-};
 
 const EmployeeDetailModal = ({ member, projectName, onClose }) => {
     if (!member) return null;

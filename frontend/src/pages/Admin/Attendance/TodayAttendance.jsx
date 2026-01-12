@@ -151,8 +151,8 @@ const TodayAttendance = () => {
                     </div>
                 </div>
 
-                {/* Table */}
-                <div className="bg-white rounded-b-xl shadow-sm border border-gray-100 overflow-x-auto">
+                {/* Desktop Table View */}
+                <div className="hidden md:block bg-white rounded-b-xl shadow-sm border border-gray-100 overflow-x-auto">
                     <table className="w-full text-base text-left">
                         <thead className="bg-white text-gray-700 font-medium border-b border-gray-100">
                             <tr>
@@ -238,6 +238,74 @@ const TodayAttendance = () => {
                             )}
                         </tbody>
                     </table>
+                </div>
+
+                {/* Mobile Card View */}
+                <div className="block md:hidden flex flex-col gap-4">
+                    {filteredEmployees.map((emp) => (
+                        <div key={emp.id} className="bg-white rounded-xl shadow-sm border border-gray-100 p-5">
+                            <div className="flex items-start justify-between mb-4">
+                                <div className="flex items-center gap-3" onClick={() => navigate('/admin/employee-attendance', { state: { employee: emp } })}>
+                                    <img src={emp.avatar} alt={emp.name} className="w-12 h-12 rounded-full bg-gray-200 object-cover" />
+                                    <div>
+                                        <h3 className="font-bold text-gray-900">{emp.name}</h3>
+                                        <p className="text-sm text-gray-500">{emp.shift}</p>
+                                    </div>
+                                </div>
+                                <span className={`px-2.5 py-1 rounded-md text-xs font-semibold ${emp.status === 'present' ? 'bg-green-100 text-green-600' : 'bg-orange-100 text-orange-400'}`}>
+                                    {emp.status}
+                                </span>
+                            </div>
+
+                            <div className="grid grid-cols-2 gap-4 py-4 border-y border-gray-50 mb-4">
+                                {filterStatus === 'Absent' ? (
+                                    <div className="col-span-2">
+                                        <p className="text-xs text-gray-500 mb-1">Reason</p>
+                                        <p className="font-medium text-gray-700">{emp.reason || 'N/A'}</p>
+                                    </div>
+                                ) : (
+                                    <>
+                                        <div>
+                                            <p className="text-xs text-gray-500 mb-1">First In</p>
+                                            <p className="font-medium text-gray-700">{emp.firstIn}</p>
+                                        </div>
+                                        <div>
+                                            <p className="text-xs text-gray-500 mb-1">Last Out</p>
+                                            <p className="font-medium text-gray-700">{emp.lastOut}</p>
+                                        </div>
+                                        <div>
+                                            <p className="text-xs text-gray-500 mb-1">Break</p>
+                                            <p className="font-medium text-gray-700">{emp.break}</p>
+                                        </div>
+                                        <div>
+                                            <p className="text-xs text-gray-500 mb-1">Total Hours</p>
+                                            <p className="font-medium text-gray-700">{emp.totalHours}</p>
+                                        </div>
+                                    </>
+                                )}
+                            </div>
+
+                            <div className="flex gap-3">
+                                <button
+                                    onClick={() => handleEdit(emp)}
+                                    className="flex-1 py-2.5 bg-blue-50 text-blue-600 font-medium rounded-lg hover:bg-blue-100 transition-colors flex items-center justify-center gap-2"
+                                >
+                                    <Pencil size={16} /> Edit
+                                </button>
+                                <button
+                                    onClick={() => handleDeleteClick(emp)}
+                                    className="flex-1 py-2.5 bg-orange-50 text-orange-600 font-medium rounded-lg hover:bg-orange-100 transition-colors flex items-center justify-center gap-2"
+                                >
+                                    <Trash2 size={16} /> Delete
+                                </button>
+                            </div>
+                        </div>
+                    ))}
+                    {filteredEmployees.length === 0 && (
+                        <div className="text-center p-8 bg-white rounded-xl border border-gray-100 text-gray-500">
+                            No employees found matching "{searchTerm}"
+                        </div>
+                    )}
                 </div>
 
                 <AttendanceModals

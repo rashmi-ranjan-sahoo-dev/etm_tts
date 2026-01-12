@@ -29,14 +29,21 @@ import AdminLeaveBalances from './pages/Admin/Leaves/LeaveBalances.jsx'
 import AdminLeaveRequests from './pages/Admin/Leaves/LeaveRequests.jsx'
 import AdminLeaveTypes from './pages/Admin/Leaves/LeaveTypes.jsx'
 import AdminLeaveDetails from './pages/Admin/AdminLeaveDetails.jsx'
-// import AdminLeaveSetting from './pages/Admin/Leaves/LeaveSetting.jsx'
+import AdminLeaveSetting from './pages/Admin/Leaves/LeaveSetting.jsx'
 import AdminLeave from './pages/Admin/Leaves/AdminLeave.jsx'
 import AdminLeader from './pages/Admin/Leader.jsx'
 import AdminTrainingList from './pages/Admin/Training/TrainingList.jsx'
 import AdminTrainers from './pages/Admin/Training/Trainers.jsx'
 import AdminTrainingType from './pages/Admin/Training/TrainingType.jsx'
+import AdminAllTrainees from './pages/Admin/Training/AllTrainees.jsx'
 import AdminHoliday from './pages/Admin/Holiday.jsx'
 import AdminNotice from './pages/Admin/Notice.jsx'
+import AdminProjectDetails from './pages/Admin/ProjectDetails.jsx'
+import AdminProfile from './pages/Admin/Profile.jsx'
+import AdminSecurity from './pages/Admin/Security.jsx'
+import AdminManagerLeave from './pages/Admin/Leaves/ManagerLeave.jsx' 
+
+
 
 
 import EmployeeLayout from './layout/EmployeeLayout'
@@ -76,49 +83,57 @@ import Settings from './pages/Settings.jsx'
 const App = () => {
   return (
     <BrowserRouter>
-        <Routes>
+      <Routes>
         <Route path="/" element={<Navigate to="/signin" replace />} />
         <Route path="/signin" element={<SignIn />} />
-        <Route path="/signup" element={<SignUp />} /> 
+        <Route path="/signup" element={<SignUp />} />
 
-        <Route path='/super-admin' element ={<SuperAdminLayout />}>
+        <Route path='/super-admin' element={<SuperAdminLayout />}>
           <Route index element={<SuperAdminDashboard />} />
           <Route path="dashboard" element={<SuperAdminDashboard />} />
-          <Route path='projects' element={<SuperAdminProjects/>}/>
-          <Route path='projects/:id' element={<SuperAdminProjectDetails/>}/>
-          <Route path='new-customers' element={<SuperAdminNewCustomersDetail/>}/>
-          <Route path='inquiries' element={<SuperAdminInquiriesDetail/>}/>
-          <Route path='earnings' element={<SuperAdminEarningsDetail/>}/>
+          <Route path='projects' element={<SuperAdminProjects />} />
+          <Route path='projects/:id' element={<SuperAdminProjectDetails />} />
+          <Route path='new-customers' element={<SuperAdminNewCustomersDetail />} />
+          <Route path='inquiries' element={<SuperAdminInquiriesDetail />} />
+          <Route path='earnings' element={<SuperAdminEarningsDetail />} />
           {/* <Route path='addprojects' element={<SuperAdminAddProjects/>}/> */}
           <Route path="client" element={<SuperAdminClientPage />} />
           <Route path="client/:id" element={<ClientDetail />} />
           <Route path="admin" element={<SuperAdminAdminPage />} />
           <Route path="admin/:id" element={<AdminDetail />} />
-          <Route path='notice' element={<SuperAdminNotice/>}/>
+          <Route path='notice' element={<SuperAdminNotice />} />
           <Route path="setting" element={<Settings />} />
         </Route>
 
-        <Route path='/admin' element={<AdminLayout/>}>
-          <Route index element={<AdminDashboard/>}/>
-          <Route path='dashboard' element={<AdminDashboard />}/>
-          <Route path='department' element={<AdminDepartment />}/>
-          <Route path='employee' element={<AdminEmployee/>}/>
-          <Route path='holiday' element={<AdminHoliday/>}/>
-          <Route path='leavebalances' element={<AdminLeaveBalances/>} />
-          <Route path='leaverequest' element={<AdminLeaveRequests/>} />
-          <Route path='leave-types' element={<AdminLeaveTypes/>} />
-          <Route path='all-employees-leave' element={<AdminLeaveDetails/>} />
-          {/* <Route path='leave-setting' element={<AdminLeaveSetting/>} /> */}
-          <Route path='notice' element={<AdminNotice/>}/>
-          <Route path='adminleave' element={<AdminLeave/>} />
-          <Route path='leader' element={<AdminLeader/>}/>
-          <Route path='today-attendance' element={<AdminTodayAttendance/>} />
-          <Route path='attendance-sheet' element={<AdminEmployeeAttendanceSheet/>} />
-          <Route path='employee-attendance' element={<AdminEmployeeAttendance/>} />
-          <Route path='training-list' element={<AdminTrainingList/>} />
-          <Route path='trainers' element={<AdminTrainers/>} />
-          <Route path='training-type' element={<AdminTrainingType/>} />
+        <Route path='/admin' element={<AdminLayout />}>
+          <Route index element={<AdminDashboard />} />
+          <Route path='dashboard' element={<AdminDashboard />} />
+          <Route path='department' element={<AdminDepartment />} />
+          <Route path='employee' element={<AdminEmployee />} />
+          <Route path='holiday' element={<AdminHoliday />} />
+          <Route path='leavebalances' element={<AdminLeaveBalances />} />
+          <Route path='leaverequest' element={<AdminLeaveRequests />} />
+          <Route path='leave-types' element={<AdminLeaveTypes />} />
+          <Route path='all-employees-leave' element={<AdminLeaveDetails />} />
+          <Route path='managerleave' element={<AdminManagerLeave />} />
+          <Route path='leave-setting' element={<AdminLeaveSetting />} />
+          <Route path='notice' element={<AdminNotice />} />
+          <Route path='adminleave' element={<AdminLeave />} />
+          <Route path='project-details' element={<AdminProjectDetails />} />
+
+
+
+          <Route path='leader' element={<AdminLeader />} />
+          <Route path='today-attendance' element={<AdminTodayAttendance />} />
+          <Route path='attendance-sheet' element={<AdminEmployeeAttendanceSheet />} />
+          <Route path='employee-attendance' element={<AdminEmployeeAttendance />} />
+          <Route path='training-list' element={<AdminTrainingList />} />
+          <Route path='trainers' element={<AdminTrainers />} />
+          <Route path='training-type' element={<AdminTrainingType />} />
+          <Route path='all-trainees' element={<AdminAllTrainees />} />
           <Route path="settings" element={<Settings />} />
+          <Route path="profile" element={<AdminProfile />} />
+          <Route path="security" element={<AdminSecurity />} />
         </Route>
 
         <Route path="/employee" element={<EmployeeLayout />}>
@@ -132,8 +147,8 @@ const App = () => {
           <Route path='teamleader/addtask' element={<TeamLeaderAddTask />} />
           <Route path='teamleader/alltasks' element={<AllTasks />} />
           <Route path="myTasks" element={<MyTask />} />
-           <Route path="lead-issue-tracker" element={<LeadTickets/>}/>
-          <Route path="issue-tracker" element={<PojectManagerTickets/>}/>
+          <Route path="lead-issue-tracker" element={<LeadTickets />} />
+          <Route path="issue-tracker" element={<PojectManagerTickets />} />
           <Route path="settings" element={<Settings />} />
           <Route path="accounts/client-payments" element={<ClientPayments />} />
           <Route path="accounts/other-payments" element={<Expense />} />

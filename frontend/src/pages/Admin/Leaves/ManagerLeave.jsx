@@ -363,10 +363,10 @@ const AdminLeaves = () => {
       leaveType: "Sick Leave",
       leaveFrom: "18/02/2025",
       leaveTo: "20/02/2025",
-      status: "Approved",
+      status: "Pending",
       requestedOn: "17/02/2025",
-      approvalDate: "17/02/2025",
-      approvedBy: "Manager",
+      approvalDate: "",
+      approvedBy: "Manager & HR",
       reason: "Medical emergency",
     },
     {
@@ -380,7 +380,7 @@ const AdminLeaves = () => {
       status: "Pending",
       requestedOn: "15/02/2025",
       approvalDate: "",
-      approvedBy: "HR",
+      approvedBy: "Manager",
       reason: "Wedding ceremony",
     },
   ]);
@@ -480,7 +480,7 @@ const AdminLeaves = () => {
               </div>
               <div>
                 <h2 className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-teal-600 to-cyan-600 bg-clip-text text-transparent">
-                HR Leave Management
+                Manager Leave Management
                 </h2>
                 <p className="text-sm text-gray-500 mt-1">
                   {filteredLeaves.length} {filteredLeaves.length === 1 ? 'request' : 'requests'} found
@@ -592,7 +592,7 @@ const AdminLeaves = () => {
                     <td className="p-4 text-gray-700">{row.approvalDate || "-"}</td>
                     <td className="p-4 text-gray-700">{row.approvedBy || "-"}</td>
                     <td className="p-4">
-                      {row.status === "Pending" && row.approvedBy === "HR" ? (
+                      {row.status === "Pending" && (row.approvedBy === "Manager" || row.approvedBy === "Manager & HR") ? (
                         <div className="flex gap-2">
                           <button
                             onClick={() => handleApprove(row.id)}
@@ -668,7 +668,7 @@ const AdminLeaves = () => {
                 <Item label="Approved By" value={row.approvedBy} />
               </div>
 
-              {row.status === "Pending" && row.approvedBy === "HR" && (
+              {row.status === "Pending" && (row.approvedBy === "Manager" || row.approvedBy === "Manager & HR") && (
                 <div className="flex gap-3 pt-3 border-t border-gray-100">
                   <button
                     onClick={() => handleApprove(row.id)}

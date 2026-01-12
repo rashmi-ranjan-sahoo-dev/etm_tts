@@ -1,168 +1,309 @@
 import React, { useState } from 'react';
-import { Calendar, X, Bell, CheckCircle, FileText, Clock } from 'lucide-react';
+import { Search, Plus, User, Mail, Shield, MoreVertical, Pencil, Trash2, CheckCircle, XCircle, X } from 'lucide-react';
 
-const User = () => {
-  const [showDetailsModal, setShowDetailsModal] = useState(false);
-  const [selectedNotice, setSelectedNotice] = useState(null);
-  
-  // Data duplicated for standalone hook - in a real app this would come from an API/Context
-  const [notices] = useState([
-    {
-      id: 1,
-      title: 'Holiday Info',
-      description: 'Office will remain closed on Republic Day (26th January 2026). Regular operations will resume on 27th January. Please plan your work accordingly and complete pending tasks before the holiday.',
-      audience: 'All Employees',
-      publishDate: '2026-01-10',
-      status: 'Published'
-    },
-    {
-      id: 2,
-      title: 'Server Maintenance',
-      description: 'Scheduled server maintenance on 12th January from 2 AM to 6 AM. Services may be temporarily unavailable during this period. Please save your work frequently and avoid scheduling critical tasks during maintenance window.',
-      audience: 'IT Dept',
-      publishDate: '2026-01-12',
-      status: 'Draft'
-    },
-    {
-      id: 3,
-      title: 'Policy Update',
-      description: 'New remote work policy will be effective from 15th January 2026. Please review the updated guidelines in the employee handbook. Key changes include flexible working hours and hybrid work options.',
-      audience: 'HR Dept',
-      publishDate: '2026-01-15',
-      status: 'Scheduled'
-    },
-    {
-      id: 4,
-      title: 'Team Building Event',
-      description: 'Annual team building event scheduled for 20th January 2026 at Beach Resort. All employees are requested to confirm their attendance by 18th January. Transportation will be provided.',
-      audience: 'All Employees',
-      publishDate: '2026-01-08',
-      status: 'Published'
-    }
+const UserPage = () => {
+  const [users, setUsers] = useState([
+    { id: 1, name: "Admin User", email: "admin@tech.com", role: "Admin", status: "Active", lastLogin: "2024-03-15 10:30 AM" },
+    { id: 2, name: "John Doe", email: "john.doe@tech.com", role: "Employee", status: "Active", lastLogin: "2024-03-14 05:45 PM" },
+    { id: 3, name: "Sarah Smith", email: "sarah.s@tech.com", role: "Manager", status: "Active", lastLogin: "2024-03-15 09:15 AM" },
+    { id: 4, name: "Mike Johnson", email: "mike.j@tech.com", role: "Employee", status: "Inactive", lastLogin: "2024-03-01 11:20 AM" },
+    { id: 5, name: "Emily Davis", email: "emily.d@tech.com", role: "HR", status: "Active", lastLogin: "2024-03-15 02:30 PM" },
   ]);
 
+  const [searchTerm, setSearchTerm] = useState("");
+  const [showModal, setShowModal] = useState(false);
+  const [currentUser, setCurrentUser] = useState(null);
+  const [formData, setFormData] = useState({ name: "", email: "", role: "Employee", status: "Active" });
+
+  const filteredUsers = users.filter(user =>
+    user.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    user.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    user.role.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+  const handleEdit = (user) => {
+    setCurrentUser(user);
+    setFormData({ name: user.name, email: user.email, role: user.role, status: user.status });
+    setShowModal(true);
+  };
+
+  const handleDelete = (id) => {
+    if (window.confirm("Are you sure you want to delete this user?")) {
+      setUsers(users.filter(u => u.id !== id));
+    }
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (currentUser) {
+      setUsers(users.map(u => u.id === currentUser.id ? { ...u, ...formData } : u));
+    } else {
+      setUsers([...users, { id: Date.now(), ...formData, lastLogin: "Never" }]);
+    }
+    setShowModal(false);
+    setCurrentUser(null);
+    setFormData({ name: "", email: "", role: "Employee", status: "Active" });
+  };
+
+  const getRoleColor = (role) => {
+    switch (role) {
+      case 'Admin': return 'bg-purple-100 text-purple-700';
+      case 'Manager': return 'bg-blue-100 text-blue-700';
+      case 'HR': return 'bg-pink-100 text-pink-700';
+      default: return 'bg-gray-100 text-gray-700';
+    }
+  };
+
   const getStatusColor = (status) => {
-    switch(status) {
-      case 'Published': return 'bg-emerald-500/10 text-emerald-700 border-emerald-500/20';
-      case 'Draft': return 'bg-slate-500/10 text-slate-700 border-slate-500/20';
-      case 'Scheduled': return 'bg-blue-500/10 text-blue-700 border-blue-500/20';
-      default: return 'bg-gray-100 text-gray-800 border-gray-200';
-    }
+    return status === 'Active' ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700';
   };
-
-  const getStatusIcon = (status) => {
-    switch(status) {
-      case 'Published': return <CheckCircle className="w-4 h-4" />;
-      case 'Draft': return <FileText className="w-4 h-4" />;
-      case 'Scheduled': return <Clock className="w-4 h-4" />;
-      default: return <Bell className="w-4 h-4" />;
-    }
-  };
-
-  const formatDate = (dateString) => {
-    const date = new Date(dateString);
-    return date.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
-  };
-
-  const handleViewDetails = (notice) => {
-    setSelectedNotice(notice);
-    setShowDetailsModal(true);
-  };
-
-  // Only show published notices for users
-  const publishedNotices = notices.filter(notice => notice.status === 'Published');
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 p-4 md:p-8">
-      <div className="max-w-4xl mx-auto">
-        <div className="bg-white rounded-2xl shadow-lg shadow-blue-100/50 p-6 mb-6 border border-blue-100/50">
-          <h1 className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent flex items-center gap-3">
-            <Bell className="text-blue-600" />
-            Your Notices
-          </h1>
-          <p className="text-sm text-gray-500 mt-2">
-            {publishedNotices.length} published notices
-          </p>
+    <div className="min-h-screen bg-gray-50/50 p-4 md:p-6 lg:p-8">
+      <div className="max-w-7xl mx-auto space-y-6">
+
+        {/* Header */}
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
+          <div>
+            <h1 className="text-2xl font-bold text-gray-900">User Management</h1>
+            <p className="text-gray-500 text-sm mt-1">Manage system access and user roles</p>
+          </div>
+          <button
+            onClick={() => { setCurrentUser(null); setFormData({ name: "", email: "", role: "Employee", status: "Active" }); setShowModal(true); }}
+            className="flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-5 py-2.5 rounded-xl font-medium transition-all hover:shadow-lg hover:shadow-blue-200"
+          >
+            <Plus size={20} />
+            <span>Add User</span>
+          </button>
         </div>
 
-        <div className="grid gap-4">
-          {publishedNotices.map(notice => (
-            <div 
-              key={notice.id} 
-              className="bg-white rounded-2xl shadow-lg shadow-blue-100/50 p-6 border-l-4 border-blue-600 hover:shadow-xl hover:shadow-blue-200/50 transition-all duration-300 cursor-pointer"
-              onClick={() => handleViewDetails(notice)}
-            >
-              <div className="flex items-start gap-4">
-                <div className="bg-blue-100 p-3 rounded-xl">
-                  <Bell className="text-blue-600" size={24} />
-                </div>
-                <div className="flex-1">
-                  <h3 className="text-xl font-bold text-gray-900 mb-2">{notice.title}</h3>
-                  <div className="flex flex-wrap items-center gap-3 text-sm text-gray-600 mb-3">
-                    <span className="px-3 py-1 bg-purple-100 text-purple-700 rounded-lg font-medium">
-                      {notice.audience}
-                    </span>
-                    <span>•</span>
-                    <span className="flex items-center gap-1">
-                      <Calendar size={14} />
-                      {formatDate(notice.publishDate)}
-                    </span>
+        {/* Search & Stats */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div className="md:col-span-2 relative">
+            <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" size={20} />
+            <input
+              type="text"
+              placeholder="Search users by name, email or role..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="w-full pl-12 pr-4 py-3 bg-white border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all shadow-sm"
+            />
+          </div>
+          <div className="bg-white p-3 rounded-xl border border-gray-100 shadow-sm flex items-center justify-between px-6">
+            <span className="text-gray-600 font-medium">Total Users</span>
+            <span className="text-2xl font-bold text-gray-900">{users.length}</span>
+          </div>
+        </div>
+
+        {/* Desktop Table View */}
+        <div className="hidden md:block bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
+          <div className="overflow-x-auto">
+            <table className="w-full text-left border-collapse">
+              <thead>
+                <tr className="bg-gray-50/50 border-b border-gray-100">
+                  <th className="p-4 text-sm font-semibold text-gray-600">User</th>
+                  <th className="p-4 text-sm font-semibold text-gray-600">Role</th>
+                  <th className="p-4 text-sm font-semibold text-gray-600">Status</th>
+                  <th className="p-4 text-sm font-semibold text-gray-600">Last Login</th>
+                  <th className="p-4 text-right text-sm font-semibold text-gray-600">Actions</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-gray-100">
+                {filteredUsers.map(user => (
+                  <tr key={user.id} className="hover:bg-gray-50/50 transition-colors">
+                    <td className="p-4">
+                      <div className="flex items-center gap-3">
+                        <div className="w-10 h-10 rounded-full bg-gradient-to-br from-blue-500 to-indigo-600 text-white flex items-center justify-center font-bold text-sm">
+                          {user.name.charAt(0)}
+                        </div>
+                        <div>
+                          <div className="font-semibold text-gray-900">{user.name}</div>
+                          <div className="text-sm text-gray-500">{user.email}</div>
+                        </div>
+                      </div>
+                    </td>
+                    <td className="p-4">
+                      <span className={`px-3 py-1 rounded-full text-xs font-medium ${getRoleColor(user.role)}`}>
+                        {user.role}
+                      </span>
+                    </td>
+                    <td className="p-4">
+                      <span className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium ${getStatusColor(user.status)}`}>
+                        {user.status === 'Active' ? <CheckCircle size={12} /> : <XCircle size={12} />}
+                        {user.status}
+                      </span>
+                    </td>
+                    <td className="p-4 text-sm text-gray-600">{user.lastLogin}</td>
+                    <td className="p-4 text-right">
+                      <div className="flex items-center justify-end gap-2">
+                        <button onClick={() => handleEdit(user)} className="p-2 text-gray-600 hover:bg-blue-50 hover:text-blue-600 rounded-lg transition-colors">
+                          <Pencil size={18} />
+                        </button>
+                        <button onClick={() => handleDelete(user.id)} className="p-2 text-gray-600 hover:bg-red-50 hover:text-red-600 rounded-lg transition-colors">
+                          <Trash2 size={18} />
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        {/* Mobile Card View */}
+        <div className="grid grid-cols-1 gap-4 md:hidden">
+          {filteredUsers.map(user => (
+            <div key={user.id} className="bg-white p-5 rounded-2xl shadow-sm border border-gray-100 flex flex-col gap-4">
+              <div className="flex items-start justify-between">
+                <div className="flex items-center gap-3">
+                  <div className="w-12 h-12 rounded-full bg-gradient-to-br from-blue-500 to-indigo-600 text-white flex items-center justify-center font-bold text-lg">
+                    {user.name.charAt(0)}
                   </div>
-                  <p className="text-gray-700 leading-relaxed line-clamp-2">
-                    {notice.description}
-                  </p>
+                  <div>
+                    <h3 className="font-bold text-gray-900">{user.name}</h3>
+                    <p className="text-sm text-gray-500">{user.email}</p>
+                  </div>
                 </div>
+                <div className="relative">
+                  <button onClick={() => handleEdit(user)} className="p-2 text-gray-400 hover:text-gray-600">
+                    <Pencil size={18} />
+                  </button>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-2 gap-4 py-4 border-y border-gray-50">
+                <div>
+                  <div className="text-xs text-gray-500 mb-1">Role</div>
+                  <span className={`px-2.5 py-1 rounded-md text-xs font-semibold ${getRoleColor(user.role)}`}>
+                    {user.role}
+                  </span>
+                </div>
+                <div>
+                  <div className="text-xs text-gray-500 mb-1">Status</div>
+                  <span className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-md text-xs font-semibold ${getStatusColor(user.status)}`}>
+                    {user.status}
+                  </span>
+                </div>
+                <div className="col-span-2">
+                  <div className="text-xs text-gray-500 mb-1">Last Login</div>
+                  <div className="text-sm font-medium text-gray-700">{user.lastLogin}</div>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-3">
+                <button
+                  onClick={() => handleEdit(user)}
+                  className="flex-1 py-2.5 bg-gray-50 text-gray-700 font-medium rounded-xl hover:bg-gray-100 transition-colors"
+                >
+                  Edit
+                </button>
+                <button
+                  onClick={() => handleDelete(user.id)}
+                  className="flex-1 py-2.5 bg-red-50 text-red-600 font-medium rounded-xl hover:bg-red-100 transition-colors"
+                >
+                  Delete
+                </button>
               </div>
             </div>
           ))}
         </div>
-      </div>
 
-      {showDetailsModal && selectedNotice && (
-        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4 z-50">
-          <div className="bg-white rounded-2xl shadow-2xl max-w-3xl w-full max-h-[90vh] overflow-y-auto">
-            <div className="bg-gradient-to-r from-blue-600 to-indigo-600 p-6 text-white">
-              <div className="flex items-center justify-between">
-                <div>
-                  <h3 className="text-2xl font-bold mb-2">{selectedNotice.title}</h3>
-                  <div className="flex flex-wrap items-center gap-3">
-                    <span className="px-3 py-1 bg-white/20 backdrop-blur-sm rounded-lg text-sm font-medium">
-                      {selectedNotice.audience}
-                    </span>
-                    <span className="flex items-center gap-1.5 text-sm">
-                      <Calendar size={16} />
-                      {formatDate(selectedNotice.publishDate)}
-                    </span>
-                  </div>
-                </div>
-                <button 
-                  onClick={() => setShowDetailsModal(false)} 
-                  className="text-white hover:bg-white/20 rounded-lg p-2 transition-colors"
-                >
+        {/* Modal */}
+        {showModal && (
+          <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4 z-50">
+            <div className="bg-white rounded-2xl w-full max-w-md shadow-2xl overflow-hidden">
+              <div className="bg-gray-50 p-6 border-b border-gray-100 flex justify-between items-center">
+                <h2 className="text-xl font-bold text-gray-900">{currentUser ? "Edit User" : "Add New User"}</h2>
+                <button onClick={() => setShowModal(false)} className="text-gray-400 hover:text-gray-600">
                   <X size={24} />
                 </button>
               </div>
-            </div>
-            
-            <div className="p-8">
-              <div className="mb-6">
-                <span className={`inline-flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm font-semibold border ${getStatusColor(selectedNotice.status)}`}>
-                  {getStatusIcon(selectedNotice.status)}
-                  {selectedNotice.status}
-                </span>
-              </div>
-              <div>
-                <h4 className="text-lg font-semibold text-gray-900 mb-3">Description</h4>
-                <p className="text-gray-700 leading-relaxed whitespace-pre-wrap">
-                  {selectedNotice.description}
-                </p>
-              </div>
+
+              <form onSubmit={handleSubmit} className="p-6 space-y-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1.5">Full Name</label>
+                  <div className="relative">
+                    <User className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
+                    <input
+                      type="text"
+                      required
+                      value={formData.name}
+                      onChange={e => setFormData({ ...formData, name: e.target.value })}
+                      className="w-full pl-10 pr-4 py-2.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500"
+                      placeholder="John Doe"
+                    />
+                  </div>
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1.5">Email Address</label>
+                  <div className="relative">
+                    <Mail className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
+                    <input
+                      type="email"
+                      required
+                      value={formData.email}
+                      onChange={e => setFormData({ ...formData, email: e.target.value })}
+                      className="w-full pl-10 pr-4 py-2.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500"
+                      placeholder="john@example.com"
+                    />
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1.5">Role</label>
+                    <div className="relative">
+                      <Shield className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
+                      <select
+                        value={formData.role}
+                        onChange={e => setFormData({ ...formData, role: e.target.value })}
+                        className="w-full pl-10 pr-4 py-2.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 appearance-none bg-white"
+                      >
+                        <option value="Admin">Admin</option>
+                        <option value="Manager">Manager</option>
+                        <option value="HR">HR</option>
+                        <option value="Employee">Employee</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1.5">Status</label>
+                    <select
+                      value={formData.status}
+                      onChange={e => setFormData({ ...formData, status: e.target.value })}
+                      className="w-full px-4 py-2.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 bg-white"
+                    >
+                      <option value="Active">Active</option>
+                      <option value="Inactive">Inactive</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div className="pt-4 flex gap-3">
+                  <button
+                    type="button"
+                    onClick={() => setShowModal(false)}
+                    className="flex-1 px-4 py-2.5 border border-gray-200 text-gray-700 font-medium rounded-xl hover:bg-gray-50 transition-colors"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    type="submit"
+                    className="flex-1 px-4 py-2.5 bg-blue-600 text-white font-medium rounded-xl hover:bg-blue-700 transition-colors shadow-lg shadow-blue-200"
+                  >
+                    {currentUser ? "Save Changes" : "Create User"}
+                  </button>
+                </div>
+              </form>
             </div>
           </div>
-        </div>
-      )}
+        )}
+      </div>
     </div>
   );
 };
 
-export default User;
+export default UserPage;

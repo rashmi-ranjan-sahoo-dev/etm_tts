@@ -1,5 +1,3 @@
-/* eslint-disable react-hooks/set-state-in-effect */
-
 import React, { useState,useEffect } from "react";
 import { Plus, Pencil, Trash2, Search, CheckCircle2, XCircle, Clock, Calendar ,AlertCircle} from "lucide-react";
 
@@ -24,6 +22,7 @@ const LeaveModal = ({ close, save, editData }) => {
     type: "",
     status: "",
     reason: "",
+    approvalAuthority: "",
   });
   const today = new Date().toISOString().split("T")[0];
   const [errors, setErrors] = useState({});
@@ -58,6 +57,7 @@ const LeaveModal = ({ close, save, editData }) => {
     if (!form.toDate) newErrors.toDate = "Required";
     if (!form.halfDay) newErrors.halfDay = "Required";
     if (!form.type) newErrors.type = "Required";
+    if (!form.approvalAuthority) newErrors.approvalAuthority = "Required";
     if (!form.reason.trim()) newErrors.reason = "Required";
 
     // Dates should not be before today (only for new requests)
@@ -157,6 +157,34 @@ const LeaveModal = ({ close, save, editData }) => {
                 <div className="flex items-center gap-1 text-red-600 text-xs mt-1">
                   <AlertCircle size={12} />
                   <span>{errors.type}</span>
+                </div>
+              )}
+            </div>
+            
+            {/* Approval Authority */}
+            <div>
+              <label className="block text-sm font-semibold text-gray-700 mb-2">
+                Approval Authority
+              </label>
+              <select
+                name="approvalAuthority"
+                value={form.approvalAuthority}
+                onChange={handleChange}
+                className={`w-full px-4 py-3 rounded-xl border-2 bg-gray-50 focus:outline-none focus:bg-white focus:ring-4 transition-all ${
+                  errors.approvalAuthority
+                    ? "border-red-400 bg-red-50 focus:border-red-500 focus:ring-red-500/10"
+                    : "border-gray-200 focus:border-teal-500 focus:ring-teal-500/10"
+                }`}
+              >
+                <option value="">Select Authority</option>
+                <option>HR</option>
+                <option>Manager</option>
+                <option>HR & Manager</option>
+              </select>
+              {errors.approvalAuthority && (
+                <div className="flex items-center gap-1 text-red-600 text-xs mt-1">
+                  <AlertCircle size={12} />
+                  <span>{errors.approvalAuthority}</span>
                 </div>
               )}
             </div>
@@ -299,6 +327,7 @@ const MyLeaves = () => {
       type: "Casual Leave",
       status: "Approved",
       reason: "Lorem Ipsum is sim..",
+      approvalAuthority: "Manager",
     },
     {
       id: 2,
@@ -309,6 +338,7 @@ const MyLeaves = () => {
       type: "Sick Leave",
       status: "Rejected",
       reason: "Lorem Ipsum is sim..",
+      approvalAuthority: "HR",
     },
   ]);
 
@@ -452,9 +482,10 @@ const MyLeaves = () => {
                   <th className="text-left p-4 text-xs font-bold text-gray-700 uppercase tracking-wider">To Date</th>
                   <th className="text-left p-4 text-xs font-bold text-gray-700 uppercase tracking-wider">Half Day</th>
                   <th className="text-left p-4 text-xs font-bold text-gray-700 uppercase tracking-wider">Leave Type</th>
+                  <th className="text-left p-4 text-xs font-bold text-gray-700 uppercase tracking-wider">Approved By</th>
                   <th className="text-left p-4 text-xs font-bold text-gray-700 uppercase tracking-wider">Status</th>
                   <th className="text-left p-4 text-xs font-bold text-gray-700 uppercase tracking-wider">Reason</th>
-                  <th className="text-left p-4 text-xs font-bold text-gray-700 uppercase tracking-wider">Actions</th>
+                  {/* <th className="text-left p-4 text-xs font-bold text-gray-700 uppercase tracking-wider">Actions</th> */}
                 </tr>
               </thead>
 
@@ -492,13 +523,16 @@ const MyLeaves = () => {
                       <span className="font-medium text-gray-900">{row.type}</span>
                     </td>
                     <td className="p-4">
+                      <span className="font-medium text-gray-900">{row.approvalAuthority}</span>
+                    </td>
+                    <td className="p-4">
                       <div className="flex items-center gap-2">
                         {getStatusIcon(row.status)}
                         {statusBadge(row.status)}
                       </div>
                     </td>
                     <td className="p-4 text-gray-600">{row.reason}</td>
-                    <td className="p-4">
+                    {/* <td className="p-4">
                       <div className="flex gap-3">
                         <button
                           onClick={() => handleEdit(row)}
@@ -513,7 +547,7 @@ const MyLeaves = () => {
                           <Trash2 size={18} />
                         </button>
                       </div>
-                    </td>
+                    </td> */}
                   </tr>
                 ))}
               </tbody>
@@ -565,9 +599,10 @@ const MyLeaves = () => {
                 </div>
 
                 <Item label="Reason" value={row.reason} />
+                <Item label="Approved By" value={row.approvalAuthority} />
               </div>
 
-              <div className="flex gap-3 pt-3 border-t border-gray-100">
+              {/* <div className="flex gap-3 pt-3 border-t border-gray-100">
                 <button
                   onClick={() => handleEdit(row)}
                   className="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-blue-600 bg-blue-50 hover:bg-blue-100 transition-colors font-semibold"
@@ -582,7 +617,7 @@ const MyLeaves = () => {
                   <Trash2 size={18} />
                   Delete
                 </button>
-              </div>
+              </div> */}
             </div>
           ))}
         </div>

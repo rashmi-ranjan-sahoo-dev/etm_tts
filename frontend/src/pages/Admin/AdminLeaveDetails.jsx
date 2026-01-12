@@ -398,7 +398,7 @@ const AdminLeaveDetails = () => {
             const availablePercent = Math.round(
               (employee.leaveBalance.availableLeave /
                 employee.leaveBalance.totalBalance) *
-                100
+              100
             );
 
             return (
@@ -455,9 +455,8 @@ const AdminLeaveDetails = () => {
                     </div>
 
                     <ChevronDown
-                      className={`w-6 h-6 text-gray-400 transition-transform ${
-                        expandedEmployee === employee.id ? "rotate-180" : ""
-                      }`}
+                      className={`w-6 h-6 text-gray-400 transition-transform ${expandedEmployee === employee.id ? "rotate-180" : ""
+                        }`}
                     />
                   </div>
 
@@ -543,77 +542,113 @@ const AdminLeaveDetails = () => {
                       </div>
 
                       {filteredRequests.length > 0 ? (
-                        <div className="overflow-x-auto">
-                          <table className="w-full text-sm">
-                            <thead>
-                              <tr className="bg-gray-50 border-b border-gray-200">
-                                <th className="px-4 py-3 text-left font-semibold text-gray-700">
-                                  Leave Type
-                                </th>
-                                <th className="px-4 py-3 text-left font-semibold text-gray-700">
-                                  Duration
-                                </th>
-                                <th className="px-4 py-3 text-left font-semibold text-gray-700">
-                                  Days
-                                </th>
-                                <th className="px-4 py-3 text-left font-semibold text-gray-700">
-                                  Status
-                                </th>
-                                <th className="px-4 py-3 text-left font-semibold text-gray-700">
-                                  Applied Date
-                                </th>
-                                <th className="px-4 py-3 text-center font-semibold text-gray-700">
-                                  Actions
-                                </th>
-                              </tr>
-                            </thead>
-                            <tbody className="divide-y divide-gray-100">
-                              {filteredRequests.map((request) => (
-                                <tr
-                                  key={request.id}
-                                  className="hover:bg-gray-50 transition-colors"
-                                >
-                                  <td className="px-4 py-3">
-                                    <span
-                                      className={`px-3 py-1 rounded-full text-xs font-semibold ${getLeaveTypeColor(request.leaveType)}`}
-                                    >
-                                      {request.leaveType}
-                                    </span>
-                                  </td>
-                                  <td className="px-4 py-3 text-gray-700">
-                                    {request.startDate} to {request.endDate}
-                                  </td>
-                                  <td className="px-4 py-3 text-gray-700 font-medium">
-                                    {request.days}
-                                  </td>
-                                  <td className="px-4 py-3">
-                                    <span
-                                      className={`px-3 py-1 rounded-full text-xs font-semibold border ${getStatusColor(request.status)}`}
-                                    >
-                                      {request.status}
-                                    </span>
-                                  </td>
-                                  <td className="px-4 py-3 text-gray-600 text-xs">
-                                    {request.appliedDate}
-                                  </td>
-                                  <td className="px-4 py-3 text-center">
-                                    <div className="flex items-center justify-center gap-2">
-                                      <button className="p-2 hover:bg-blue-100 rounded-lg transition-colors">
-                                        <Eye className="w-4 h-4 text-blue-600" />
-                                      </button>
-                                      <button className="p-2 hover:bg-yellow-100 rounded-lg transition-colors">
-                                        <Edit2 className="w-4 h-4 text-yellow-600" />
-                                      </button>
-                                      <button className="p-2 hover:bg-red-100 rounded-lg transition-colors">
-                                        <Trash2 className="w-4 h-4 text-red-600" />
-                                      </button>
-                                    </div>
-                                  </td>
+                        <>
+                          <div className="hidden lg:block overflow-x-auto">
+                            <table className="w-full text-sm">
+                              <thead>
+                                <tr className="bg-gray-50 border-b border-gray-200">
+                                  <th className="px-4 py-3 text-left font-semibold text-gray-700">
+                                    Leave Type
+                                  </th>
+                                  <th className="px-4 py-3 text-left font-semibold text-gray-700">
+                                    Duration
+                                  </th>
+                                  <th className="px-4 py-3 text-left font-semibold text-gray-700">
+                                    Days
+                                  </th>
+                                  <th className="px-4 py-3 text-left font-semibold text-gray-700">
+                                    Status
+                                  </th>
+                                  <th className="px-4 py-3 text-left font-semibold text-gray-700">
+                                    Applied Date
+                                  </th>
+                                  <th className="px-4 py-3 text-center font-semibold text-gray-700">
+                                    Actions
+                                  </th>
                                 </tr>
-                              ))}
-                            </tbody>
-                          </table>
-                        </div>
+                              </thead>
+                              <tbody className="divide-y divide-gray-100">
+                                {filteredRequests.map((request) => (
+                                  <tr
+                                    key={request.id}
+                                    className="hover:bg-gray-50 transition-colors"
+                                  >
+                                    <td className="px-4 py-3">
+                                      <span
+                                        className={`px-3 py-1 rounded-full text-xs font-semibold ${getLeaveTypeColor(request.leaveType)}`}
+                                      >
+                                        {request.leaveType}
+                                      </span>
+                                    </td>
+                                    <td className="px-4 py-3 text-gray-700">
+                                      {request.startDate} to {request.endDate}
+                                    </td>
+                                    <td className="px-4 py-3 text-gray-700 font-medium">
+                                      {request.days}
+                                    </td>
+                                    <td className="px-4 py-3">
+                                      <span
+                                        className={`px-3 py-1 rounded-full text-xs font-semibold border ${getStatusColor(request.status)}`}
+                                      >
+                                        {request.status}
+                                      </span>
+                                    </td>
+                                    <td className="px-4 py-3 text-gray-600 text-xs">
+                                      {request.appliedDate}
+                                    </td>
+                                    <td className="px-4 py-3 text-center">
+                                      <div className="flex items-center justify-center gap-2">
+                                        <button className="p-2 hover:bg-blue-100 rounded-lg transition-colors">
+                                          <Eye className="w-4 h-4 text-blue-600" />
+                                        </button>
+                                        <button className="p-2 hover:bg-yellow-100 rounded-lg transition-colors">
+                                          <Edit2 className="w-4 h-4 text-yellow-600" />
+                                        </button>
+                                        <button className="p-2 hover:bg-red-100 rounded-lg transition-colors">
+                                          <Trash2 className="w-4 h-4 text-red-600" />
+                                        </button>
+                                      </div>
+                                    </td>
+                                  </tr>
+                                ))}
+                              </tbody>
+                            </table>
+                          </div>
+                          {/* Mobile View Requests */}
+                          <div className="lg:hidden space-y-3">
+                            {filteredRequests.map((request) => (
+                              <div key={request.id} className="bg-white p-4 rounded-xl border border-gray-100 shadow-sm">
+                                <div className="flex justify-between items-start mb-2">
+                                  <span className={`px-3 py-1 rounded-full text-xs font-semibold ${getLeaveTypeColor(request.leaveType)}`}>
+                                    {request.leaveType}
+                                  </span>
+                                  <span className={`px-3 py-1 rounded-full text-xs font-semibold border ${getStatusColor(request.status)}`}>
+                                    {request.status}
+                                  </span>
+                                </div>
+                                <div className="mb-3 space-y-1">
+                                  <p className="text-sm font-medium text-gray-800 flex items-center gap-2">
+                                    <Calendar size={14} className="text-gray-400" />
+                                    {request.startDate} - {request.endDate}
+                                  </p>
+                                  <p className="text-xs text-gray-500">Duration: {request.days} days</p>
+                                  <p className="text-xs text-gray-500">Applied: {request.appliedDate}</p>
+                                </div>
+                                <div className="flex justify-end gap-2 pt-2 border-t border-gray-50">
+                                  <button className="p-2 hover:bg-blue-50 text-blue-600 rounded-lg transition-colors bg-blue-50/50">
+                                    <Eye className="w-4 h-4" />
+                                  </button>
+                                  <button className="p-2 hover:bg-yellow-50 text-yellow-600 rounded-lg transition-colors bg-yellow-50/50">
+                                    <Edit2 className="w-4 h-4" />
+                                  </button>
+                                  <button className="p-2 hover:bg-red-50 text-red-600 rounded-lg transition-colors bg-red-50/50">
+                                    <Trash2 className="w-4 h-4" />
+                                  </button>
+                                </div>
+                              </div>
+                            ))}
+                          </div>
+                        </>
                       ) : (
                         <div className="text-center py-8 bg-gray-50 rounded-lg">
                           <p className="text-gray-500">

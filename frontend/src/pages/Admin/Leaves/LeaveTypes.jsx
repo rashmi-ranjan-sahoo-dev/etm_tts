@@ -118,10 +118,10 @@ const LeaveTypes = () => {
       alert('Please fill in required fields: Leave Policy Name and Leave Quota');
       return;
     }
-    
+
     if (editingLeave) {
-      setLeaves(leaves.map(leave => 
-        leave.id === editingLeave.id 
+      setLeaves(leaves.map(leave =>
+        leave.id === editingLeave.id
           ? { ...formData, id: leave.id, duration: parseInt(formData.duration) || 0, notification: parseInt(formData.notification) || 0, carryForward: parseInt(formData.carryForward) || 0, leaveQuota: parseInt(formData.leaveQuota) || 0 }
           : leave
       ));
@@ -136,7 +136,7 @@ const LeaveTypes = () => {
       };
       setLeaves([...leaves, newLeave]);
     }
-    
+
     resetForm();
   };
 
@@ -212,7 +212,7 @@ const LeaveTypes = () => {
   }, []);
 
   const getTypeColor = (type) => {
-    switch(type) {
+    switch (type) {
       case 'Paid': return 'bg-blue-100 text-blue-700';
       case 'Unpaid': return 'bg-purple-100 text-purple-700';
       case 'Compensatory': return 'bg-indigo-100 text-indigo-700';
@@ -254,7 +254,7 @@ const LeaveTypes = () => {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                 </svg>
               </div>
-              
+
               {/* Column Filter Dropdown */}
               <div className="relative" ref={columnFilterRef}>
                 <button
@@ -264,7 +264,7 @@ const LeaveTypes = () => {
                 >
                   <Menu className="w-5 h-5 text-gray-600" />
                 </button>
-                
+
                 {showColumnFilter && (
                   <div className="absolute right-0 mt-2 w-72 bg-white rounded-xl shadow-lg border border-gray-200 z-50">
                     <div className="p-4 border-b border-gray-200">
@@ -280,7 +280,7 @@ const LeaveTypes = () => {
                         />
                         <span className="text-gray-700">Checkbox</span>
                       </label>
-                      
+
                       <label className="flex items-center gap-3 p-3 hover:bg-gray-50 rounded-lg cursor-pointer">
                         <input
                           type="checkbox"
@@ -290,7 +290,7 @@ const LeaveTypes = () => {
                         />
                         <span className="text-gray-700">Leave Name</span>
                       </label>
-                      
+
                       <label className="flex items-center gap-3 p-3 hover:bg-gray-50 rounded-lg cursor-pointer">
                         <input
                           type="checkbox"
@@ -300,7 +300,7 @@ const LeaveTypes = () => {
                         />
                         <span className="text-gray-700">Leave Type</span>
                       </label>
-                      
+
                       <label className="flex items-center gap-3 p-3 hover:bg-gray-50 rounded-lg cursor-pointer">
                         <input
                           type="checkbox"
@@ -310,7 +310,7 @@ const LeaveTypes = () => {
                         />
                         <span className="text-gray-700">Leave Unit</span>
                       </label>
-                      
+
                       <label className="flex items-center gap-3 p-3 hover:bg-gray-50 rounded-lg cursor-pointer">
                         <input
                           type="checkbox"
@@ -320,7 +320,7 @@ const LeaveTypes = () => {
                         />
                         <span className="text-gray-700">Status</span>
                       </label>
-                      
+
                       <label className="flex items-center gap-3 p-3 hover:bg-gray-50 rounded-lg cursor-pointer">
                         <input
                           type="checkbox"
@@ -330,7 +330,7 @@ const LeaveTypes = () => {
                         />
                         <span className="text-gray-700">Duration Days</span>
                       </label>
-                      
+
                       <label className="flex items-center gap-3 p-3 hover:bg-gray-50 rounded-lg cursor-pointer">
                         <input
                           type="checkbox"
@@ -340,7 +340,7 @@ const LeaveTypes = () => {
                         />
                         <span className="text-gray-700">Notification Period</span>
                       </label>
-                      
+
                       <label className="flex items-center gap-3 p-3 hover:bg-gray-50 rounded-lg cursor-pointer">
                         <input
                           type="checkbox"
@@ -354,7 +354,7 @@ const LeaveTypes = () => {
                   </div>
                 )}
               </div>
-              
+
               <button
                 onClick={() => setShowForm(true)}
                 className="bg-orange-500 hover:bg-orange-600 text-white px-6 py-3 rounded-xl flex items-center gap-2 transition-colors"
@@ -380,7 +380,7 @@ const LeaveTypes = () => {
               </button>
             </div>
 
-            <div className="grid grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <label className="block text-sm font-semibold text-gray-700 mb-2">
                   Leave Policy Name *
@@ -536,7 +536,7 @@ const LeaveTypes = () => {
         )}
 
         {/* Table */}
-        <div className="bg-white rounded-2xl shadow-sm overflow-hidden">
+        <div className="hidden lg:block bg-white rounded-2xl shadow-sm overflow-hidden">
           <div className="overflow-x-auto">
             <table className="w-full">
               <thead className="bg-gray-50 border-b border-gray-200">
@@ -674,6 +674,64 @@ const LeaveTypes = () => {
               </tbody>
             </table>
           </div>
+        </div>
+
+        {/* Mobile View */}
+        <div className="lg:hidden space-y-4">
+          {filteredLeaves.map((leave) => (
+            <div key={leave.id} className="bg-white rounded-xl p-5 shadow-sm border border-gray-100 flex flex-col gap-3">
+              <div className="flex justify-between items-start">
+                <div>
+                  <h3 className="font-bold text-gray-800 text-lg flex items-center gap-2">
+                    <svg className="w-5 h-5 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                    </svg>
+                    {leave.name}
+                  </h3>
+                </div>
+                <span className={`px-2 py-1 rounded-full text-xs font-semibold ${getTypeColor(leave.type)}`}>
+                  {leave.type}
+                </span>
+              </div>
+
+              <div className="grid grid-cols-2 gap-2 text-sm text-gray-600">
+                <div>
+                  <span className="text-xs text-gray-400 block uppercase">Unit</span>
+                  <span className="font-medium">{leave.unit}</span>
+                </div>
+                <div>
+                  <span className="text-xs text-gray-400 block uppercase">Status</span>
+                  <span className="font-medium text-green-600 flex items-center gap-1">
+                    <div className="w-1.5 h-1.5 bg-green-500 rounded-full"></div>
+                    {leave.status}
+                  </span>
+                </div>
+                <div>
+                  <span className="text-xs text-gray-400 block uppercase">Duration</span>
+                  <span className="font-medium">{leave.duration} days</span>
+                </div>
+                <div>
+                  <span className="text-xs text-gray-400 block uppercase">Notification</span>
+                  <span className="font-medium">{leave.notification} days</span>
+                </div>
+              </div>
+
+              <div className="flex gap-2 justify-end mt-2 pt-2 border-t border-gray-50">
+                <button
+                  onClick={() => handleEdit(leave)}
+                  className="p-2 text-blue-600 hover:bg-blue-50 rounded-lg transition-colors bg-blue-50/50"
+                >
+                  <Edit2 size={18} />
+                </button>
+                <button
+                  onClick={() => handleDelete(leave.id)}
+                  className="p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors bg-red-50/50"
+                >
+                  <Trash2 size={18} />
+                </button>
+              </div>
+            </div>
+          ))}
         </div>
       </div>
     </div>

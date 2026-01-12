@@ -496,15 +496,15 @@ const LeaveBalances = () => {
                       className="w-4 h-4 rounded border-gray-300 text-teal-600 focus:ring-2 focus:ring-teal-500/50 cursor-pointer"
                     />
                   </th>
-                  <th className="text-left p-4 text-xs font-bold text-gray-700 uppercase tracking-wider">Employee Name</th>
-                  <th className="text-left p-4 text-xs font-bold text-gray-700 uppercase tracking-wider">Previous Balance</th>
-                  <th className="text-left p-4 text-xs font-bold text-gray-700 uppercase tracking-wider">Current Balance</th>
-                  <th className="text-left p-4 text-xs font-bold text-gray-700 uppercase tracking-wider">Total Balance</th>
-                  <th className="text-left p-4 text-xs font-bold text-gray-700 uppercase tracking-wider">Used Leave</th>
-                  <th className="text-left p-4 text-xs font-bold text-gray-700 uppercase tracking-wider">Accepted Leave</th>
-                  <th className="text-left p-4 text-xs font-bold text-gray-700 uppercase tracking-wider">Rejected Leave</th>
-                  <th className="text-left p-4 text-xs font-bold text-gray-700 uppercase tracking-wider">Expired Leave</th>
-                  <th className="text-left p-4 text-xs font-bold text-gray-700 uppercase tracking-wider">Carry Over Balance</th>
+                  <th className="text-left p-4 text-xs font-bold text-gray-700 uppercase tracking-wider whitespace-nowrap">Employee Name</th>
+                  <th className="text-left p-4 text-xs font-bold text-gray-700 uppercase tracking-wider whitespace-nowrap">Previous Balance</th>
+                  <th className="text-left p-4 text-xs font-bold text-gray-700 uppercase tracking-wider whitespace-nowrap">Current Balance</th>
+                  <th className="text-left p-4 text-xs font-bold text-gray-700 uppercase tracking-wider whitespace-nowrap">Total Balance</th>
+                  <th className="text-left p-4 text-xs font-bold text-gray-700 uppercase tracking-wider whitespace-nowrap">Used Leave</th>
+                  <th className="text-left p-4 text-xs font-bold text-gray-700 uppercase tracking-wider whitespace-nowrap">Accepted Leave</th>
+                  <th className="text-left p-4 text-xs font-bold text-gray-700 uppercase tracking-wider whitespace-nowrap">Rejected Leave</th>
+                  <th className="text-left p-4 text-xs font-bold text-gray-700 uppercase tracking-wider whitespace-nowrap">Expired Leave</th>
+                  <th className="text-left p-4 text-xs font-bold text-gray-700 uppercase tracking-wider whitespace-nowrap">Carry Over Balance</th>
                   <th className="text-left p-4 text-xs font-bold text-gray-700 uppercase tracking-wider">Actions</th>
                 </tr>
               </thead>
@@ -530,45 +530,45 @@ const LeaveBalances = () => {
                     </td>
 
                     <td className="p-4">
-                      <span className="font-semibold text-teal-700 group-hover:text-teal-800">{row.empName}</span>
+                      <span className="font-semibold text-teal-700 group-hover:text-teal-800 whitespace-nowrap">{row.empName}</span>
                     </td>
                     <td className="p-4">
-                      <span className="px-3 py-1.5 rounded-lg text-xs font-semibold bg-blue-100 text-blue-700">
+                      <span className="px-3 py-1.5 rounded-lg text-xs font-semibold bg-blue-100 text-blue-700 whitespace-nowrap">
                         {row.previousBalance} days
                       </span>
                     </td>
                     <td className="p-4">
-                      <span className="px-3 py-1.5 rounded-lg text-xs font-semibold bg-emerald-100 text-emerald-700">
+                      <span className="px-3 py-1.5 rounded-lg text-xs font-semibold bg-emerald-100 text-emerald-700 whitespace-nowrap">
                         {row.currentBalance} days
                       </span>
                     </td>
                     <td className="p-4">
-                      <span className="px-3 py-1.5 rounded-lg text-xs font-semibold bg-indigo-100 text-indigo-700">
+                      <span className="px-3 py-1.5 rounded-lg text-xs font-semibold bg-indigo-100 text-indigo-700 whitespace-nowrap">
                         {row.totalBalance} days
                       </span>
                     </td>
                     <td className="p-4">
-                      <span className="px-3 py-1.5 rounded-lg text-xs font-semibold bg-orange-100 text-orange-700">
+                      <span className="px-3 py-1.5 rounded-lg text-xs font-semibold bg-orange-100 text-orange-700 whitespace-nowrap">
                         {row.usedLeave} days
                       </span>
                     </td>
                     <td className="p-4">
-                      <span className="px-3 py-1.5 rounded-lg text-xs font-semibold bg-green-100 text-green-700">
+                      <span className="px-3 py-1.5 rounded-lg text-xs font-semibold bg-green-100 text-green-700 whitespace-nowrap">
                         {row.acceptedLeave} days
                       </span>
                     </td>
                     <td className="p-4">
-                      <span className="px-3 py-1.5 rounded-lg text-xs font-semibold bg-red-100 text-red-700">
+                      <span className="px-3 py-1.5 rounded-lg text-xs font-semibold bg-red-100 text-red-700 whitespace-nowrap">
                         {row.rejectedLeave} days
                       </span>
                     </td>
                     <td className="p-4">
-                      <span className="px-3 py-1.5 rounded-lg text-xs font-semibold bg-gray-100 text-gray-700">
+                      <span className="px-3 py-1.5 rounded-lg text-xs font-semibold bg-gray-100 text-gray-700 whitespace-nowrap">
                         {row.expiredLeave} days
                       </span>
                     </td>
                     <td className="p-4">
-                      <span className="px-3 py-1.5 rounded-lg text-xs font-semibold bg-teal-100 text-teal-700 flex items-center gap-1 w-fit">
+                      <span className="px-3 py-1.5 rounded-lg text-xs font-semibold bg-teal-100 text-teal-700 flex items-center gap-1 w-fit whitespace-nowrap">
                         <TrendingUp size={14} />
                         {row.carryOverBalance} days
                       </span>

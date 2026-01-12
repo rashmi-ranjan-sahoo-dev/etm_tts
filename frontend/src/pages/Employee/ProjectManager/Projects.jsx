@@ -143,11 +143,10 @@ const ManagerAllProjects = () => {
                 onClick={() => setSelectedProject(project)}
                 className={`cursor-pointer bg-white p-6 rounded-xl shadow-sm
                 border-2 hover:shadow-lg transition-all transform hover:-translate-y-1
-                ${
-                  selectedProject?.id === project.id
+                ${selectedProject?.id === project.id
                     ? "border-indigo-500 shadow-lg ring-2 ring-indigo-200"
                     : "border-gray-100"
-                }`}
+                  }`}
               >
                 <div className="flex justify-between items-start mb-4">
                   <div className="flex-1">

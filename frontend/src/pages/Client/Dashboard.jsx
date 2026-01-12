@@ -56,7 +56,7 @@ const ClientDashboard = () => {
     <div className="p-3 sm:p-4 md:p-6 lg:p-8 bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 min-h-screen">
 
       {/* Welcome Card */}
-      <div className="bg-white rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-500 p-4 sm:p-6 md:p-8 flex flex-col md:flex-row items-center gap-4 md:gap-8 mb-6 md:mb-8 border border-blue-100 overflow-hidden relative">
+      {/* <div className="bg-white rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-500 p-4 sm:p-6 md:p-8 flex flex-col md:flex-row items-center gap-4 md:gap-8 mb-6 md:mb-8 border border-blue-100 overflow-hidden relative">
         <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-br from-blue-100 to-indigo-100 rounded-full blur-3xl opacity-30 -z-10"></div>
         <img
           src="https://illustrations.popsy.co/gray/welcome.svg"
@@ -73,7 +73,7 @@ const ClientDashboard = () => {
             practice and to thank you for choosing our company.
           </p>
         </div>
-      </div>
+      </div> */}
 
       {/* Stats Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4 md:gap-6 mb-6 md:mb-8">

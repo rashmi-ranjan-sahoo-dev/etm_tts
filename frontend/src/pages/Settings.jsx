@@ -277,7 +277,7 @@ const Settings = () => {
 
         {/* PROFILE INFORMATION */}
         <div className="bg-white rounded-2xl shadow-lg shadow-purple-100/50 p-6 sm:p-8 border border-purple-100/50 hover:shadow-xl hover:shadow-purple-200/50 transition-all duration-300">
-          <h2 className="text-xl font-bold text-gray-800 mb-6">Profile Information</h2>
+          <h2 className="text-xl font-bold text-gray-800 mb-6">Profile</h2>
 
           <div className="flex items-center gap-4 mb-8">
             <div className="relative">

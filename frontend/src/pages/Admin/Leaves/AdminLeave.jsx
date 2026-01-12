@@ -54,7 +54,7 @@ export default function AdminLeave() {
           <ClipboardList className="w-8 h-8 text-blue-500" />
           <h1 className="text-3xl font-bold text-gray-800">Leave Application</h1>
         </div>
-        
+
         <p className="text-center text-gray-600 mb-8">
           Fill out the form below to apply for leave.
         </p>
@@ -66,7 +66,7 @@ export default function AdminLeave() {
             </label>
             <select
               value={formData.leaveType}
-              onChange={(e) => setFormData({...formData, leaveType: e.target.value})}
+              onChange={(e) => setFormData({ ...formData, leaveType: e.target.value })}
               className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white text-gray-700 appearance-none cursor-pointer"
               style={{
                 backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23666' d='M6 9L1 4h10z'/%3E%3C/svg%3E")`,
@@ -81,7 +81,7 @@ export default function AdminLeave() {
             </select>
           </div>
 
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
               <label className="block text-gray-800 font-semibold mb-2">
                 From Date
@@ -89,7 +89,7 @@ export default function AdminLeave() {
               <input
                 type="date"
                 value={formData.fromDate}
-                onChange={(e) => setFormData({...formData, fromDate: e.target.value})}
+                onChange={(e) => setFormData({ ...formData, fromDate: e.target.value })}
                 placeholder="Select date"
                 className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
@@ -102,7 +102,7 @@ export default function AdminLeave() {
               <input
                 type="date"
                 value={formData.toDate}
-                onChange={(e) => setFormData({...formData, toDate: e.target.value})}
+                onChange={(e) => setFormData({ ...formData, toDate: e.target.value })}
                 placeholder="Select date"
                 className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
@@ -116,7 +116,7 @@ export default function AdminLeave() {
             <input
               type="text"
               value={formData.reason}
-              onChange={(e) => setFormData({...formData, reason: e.target.value})}
+              onChange={(e) => setFormData({ ...formData, reason: e.target.value })}
               placeholder="Enter the reason for leave"
               className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
@@ -128,7 +128,7 @@ export default function AdminLeave() {
             </label>
             <textarea
               value={formData.notes}
-              onChange={(e) => setFormData({...formData, notes: e.target.value})}
+              onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
               placeholder="Optional: add any additional details..."
               rows="4"
               className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none"

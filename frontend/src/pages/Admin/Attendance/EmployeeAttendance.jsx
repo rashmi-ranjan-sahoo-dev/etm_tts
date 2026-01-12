@@ -416,7 +416,7 @@ const EmployeeAttendance = () => {
                     </div>
 
                     {/* Table */}
-                    <div className="overflow-x-auto">
+                    <div className="hidden md:block overflow-x-auto">
                         <table className="w-full text-sm text-left">
                             <thead className="bg-white border-b border-gray-100">
                                 <tr>
@@ -462,6 +462,49 @@ const EmployeeAttendance = () => {
                                 ))}
                             </tbody>
                         </table>
+                    </div>
+
+                    {/* Mobile Card View */}
+                    <div className="md:hidden space-y-4 p-4">
+                        {attendanceData.map((row, index) => (
+                            <div key={index} className="bg-white rounded-xl shadow-sm border border-gray-100 p-4 space-y-3">
+                                <div className="flex justify-between items-start">
+                                    <div>
+                                        <p className="font-bold text-gray-800">{row.date}</p>
+                                        <span className={`inline-block mt-1 px-2 py-0.5 text-xs border rounded ${getStatusColor(row.status)}`}>
+                                            {row.status}
+                                        </span>
+                                    </div>
+                                    <div className="flex gap-2">
+                                        <button className="text-blue-500 hover:bg-blue-50 p-2 rounded">
+                                            <Pencil size={16} />
+                                        </button>
+                                        <button className="text-orange-500 hover:bg-orange-50 p-2 rounded">
+                                            <Trash2 size={16} />
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <div className="grid grid-cols-2 gap-3 text-sm">
+                                    <div>
+                                        <p className="text-gray-400 text-xs">Check In</p>
+                                        <p className={`font-medium ${row.checkIn === '-' ? 'text-gray-400' : 'text-gray-700'}`}>{row.checkIn}</p>
+                                    </div>
+                                    <div>
+                                        <p className="text-gray-400 text-xs">Check Out</p>
+                                        <p className={`font-medium ${row.checkOut === '-' ? 'text-gray-400' : 'text-gray-700'}`}>{row.checkOut}</p>
+                                    </div>
+                                    <div>
+                                        <p className="text-gray-400 text-xs">Working Hours</p>
+                                        <p className={`font-medium ${row.hours === '-' ? 'text-gray-400' : 'text-gray-700'}`}>{row.hours}</p>
+                                    </div>
+                                    <div>
+                                        <p className="text-gray-400 text-xs">Shift</p>
+                                        <p className="font-medium text-gray-700">{row.shift}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        ))}
                     </div>
 
                 </div>
