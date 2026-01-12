@@ -537,7 +537,7 @@ const TrainingList = () => {
                 trainingType: "Not Specified", // Default or derived
                 // Add any other missing fields if needed
             };
-            navigate(`/trainee/${fullTrainee.id}`, { state: { trainee: traineeData } });
+            navigate(`/admin/trainee/${fullTrainee.id}`, { state: { trainee: traineeData } });
         } else {
             console.warn("Trainee details not found for:", traineeName);
         }

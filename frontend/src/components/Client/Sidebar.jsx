@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import {LayoutDashboard,FolderKanban,Headphones,CreditCard,Settings,LogOut,X,Sparkles,
+import {LayoutDashboard,FolderKanban,Headphones,CreditCard,Settings,LogOut,X,Sparkles, Lock,
 } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 
@@ -21,7 +21,7 @@ const ClientSidebar = ({ isSidebarOpen = true, setIsSidebarOpen = () => {} }) =>
     { name: "Projects", icon: FolderKanban, to: "/client/projects" },
     { name: "Supports", icon: Headphones, to: "/client/supports" },
     { name: "Billing", icon: CreditCard, to: "/client/billing" },
-    { name: "Settings", icon: Settings, to: "/client/settings" },
+    { name: "Security", icon: Lock, to: "/client/security" },
   ];
 
   return (

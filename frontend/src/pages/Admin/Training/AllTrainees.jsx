@@ -272,7 +272,7 @@ const AllTrainees = () => {
                                         </td>
                                         <td className="px-4 py-4">
                                             <span
-                                                onClick={() => navigate(`/trainee/${trainee.id}`, { state: { trainee } })}
+                                                onClick={() => navigate(`/admin/trainee/${trainee.id}`, { state: { trainee } })}
                                                 className="text-blue-600 font-medium hover:underline cursor-pointer"
                                             >
                                                 {trainee.name}
