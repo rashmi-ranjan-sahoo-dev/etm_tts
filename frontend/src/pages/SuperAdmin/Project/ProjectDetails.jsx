@@ -321,7 +321,7 @@ const ProjectDetails = () => {
             </div>
 
             {/* Team Information */}
-            <div className="bg-white rounded-2xl p-8 shadow-lg border border-gray-200">
+            {/* <div className="bg-white rounded-2xl p-8 shadow-lg border border-gray-200">
               <h3 className="text-2xl font-bold text-gray-800 mb-6 flex items-center gap-3">
                 <Users className="w-6 h-6 text-indigo-600" />
                 Team Information
@@ -349,7 +349,7 @@ const ProjectDetails = () => {
                   </div>
                 )}
               </div>
-            </div>
+            </div> */}
 
             {/* Client Information */}
             <div className="bg-white rounded-2xl p-8 shadow-lg border border-gray-200">

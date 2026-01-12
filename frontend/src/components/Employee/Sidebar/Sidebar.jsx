@@ -25,6 +25,7 @@ const Sidebar = ({ isSidebarOpen = true, setIsSidebarOpen = () => { } }) => {
     { name: "Settings", icon: Settings, to: "/employee/settings" },
     { name: "LeadTickets", icon:Ticket, to: "/employee/lead-issue-tracker" },
     { name: "ManagerTickets", icon:Ticket, to: "/employee/issue-tracker" },
+    {name: "Projects" , icon:FileText, to:"/employee/projectmanager/projects"}
   ];
 
   return (

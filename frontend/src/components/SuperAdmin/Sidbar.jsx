@@ -10,7 +10,7 @@ import SperAdminProfileModal from "./SuperAdminProfileModal";
 const SuperAdminSidebar = ({ isSidebarOpen = true, setIsSidebarOpen = () => { } }) => {
   const location = useLocation();
   const [activeRoute, setActiveRoute] = useState(location.pathname);
-  const [openProjects, setOpenProjects] = useState(false);
+  // const [openProjects, setOpenProjects] = useState(false);
   const [isProfileModalOpen, setIsProfileModalOpen] = useState(false);
 
   const logo =
@@ -24,6 +24,7 @@ const SuperAdminSidebar = ({ isSidebarOpen = true, setIsSidebarOpen = () => { } 
     { name: "Client", icon: Users, to: "/super-admin/client" },
     { name: "Admin", icon: ShieldCheck, to: "/super-admin/admin" },
     { name: "Setting", icon: Settings, to: "/super-admin/setting" },
+    { name: "Projects", icon: FolderKanban, to: "/super-admin/projects"}
   ];
 
   return (
@@ -123,7 +124,7 @@ const SuperAdminSidebar = ({ isSidebarOpen = true, setIsSidebarOpen = () => { } 
               );
             })}
 
-            <button
+            {/* <button
               onClick={() => setOpenProjects(!openProjects)}
               className={`group flex items-center justify-between w-full px-4 py-3.5 rounded-xl font-medium transition-all duration-200 text-gray-700
     ${openProjects ? "bg-white/80 shadow-md" : "hover:bg-white/80 hover:shadow-md"}`}
@@ -169,7 +170,7 @@ const SuperAdminSidebar = ({ isSidebarOpen = true, setIsSidebarOpen = () => { } 
                 <div className="w-1.5 h-1.5 rounded-full bg-current"></div>
                 Add Project
               </Link>
-            </div>
+            </div> */}
 
 
 

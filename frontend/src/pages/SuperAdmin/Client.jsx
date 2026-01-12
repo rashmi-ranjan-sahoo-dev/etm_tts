@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import ClientProfileModal from "../../components/Client/ClientProfileModal";
 
 // Icons (same look as Kuber template)
 const SearchIcon = () => (
@@ -291,6 +292,8 @@ const Client = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [showModal, setShowModal] = useState(false);
   const [editingClient, setEditingClient] = useState(null);
+  // const [showProfileModal, setShowProfileModal] = useState(false);
+  // const [selectedClientProfile, setSelectedClientProfile] = useState(null);
   const [formData, setFormData] = useState({
     clientId: "",
     name: "",
@@ -371,6 +374,13 @@ const Client = () => {
 
   const closeModal = () => setShowModal(false);
 
+  // const openProfileModal = (client) => {
+  //   setSelectedClientProfile(client);
+  //   setShowProfileModal(true);
+  // };
+
+  // const closeProfileModal = () => setShowProfileModal(false);
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
@@ -391,9 +401,9 @@ const Client = () => {
         prev.map((c) =>
           c.id === editingClient.id
             ? {
-                ...c,
-                ...formData,
-              }
+              ...c,
+              ...formData,
+            }
             : c
         )
       );
@@ -431,7 +441,7 @@ const Client = () => {
     }
   };
 
-    return (
+  return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-slate-100 to-slate-200 px-4 py-6 md:px-8">
       <div className="max-w-6xl mx-auto">
         {/* Page heading */}
@@ -517,9 +527,10 @@ const Client = () => {
                   currentItems.map((client) => (
                     <tr
                       key={client.id}
-                      className="border-b border-slate-200 hover:bg-slate-50 transition"
+                      className="border-b border-slate-200 hover:bg-slate-50 transition cursor-pointer"
+                      onClick={() => navigate(`/super-admin/client/${client.id}`, { state: { clientData: client } })}
                     >
-                      <td className="px-4 py-3">
+                      <td className="px-4 py-3" onClick={(e) => e.stopPropagation()}>
                         <input type="checkbox" />
                       </td>
                       <td className="px-4 py-3 font-medium text-slate-800">
@@ -532,12 +543,11 @@ const Client = () => {
                             alt={client.name}
                             className="w-9 h-9 rounded-full border border-slate-200 object-cover"
                           />
-                          <button
-                            onClick={() => navigate(`/super-admin/client/${client.id}`)}
-                            className="font-semibold text-slate-800 hover:text-indigo-600 transition-colors cursor-pointer"
+                          <span
+                            className="font-semibold text-slate-800 hover:text-indigo-600 transition-colors"
                           >
                             {client.name}
-                          </button>
+                          </span>
                         </div>
                       </td>
                       <td className="px-4 py-3">
@@ -573,16 +583,15 @@ const Client = () => {
                       </td>
                       <td className="px-4 py-3">
                         <span
-                          className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold ${
-                            client.status === "Active"
+                          className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold ${client.status === "Active"
                               ? "bg-emerald-100 text-emerald-700"
                               : "bg-amber-100 text-amber-700"
-                          }`}
+                            }`}
                         >
                           {client.status}
                         </span>
                       </td>
-                      <td className="px-4 py-3 text-center">
+                      <td className="px-4 py-3 text-center" onClick={(e) => e.stopPropagation()}>
                         <button
                           className="inline-flex items-center justify-center rounded-lg bg-amber-100 text-amber-700 px-3 py-2 text-xs font-semibold hover:bg-amber-200 transition"
                           title="View Contract"
@@ -601,7 +610,7 @@ const Client = () => {
                             : client.address}
                         </div>
                       </td>
-                      <td className="px-4 py-3">
+                      <td className="px-4 py-3" onClick={(e) => e.stopPropagation()}>
                         <div className="flex items-center gap-2">
                           <button
                             type="button"
@@ -656,11 +665,10 @@ const Client = () => {
                 (page) => (
                   <button
                     key={page}
-                    className={`px-3 py-1.5 text-xs sm:text-sm rounded-lg border ${
-                      currentPage === page
+                    className={`px-3 py-1.5 text-xs sm:text-sm rounded-lg border ${currentPage === page
                         ? "bg-indigo-500 border-indigo-500 text-white"
                         : "bg-white border-slate-300 text-slate-700 hover:border-indigo-500 hover:text-indigo-600"
-                    }`}
+                      }`}
                     onClick={() => handlePageChange(page)}
                   >
                     {page}
@@ -966,8 +974,8 @@ const Client = () => {
           </div>
         )}
       </div>
-        </div>
-    );
+    </div>
+  );
 };
 
 export default Client;

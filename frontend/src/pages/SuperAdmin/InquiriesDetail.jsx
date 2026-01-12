@@ -201,7 +201,7 @@ const InquiriesDetail = () => {
         </div>
 
         {/* Stats Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+        {/* <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
           <div className="bg-gradient-to-br from-blue-400 to-indigo-500 p-6 rounded-2xl text-white shadow-lg">
             <div className="flex items-center justify-between mb-4">
               <AlertCircle className="w-8 h-8 opacity-80" />
@@ -233,7 +233,7 @@ const InquiriesDetail = () => {
             <h3 className="text-2xl font-bold mb-1">{inquiries.filter(i => i.status === 'Completed').length}</h3>
             <p className="text-green-100">Completed</p>
           </div>
-        </div>
+        </div> */}
 
         {/* Filters */}
         <div className="bg-white rounded-2xl shadow-lg p-6 mb-6 border border-gray-100">

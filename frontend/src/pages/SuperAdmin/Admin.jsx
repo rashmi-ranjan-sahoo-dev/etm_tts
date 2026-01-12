@@ -347,9 +347,9 @@ const Admin = () => {
         prev.map((a) =>
           a.id === editingAdmin.id
             ? {
-                ...a,
-                ...formData,
-              }
+              ...a,
+              ...formData,
+            }
             : a
         )
       );
@@ -407,7 +407,7 @@ const Admin = () => {
     }
   };
 
-    return (
+  return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-slate-100 to-slate-200 px-4 py-6 md:px-8">
       <div className="max-w-6xl mx-auto">
         {/* Page heading */}
@@ -507,14 +507,29 @@ const Admin = () => {
                   currentItems.map((admin) => (
                     <tr
                       key={admin.id}
-                      className="border-b border-slate-200 hover:bg-slate-50 transition"
+                      className="border-b border-slate-200 hover:bg-slate-50 transition cursor-pointer"
+                      onClick={() => navigate(`/super-admin/admin/${admin.id}`, { state: { adminData: admin } })}
                     >
-                      <td className="px-4 py-3">
+                      <td className="px-4 py-3" onClick={(e) => e.stopPropagation()}>
                         <input type="checkbox" />
                       </td>
                       <td className="px-4 py-3 font-medium text-slate-800">
                         {admin.adminId}
                       </td>
+                      {/* <td className="px-4 py-3">
+                        <div className="flex items-center gap-3">
+                          <img
+                            src={admin.avatar}
+                            alt={admin.name}
+                            className="w-9 h-9 rounded-full border border-slate-200 object-cover"
+                          />
+                          <span
+                            className="font-semibold text-slate-800 hover:text-indigo-600 transition-colors"
+                          >
+                            {admin.name}
+                          </span>
+                        </div>
+                      </td> */}
                       <td className="px-4 py-3">
                         <div className="flex items-center gap-3">
                           <img
@@ -522,14 +537,21 @@ const Admin = () => {
                             alt={admin.name}
                             className="w-9 h-9 rounded-full border border-slate-200 object-cover"
                           />
+
                           <button
-                            onClick={() => navigate(`/super-admin/admin/${admin.id}`)}
-                            className="font-semibold text-slate-800 hover:text-indigo-600 transition-colors cursor-pointer"
+                            className="font-semibold text-slate-800 hover:text-indigo-600 transition-colors"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              navigate(`/super-admin/admin/${admin.id}`, {
+                                state: { adminData: admin },
+                              });
+                            }}
                           >
                             {admin.name}
                           </button>
                         </div>
                       </td>
+
                       <td className="px-4 py-3">
                         <span className="text-slate-700">{admin.position || "N/A"}</span>
                       </td>
@@ -551,16 +573,15 @@ const Admin = () => {
                       </td>
                       <td className="px-4 py-3">
                         <span
-                          className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold ${
-                            admin.status === "Active"
-                              ? "bg-emerald-100 text-emerald-700"
-                              : "bg-amber-100 text-amber-700"
-                          }`}
+                          className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold ${admin.status === "Active"
+                            ? "bg-emerald-100 text-emerald-700"
+                            : "bg-amber-100 text-amber-700"
+                            }`}
                         >
                           {admin.status}
                         </span>
                       </td>
-                      <td className="px-4 py-3 text-center hidden md:table-cell">
+                      <td className="px-4 py-3 text-center hidden md:table-cell" onClick={(e) => e.stopPropagation()}>
                         <button
                           className="inline-flex items-center justify-center rounded-lg bg-amber-100 text-amber-700 px-3 py-2 text-xs font-semibold hover:bg-amber-200 transition"
                           title="Download Documents"
@@ -580,7 +601,7 @@ const Admin = () => {
                             : admin.address}
                         </div>
                       </td>
-                      <td className="px-4 py-3">
+                      <td className="px-4 py-3" onClick={(e) => e.stopPropagation()}>
                         <div className="flex items-center gap-2">
                           <button
                             type="button"
@@ -635,11 +656,10 @@ const Admin = () => {
                 (page) => (
                   <button
                     key={page}
-                    className={`px-3 py-1.5 text-xs sm:text-sm rounded-lg border ${
-                      currentPage === page
-                        ? "bg-indigo-500 border-indigo-500 text-white"
-                        : "bg-white border-slate-300 text-slate-700 hover:border-indigo-500 hover:text-indigo-600"
-                    }`}
+                    className={`px-3 py-1.5 text-xs sm:text-sm rounded-lg border ${currentPage === page
+                      ? "bg-indigo-500 border-indigo-500 text-white"
+                      : "bg-white border-slate-300 text-slate-700 hover:border-indigo-500 hover:text-indigo-600"
+                      }`}
                     onClick={() => handlePageChange(page)}
                   >
                     {page}
@@ -878,8 +898,8 @@ const Admin = () => {
           </div>
         )}
       </div>
-        </div>
-    );
+    </div>
+  );
 };
 
 export default Admin;
