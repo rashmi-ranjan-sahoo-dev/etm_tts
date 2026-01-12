@@ -182,7 +182,7 @@ const NewCustomersDetail = () => {
         </div>
 
         {/* Stats Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+        {/* <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
           <div className="bg-gradient-to-br from-green-400 to-emerald-500 p-6 rounded-2xl text-white shadow-lg">
             <div className="flex items-center justify-between mb-4">
               <Users className="w-8 h-8 opacity-80" />
@@ -211,7 +211,7 @@ const NewCustomersDetail = () => {
             </h3>
             <p className="text-purple-100">Total Revenue</p>
           </div>
-        </div>
+        </div> */}
 
         {/* Filters */}
         <div className="bg-white rounded-2xl shadow-lg p-6 mb-6 border border-gray-100">

@@ -1,15 +1,13 @@
 
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
-import { Users, DollarSign, Crown, Briefcase, Globe, ArrowUp, ArrowDown, Search, Eye, Pencil, Trash2, } from "lucide-react";
+import { Users, DollarSign, Crown, Briefcase, Globe, Star, TrendingUp, Search, } from "lucide-react";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell } from "recharts";
-import { Settings } from 'lucide-react';
-import { Legend } from 'recharts';
-import { Gift, Bell, Trophy, Cake, Download, CheckCircle, Clock, FileText, TrendingUp, TrendingDown, X } from "lucide-react";
+import { Gift, Bell, Trophy, Cake, Download, CheckCircle, Clock, FileText, TrendingDown, X } from "lucide-react";
 
 const Dashboard = () => {
     const navigate = useNavigate();
-    const [timeFilter, setTimeFilter] = useState("month");
+    // const [timeFilter, setTimeFilter] = useState("month");
 
     const statsCards = [
         {
@@ -88,21 +86,20 @@ const Dashboard = () => {
                             </h1>
                             <p className="text-gray-600 dark:text-gray-400 mt-1 md:mt-2 text-sm md:text-base font-medium">Welcome back! Here's your comprehensive system overview</p>
                         </div>
-                        <div className="flex gap-2 sm:gap-3">
+                        {/* <div className="flex gap-2 sm:gap-3">
                             {["week", "month", "year"].map((filter) => (
                                 <button
                                     key={filter}
                                     onClick={() => setTimeFilter(filter)}
-                                    className={`px-4 md:px-5 py-2 md:py-2.5 rounded-xl text-xs md:text-sm font-semibold transition-all duration-300 transform hover:scale-105 ${
-                                        timeFilter === filter
-                                            ? "bg-gradient-to-r from-purple-500 to-indigo-500 text-white shadow-lg shadow-purple-500/50"
-                                            : "bg-white text-gray-600 hover:bg-gray-50 shadow-md hover:shadow-lg border border-gray-200"
-                                    }`}
+                                    className={`px-4 md:px-5 py-2 md:py-2.5 rounded-xl text-xs md:text-sm font-semibold transition-all duration-300 transform hover:scale-105 ${timeFilter === filter
+                                        ? "bg-gradient-to-r from-purple-500 to-indigo-500 text-white shadow-lg shadow-purple-500/50"
+                                        : "bg-white text-gray-600 hover:bg-gray-50 shadow-md hover:shadow-lg border border-gray-200"
+                                        }`}
                                 >
                                     {filter.charAt(0).toUpperCase() + filter.slice(1)}
                                 </button>
                             ))}
-                        </div>
+                        </div> */}
                     </div>
                 </div>
 
@@ -123,9 +120,9 @@ const Dashboard = () => {
                                         backgroundSize: '24px 24px'
                                     }}></div>
                                 </div>
-                                
+
                                 <Icon className="absolute right-4 top-4 opacity-20 group-hover:opacity-30 transition-opacity" size={70} />
-                                
+
                                 <div className="relative z-10">
                                     <div className="flex items-center justify-between mb-3">
                                         <p className="text-sm md:text-base font-semibold opacity-95">{card.title}</p>
@@ -134,11 +131,11 @@ const Dashboard = () => {
                                         </div>
                                     </div>
                                     <h2 className="text-3xl md:text-4xl lg:text-5xl font-extrabold mb-3 drop-shadow-lg">{card.value}</h2>
-                                    
+
                                     <div className="w-full h-1.5 bg-white/30 rounded-full mb-3 overflow-hidden">
                                         <div className="h-full w-[70%] bg-white rounded-full shadow-lg animate-pulse" />
                                     </div>
-                                    
+
                                     <div className="flex items-center gap-2 text-xs md:text-sm font-medium">
                                         {card.trend === "up" ? (
                                             <div className="flex items-center gap-1 bg-white/20 px-2 py-1 rounded-lg">
@@ -276,7 +273,7 @@ const EmployeeAttrition = () => {
                     <Users className="text-red-500" size={20} />
                 </div>
             </div>
-            
+
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 md:gap-4 mb-6">
                 <div className="bg-gradient-to-br from-red-50 to-pink-50 p-4 rounded-xl border border-red-100">
                     <p className="text-2xl md:text-3xl font-extrabold text-red-600 mb-1">8.5%</p>
@@ -297,31 +294,31 @@ const EmployeeAttrition = () => {
                     </p>
                 </div>
             </div>
-            
+
             <div className="h-48 md:h-64 lg:h-72 w-full">
                 <ResponsiveContainer width="100%" height="100%">
                     <BarChart data={data}>
                         <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
-                        <XAxis 
-                            dataKey="department" 
-                            tick={{ fontSize: 11, fill: '#6b7280' }} 
+                        <XAxis
+                            dataKey="department"
+                            tick={{ fontSize: 11, fill: '#6b7280' }}
                             axisLine={{ stroke: '#e5e7eb' }}
                         />
-                        <YAxis 
-                            tick={{ fontSize: 11, fill: '#6b7280' }} 
+                        <YAxis
+                            tick={{ fontSize: 11, fill: '#6b7280' }}
                             axisLine={{ stroke: '#e5e7eb' }}
                         />
-                        <Tooltip 
-                            contentStyle={{ 
-                                backgroundColor: 'white', 
-                                border: '1px solid #e5e7eb', 
+                        <Tooltip
+                            contentStyle={{
+                                backgroundColor: 'white',
+                                border: '1px solid #e5e7eb',
                                 borderRadius: '8px',
                                 boxShadow: '0 4px 6px rgba(0,0,0,0.1)'
-                            }} 
+                            }}
                         />
-                        <Bar 
-                            dataKey="rate" 
-                            fill="url(#colorGradient)" 
+                        <Bar
+                            dataKey="rate"
+                            fill="url(#colorGradient)"
                             radius={[8, 8, 0, 0]}
                         >
                             <defs>
@@ -339,56 +336,161 @@ const EmployeeAttrition = () => {
 };
 
 const projects = [
-    { name: "Project A", progress: 30, duration: "2 Months" },
-    { name: "Project B", progress: 55, duration: "3 Months" },
-    { name: "Project C", progress: 67, duration: "1 Month" },
-    { name: "Project D", progress: 70, duration: "2 Months" },
-    { name: "Project E", progress: 24, duration: "3 Months" },
-    { name: "Project F", progress: 77, duration: "4 Months" },
+  {
+    id: 1,
+    name: "Project A",
+    progress: 30,
+    duration: "2 Months",
+    description: "CRM dashboard development",
+    client: "ABC Corp",
+    status: "In Progress",
+    startDate: "2025-11-01",
+    endDate: "2026-01-01",
+  },
+  {
+    id: 2,
+    name: "Project B",
+    progress: 55,
+    duration: "3 Months",
+    description: "E-commerce website",
+    client: "Flipkart",
+    status: "In Progress",
+    startDate: "2025-10-15",
+    endDate: "2026-01-15",
+  },
+  {
+    id: 3,
+    name: "Project C",
+    progress: 67,
+    duration: "1 Month",
+    description: "Admin panel UI",
+    client: "Startup X",
+    status: "Review",
+    startDate: "2025-12-01",
+    endDate: "2025-12-31",
+  },
+  {
+    id: 4,
+    name: "Project D",
+    progress: 70,
+    duration: "2 Months",
+    description: "Mobile App Backend",
+    client: "TechSoft",
+    status: "Completed",
+    startDate: "2025-09-01",
+    endDate: "2025-11-01",
+  },
 ];
 
-const ProjectStatus = () => {
-    const getProgressColor = (progress) => {
-        if (progress >= 70) return "from-green-500 to-emerald-600";
-        if (progress >= 50) return "from-blue-500 to-indigo-600";
-        if (progress >= 30) return "from-yellow-500 to-orange-500";
-        return "from-red-500 to-pink-600";
-    };
 
-    return (
-        <div className="bg-white rounded-2xl md:rounded-3xl shadow-xl border border-gray-100 p-5 md:p-6 h-full flex flex-col hover:shadow-2xl transition-shadow duration-300">
-            <div className="flex items-center justify-between mb-5">
-                <div>
-                    <h2 className="text-lg md:text-xl font-bold text-gray-800 mb-1">Project Status</h2>
-                    <p className="text-xs md:text-sm text-gray-500">Active projects overview</p>
-                </div>
-                <div className="p-2 bg-blue-50 rounded-lg">
-                    <Briefcase className="text-blue-500" size={20} />
-                </div>
-            </div>
-            
-            <div className="space-y-4 md:space-y-5 flex-1 overflow-y-auto pr-2">
-                {projects.map((project, i) => (
-                    <div key={i} className="group">
-                        <div className="flex justify-between items-center mb-2">
-                            <span className="font-semibold text-sm md:text-base text-gray-800">{project.name}</span>
-                            <span className="text-xs md:text-sm text-gray-500 bg-gray-50 px-2 py-1 rounded-lg font-medium">{project.duration}</span>
-                        </div>
-                        <div className="w-full bg-gray-100 h-2.5 md:h-3 rounded-full overflow-hidden shadow-inner">
-                            <div 
-                                className={`h-full bg-gradient-to-r ${getProgressColor(project.progress)} rounded-full transition-all duration-500 shadow-sm group-hover:shadow-md`} 
-                                style={{ width: `${project.progress}%` }}
-                            />
-                        </div>
-                        <div className="flex justify-end mt-1">
-                            <span className="text-xs font-semibold text-gray-600">{project.progress}%</span>
-                        </div>
-                    </div>
-                ))}
-            </div>
+const ProjectStatus = () => {
+  const navigate = useNavigate();
+
+  const getProgressColor = (progress) => {
+    if (progress >= 70) return "from-green-500 to-emerald-600";
+    if (progress >= 50) return "from-blue-500 to-indigo-600";
+    if (progress >= 30) return "from-yellow-500 to-orange-500";
+    return "from-red-500 to-pink-600";
+  };
+
+  const handleProjectClick = (project) => {
+    navigate(`/super-admin/projects/${project.id}`, {
+      state: project, // 👈 pass full project data
+    });
+  };
+
+  return (
+    <div className="bg-white rounded-2xl md:rounded-3xl shadow-xl border border-gray-100 p-5 md:p-6 h-full flex flex-col hover:shadow-2xl transition-shadow duration-300">
+      <div className="flex items-center justify-between mb-5">
+        <div>
+          <h2 className="text-lg md:text-xl font-bold text-gray-800 mb-1">
+            Project Status
+          </h2>
+          <p className="text-xs md:text-sm text-gray-500">
+            Active projects overview
+          </p>
         </div>
-    );
+        <div className="p-2 bg-blue-50 rounded-lg">
+          <Briefcase className="text-blue-500" size={20} />
+        </div>
+      </div>
+
+      <div className="space-y-4 md:space-y-5 flex-1 overflow-y-auto pr-2">
+        {projects.map((project) => (
+          <div
+            key={project.id}
+            onClick={() => handleProjectClick(project)}
+            className="group cursor-pointer rounded-xl p-3 hover:bg-gray-50 transition"
+          >
+            <div className="flex justify-between items-center mb-2">
+              <span className="font-semibold text-sm md:text-base text-gray-800 group-hover:text-blue-600">
+                {project.name}
+              </span>
+              <span className="text-xs md:text-sm text-gray-500 bg-gray-100 px-2 py-1 rounded-lg font-medium">
+                {project.duration}
+              </span>
+            </div>
+
+            <div className="w-full bg-gray-100 h-2.5 md:h-3 rounded-full overflow-hidden">
+              <div
+                className={`h-full bg-gradient-to-r ${getProgressColor(
+                  project.progress
+                )} rounded-full transition-all duration-500`}
+                style={{ width: `${project.progress}%` }}
+              />
+            </div>
+
+            <div className="flex justify-end mt-1">
+              <span className="text-xs font-semibold text-gray-600">
+                {project.progress}%
+              </span>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
 };
+
+
+
+// 🔹 Project Detail Modal
+import { useLocation } from "react-router-dom";
+import { ArrowLeft } from "lucide-react";
+
+const ProjectDetails = () => {
+  const { state: project } = useLocation();
+  const navigate = useNavigate();
+
+  if (!project) return <p>No project data found</p>;
+
+  return (
+    <div className="p-6 max-w-4xl mx-auto">
+      <button
+        onClick={() => navigate(-1)}
+        className="flex items-center gap-2 text-blue-600 mb-4"
+      >
+        <ArrowLeft size={18} /> Back
+      </button>
+
+      <div className="bg-white rounded-2xl shadow-xl p-6">
+        <h2 className="text-2xl font-bold mb-2">{project.name}</h2>
+        <p className="text-gray-600 mb-4">{project.description}</p>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
+          <p><b>Client:</b> {project.client}</p>
+          <p><b>Status:</b> {project.status}</p>
+          <p><b>Start Date:</b> {project.startDate}</p>
+          <p><b>End Date:</b> {project.endDate}</p>
+          <p><b>Progress:</b> {project.progress}%</p>
+          <p><b>Duration:</b> {project.duration}</p>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+// LeaveRequestsSection
 
 const stats = [
     { label: "Total", value: 11, bg: "bg-gray-100", text: "text-blue-600" },
@@ -415,10 +517,24 @@ const statusStyle = {
 };
 
 const LeaveRequestsSection = () => {
+    // const [search, setSearch] = useState("");
     const [search, setSearch] = useState("");
-    const filteredRequests = requestsData.filter((item) =>
-        `${item.name} ${item.dept} ${item.type} ${item.status}`.toLowerCase().includes(search.toLowerCase())
-    );
+
+    const filteredRequests = useMemo(() => {
+        const searchValue = search.trim().toLowerCase();
+
+        if (!searchValue) {
+            return requestsData;
+        }
+
+        return requestsData.filter((item) =>
+            item.name?.toLowerCase().includes(searchValue) ||
+            item.dept?.toLowerCase().includes(searchValue) ||
+            item.type?.toLowerCase().includes(searchValue) ||
+            item.status?.toLowerCase().includes(searchValue)
+        );
+    }, [search]); // Remove requestsData from dependencies
+
 
     return (
         <div className="bg-white rounded-2xl md:rounded-3xl shadow-xl border border-gray-100 p-5 md:p-6 hover:shadow-2xl transition-shadow duration-300">
@@ -431,7 +547,7 @@ const LeaveRequestsSection = () => {
                     <Clock className="text-indigo-500" size={20} />
                 </div>
             </div>
-            
+
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 md:gap-4 mb-5">
                 {stats.map((item, i) => (
                     <div key={i} className={`rounded-xl md:rounded-2xl p-4 text-center border-2 transition-all hover:scale-105 ${item.bg} ${item.text.includes('blue') ? 'border-blue-200' : item.text.includes('green') ? 'border-green-200' : item.text.includes('yellow') ? 'border-yellow-200' : 'border-red-200'}`}>
@@ -440,7 +556,7 @@ const LeaveRequestsSection = () => {
                     </div>
                 ))}
             </div>
-            
+
             <div className="relative mb-5">
                 <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
                 <input
@@ -451,7 +567,7 @@ const LeaveRequestsSection = () => {
                     className="w-full pl-12 pr-4 py-2.5 md:py-3 border-2 border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all"
                 />
             </div>
-            
+
             <div className="overflow-x-auto max-h-96 overflow-y-auto border-2 border-gray-100 rounded-xl">
                 <table className="min-w-full text-xs md:text-sm">
                     <thead className="sticky top-0 bg-gradient-to-r from-indigo-50 to-purple-50 z-10 border-b-2 border-gray-200">
@@ -537,22 +653,22 @@ const EarningSource = () => {
                     <div key={index} className="group">
                         <div className="flex justify-between items-center mb-2">
                             <div className="flex items-center gap-2 min-w-0 flex-1">
-                                <div 
-                                    className="w-3 h-3 rounded-full flex-shrink-0 shadow-sm" 
+                                <div
+                                    className="w-3 h-3 rounded-full flex-shrink-0 shadow-sm"
                                     style={{ backgroundColor: item.color }}
                                 />
                                 <span className="text-sm md:text-base font-semibold text-gray-800 truncate">{item.name}</span>
                             </div>
-                            <span 
-                                className="px-3 py-1 rounded-lg text-xs font-bold text-white flex-shrink-0 shadow-md" 
+                            <span
+                                className="px-3 py-1 rounded-lg text-xs font-bold text-white flex-shrink-0 shadow-md"
                                 style={{ backgroundColor: item.color }}
                             >
                                 {item.percentage}%
                             </span>
                         </div>
                         <div className="w-full bg-gray-100 rounded-full h-2.5 overflow-hidden shadow-inner">
-                            <div 
-                                className="h-full rounded-full transition-all duration-500 shadow-sm group-hover:shadow-md" 
+                            <div
+                                className="h-full rounded-full transition-all duration-500 shadow-sm group-hover:shadow-md"
                                 style={{ width: `${item.percentage}%`, backgroundColor: item.color }}
                             />
                         </div>
@@ -594,26 +710,26 @@ const CountryClients = () => {
                 <div className="h-40 md:h-56 mb-5">
                     <ResponsiveContainer width="100%" height="100%">
                         <PieChart>
-                            <Pie 
-                                data={chartData} 
-                                cx="50%" 
-                                cy="50%" 
-                                innerRadius="55%" 
-                                outerRadius="80%" 
-                                paddingAngle={3} 
+                            <Pie
+                                data={chartData}
+                                cx="50%"
+                                cy="50%"
+                                innerRadius="55%"
+                                outerRadius="80%"
+                                paddingAngle={3}
                                 dataKey="value"
                             >
                                 {chartData.map((entry, index) => (
                                     <Cell key={`cell-${index}`} fill={countryClientsData[index].color} stroke="#fff" strokeWidth={2} />
                                 ))}
                             </Pie>
-                            <Tooltip 
-                                contentStyle={{ 
-                                    backgroundColor: 'white', 
-                                    border: '1px solid #e5e7eb', 
+                            <Tooltip
+                                contentStyle={{
+                                    backgroundColor: 'white',
+                                    border: '1px solid #e5e7eb',
                                     borderRadius: '8px',
                                     boxShadow: '0 4px 6px rgba(0,0,0,0.1)'
-                                }} 
+                                }}
                             />
                         </PieChart>
                     </ResponsiveContainer>
@@ -622,8 +738,8 @@ const CountryClients = () => {
                     {countryClientsData.map((country, index) => (
                         <div key={index} className="flex justify-between items-center py-3 px-4 bg-gray-50 rounded-xl hover:bg-gray-100 transition-colors border border-gray-200">
                             <div className="flex items-center gap-3 min-w-0 flex-1">
-                                <div 
-                                    className="w-4 h-4 rounded-full flex-shrink-0 shadow-sm border-2 border-white" 
+                                <div
+                                    className="w-4 h-4 rounded-full flex-shrink-0 shadow-sm border-2 border-white"
                                     style={{ backgroundColor: country.color }}
                                 />
                                 <span className="text-sm md:text-base font-semibold text-gray-800 truncate">{country.name}</span>
@@ -651,6 +767,8 @@ const weeklyData = [
     { day: "Fri", value: 93 },
 ];
 
+// AttendanceSummary
+
 const AttendanceSummary = () => {
     return (
         <div className="bg-white rounded-2xl md:rounded-3xl shadow-xl border border-gray-100 p-5 md:p-6 flex flex-col h-96 max-h-[500px] hover:shadow-2xl transition-shadow duration-300">
@@ -660,8 +778,8 @@ const AttendanceSummary = () => {
                     <p className="text-xs md:text-sm text-gray-500">Employee attendance overview</p>
                 </div>
                 <div className="text-right bg-gradient-to-br from-green-50 to-emerald-50 px-4 py-2 rounded-xl border border-green-100">
-                    <p className="text-xs md:text-sm font-semibold text-gray-700">January 6, 2026</p>
-                    <p className="text-xs text-gray-500">Tuesday</p>
+                    <p className="text-xs md:text-sm font-semibold text-gray-700">{new Date().toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}</p>
+                    {/* <p className="text-xs text-gray-500">Tuesday</p> */}
                 </div>
             </div>
             <div className="mb-5 bg-gradient-to-br from-green-50 to-emerald-50 p-4 rounded-xl border border-green-100">
@@ -678,17 +796,17 @@ const AttendanceSummary = () => {
                         <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
                         <XAxis dataKey="day" tick={{ fontSize: 11, fill: '#6b7280' }} axisLine={{ stroke: '#e5e7eb' }} />
                         <YAxis domain={[90, 100]} tick={{ fontSize: 11, fill: '#6b7280' }} axisLine={{ stroke: '#e5e7eb' }} />
-                        <Tooltip 
-                            contentStyle={{ 
-                                backgroundColor: 'white', 
-                                border: '1px solid #e5e7eb', 
+                        <Tooltip
+                            contentStyle={{
+                                backgroundColor: 'white',
+                                border: '1px solid #e5e7eb',
                                 borderRadius: '8px',
                                 boxShadow: '0 4px 6px rgba(0,0,0,0.1)'
-                            }} 
+                            }}
                         />
-                        <Bar 
-                            dataKey="value" 
-                            fill="url(#attendanceGradient)" 
+                        <Bar
+                            dataKey="value"
+                            fill="url(#attendanceGradient)"
                             radius={[8, 8, 0, 0]}
                         >
                             <defs>
@@ -705,52 +823,97 @@ const AttendanceSummary = () => {
     );
 };
 
+// TopPerformingEmployee
+
 const employees = [
-    { rank: 1, name: "Emma Thompson", subject: "Mathematics", improvement: "+5%", score: "98%", color: "bg-yellow-400" },
-    { rank: 2, name: "James Wilson", subject: "Science", improvement: "+3%", score: "96%", color: "bg-green-400" },
-    { rank: 3, name: "Sophia Brown", subject: "English", improvement: "+4%", score: "95%", color: "bg-blue-400" },
-    { rank: 4, name: "Oliver Davis", subject: "Physics", improvement: "+2%", score: "94%", color: "bg-purple-400" },
-    { rank: 5, name: "Mia Johnson", subject: "Chemistry", improvement: "+6%", score: "93%", color: "bg-pink-400" },
+    { rank: 1, name: "Emma Thompson", department: "Frontend Development", color: "bg-blue-400" },
+    { rank: 2, name: "James Wilson", department: "Backend Development", color: "bg-green-400" },
+    { rank: 3, name: "Sophia Brown", department: "UI/UX Design", color: "bg-purple-400" },
+    { rank: 4, name: "Oliver Davis", department: "DevOps", color: "bg-yellow-400" },
+    { rank: 5, name: "Mia Johnson", department: "Quality Assurance", color: "bg-pink-400" },
 ];
+
+const renderStars = (rank) => {
+    const maxStars = 5;
+    const filledStars = Math.max(1, maxStars - rank + 1);
+
+    return (
+        <div className="flex items-center gap-0.5">
+            {[...Array(maxStars)].map((_, i) => (
+                <Star
+                    key={i}
+                    size={14}
+                    className={
+                        i < filledStars
+                            ? "text-yellow-400 fill-yellow-400"
+                            : "text-gray-300"
+                    }
+                />
+            ))}
+        </div>
+    );
+};
 
 const TopPerformingEmployee = () => {
     return (
         <div className="bg-white rounded-2xl md:rounded-3xl shadow-xl border border-gray-100 p-5 md:p-6 flex flex-col h-96 max-h-[500px] hover:shadow-2xl transition-shadow duration-300">
             <div className="flex justify-between items-center mb-5">
                 <div>
-                    <h2 className="text-lg md:text-xl font-bold text-gray-800 mb-1">Top Performing Employee</h2>
-                    <p className="text-xs md:text-sm text-gray-500">Best performers this month</p>
+                    <h2 className="text-lg md:text-xl font-bold text-gray-800 mb-1">
+                        Top Performing Employee
+                    </h2>
+                    <p className="text-xs md:text-sm text-gray-500">
+                        Best performers this month
+                    </p>
                 </div>
-                <button className="text-blue-600 text-xs md:text-sm font-semibold hover:text-blue-700 hover:underline transition-colors">View All</button>
+                <button className="text-blue-600 text-xs md:text-sm font-semibold hover:text-blue-700 hover:underline transition-colors">
+                    View All
+                </button>
             </div>
+
             <div className="flex-1 overflow-y-auto space-y-4 pr-2">
                 {employees.map((emp, i) => (
-                    <div key={i} className="flex items-center justify-between p-4 bg-gradient-to-r from-gray-50 to-white rounded-xl border border-gray-200 hover:border-blue-300 hover:shadow-md transition-all group">
+                    <div
+                        key={i}
+                        className="flex items-center justify-between p-4 bg-gradient-to-r from-gray-50 to-white rounded-xl border border-gray-200 hover:border-blue-300 hover:shadow-md transition-all group"
+                    >
                         <div className="flex items-center gap-4 flex-1 min-w-0">
-                            <div className={`w-12 h-12 md:w-14 md:h-14 rounded-xl text-white flex items-center justify-center font-extrabold text-base md:text-lg flex-shrink-0 shadow-lg ${emp.color} group-hover:scale-110 transition-transform`}>
+                            <div
+                                className={`w-12 h-12 md:w-14 md:h-14 rounded-xl text-white flex items-center justify-center font-extrabold text-base md:text-lg flex-shrink-0 shadow-lg ${emp.color} group-hover:scale-110 transition-transform`}
+                            >
                                 {emp.rank}
                             </div>
+
                             <div className="min-w-0 flex-1">
-                                <p className="font-bold text-sm md:text-base text-gray-800 truncate mb-1">{emp.name}</p>
-                                <div className="flex gap-2 flex-wrap">
-                                    <span className="px-2.5 py-1 bg-indigo-100 text-indigo-700 rounded-lg text-xs font-semibold">{emp.subject}</span>
-                                    <span className="px-2.5 py-1 bg-green-100 text-green-700 rounded-lg text-xs font-semibold flex items-center gap-1">
-                                        <TrendingUp size={10} />
-                                        {emp.improvement}
-                                    </span>
+                                <p className="font-bold text-sm md:text-base text-gray-800 truncate mb-1">
+                                    {emp.name}
+                                </p>
+
+                                <div className="flex items-center gap-3 flex-wrap">
+                                    {/* <span className="px-2.5 py-1 bg-indigo-100 text-indigo-700 rounded-lg text-xs font-semibold">
+                    {emp.subject}
+                  </span> */}
+
+                                    {/* <span className="px-2.5 py-1 bg-green-100 text-green-700 rounded-lg text-xs font-semibold flex items-center gap-1">
+                    <TrendingUp size={10} />
+                    {emp.improvement}
+                  </span> */}
+
+                                    {/* ⭐ Performance Stars */}
+                                    {renderStars(emp.rank)}
                                 </div>
                             </div>
                         </div>
-                        <span className="px-4 py-2 rounded-xl bg-gradient-to-r from-red-500 to-pink-600 text-white text-sm md:text-base font-extrabold flex-shrink-0 shadow-lg">
-                            {emp.score}
-                        </span>
+
+                        {/* <span className="px-4 py-2 rounded-xl bg-gradient-to-r from-red-500 to-pink-600 text-white text-sm md:text-base font-extrabold flex-shrink-0 shadow-lg">
+              {emp.score}
+            </span> */}
                     </div>
                 ))}
             </div>
         </div>
     );
 };
-
 
 const eventsData = {
     birthdays: [
@@ -890,7 +1053,6 @@ const UpcomingEvents = () => {
     );
 };
 
-
 const genderData = [
     { name: "Male", value: 320, color: "#3b82f6" },
     { name: "Female", value: 270, color: "#ef4444" },
@@ -941,13 +1103,13 @@ const GenderDiversity = () => {
                                     <Cell key={index} fill={entry.color} stroke="#fff" strokeWidth={2} />
                                 ))}
                             </Pie>
-                            <Tooltip 
-                                contentStyle={{ 
-                                    backgroundColor: 'white', 
-                                    border: '1px solid #e5e7eb', 
+                            <Tooltip
+                                contentStyle={{
+                                    backgroundColor: 'white',
+                                    border: '1px solid #e5e7eb',
                                     borderRadius: '8px',
                                     boxShadow: '0 4px 6px rgba(0,0,0,0.1)'
-                                }} 
+                                }}
                             />
                         </PieChart>
                     </ResponsiveContainer>
@@ -973,7 +1135,7 @@ const GenderDiversity = () => {
                     {genderData.map((g) => (
                         <div key={g.name} className="flex justify-between items-center p-3 bg-gray-50 rounded-xl border border-gray-200">
                             <div className="flex items-center gap-3">
-                                <div 
+                                <div
                                     className="w-4 h-4 rounded-full shadow-sm"
                                     style={{ background: g.color }}
                                 />
@@ -987,8 +1149,8 @@ const GenderDiversity = () => {
 
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4">
                         <div className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-xl p-4 border-2 border-blue-100">
-                            <p className="text-xs md:text-sm text-gray-600 font-medium mb-1">Gender Ratio (M:F)</p>
-                            <p className="text-2xl md:text-3xl font-extrabold text-blue-700">32:27</p>
+                            <p className="text-xs md:text-sm text-gray-600 font-medium mb-1">Gender Ratio (M:F:O)</p>
+                            <p className="text-2xl md:text-3xl font-extrabold text-blue-700">32:27:1</p>
                         </div>
 
                         <div className="bg-gradient-to-br from-green-50 to-emerald-50 rounded-xl p-4 border-2 border-green-100">
@@ -1188,157 +1350,156 @@ const OurPayments = () => {
 
 
 const paymentsData = [
-  {
-    id: "#201",
-    client: "Alisha Jain",
-    clientId: "C101",
-    invoice: "INV001.pdf",
-    date: "2023-09-01",
-    amount: 150,
-    tax: 0,
-    discount: 0,
-    total: 150,
-    method: "Credit Card",
-    status: "Completed",
-  },
-  {
-    id: "#202",
-    client: "Bobby Ghosh",
-    clientId: "C102",
-    invoice: "INV002.pdf",
-    date: "2023-09-02",
-    amount: 200,
-    tax: 0,
-    discount: 0,
-    total: 200,
-    method: "Bank Transfer",
-    status: "Pending",
-  },
+    {
+        id: "#201",
+        client: "Alisha Jain",
+        clientId: "C101",
+        invoice: "INV001.pdf",
+        date: "2023-09-01",
+        amount: 150,
+        tax: 0,
+        discount: 0,
+        total: 150,
+        method: "Credit Card",
+        status: "Completed",
+    },
+    {
+        id: "#202",
+        client: "Bobby Ghosh",
+        clientId: "C102",
+        invoice: "INV002.pdf",
+        date: "2023-09-02",
+        amount: 200,
+        tax: 0,
+        discount: 0,
+        total: 200,
+        method: "Bank Transfer",
+        status: "Pending",
+    },
 ];
 
 const statusStylee = {
-  Completed: "bg-green-100 text-green-600",
-  Pending: "bg-orange-100 text-orange-600",
+    Completed: "bg-green-100 text-green-600",
+    Pending: "bg-orange-100 text-orange-600",
 };
 
 const ClientPayment = () => {
-  const [search, setSearch] = useState("");
+    const [search, setSearch] = useState("");
 
-  const filteredData = paymentsData.filter(
-    (item) =>
-      item.client.toLowerCase().includes(search.toLowerCase()) ||
-      item.id.includes(search)
-  );
+    const filteredData = paymentsData.filter(
+        (item) =>
+            item.client.toLowerCase().includes(search.toLowerCase()) ||
+            item.id.includes(search)
+    );
 
-  return (
-    <div className="bg-white rounded-2xl md:rounded-3xl shadow-xl border border-gray-100 hover:shadow-2xl transition-shadow duration-300">
-      
-      {/* HEADER */}
-      <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 p-5 md:p-6 border-b-2 border-gray-100 bg-gradient-to-r from-purple-50 to-indigo-50">
-        <div className="flex items-center gap-4">
-          <div className="bg-gradient-to-br from-purple-600 to-indigo-600 text-white p-4 rounded-2xl shadow-lg">
-            <DollarSign size={24} />
-          </div>
-          <div>
-            <h2 className="text-xl md:text-2xl font-bold bg-gradient-to-r from-purple-600 to-indigo-600 bg-clip-text text-transparent">
-              Client Payment
-            </h2>
-            <p className="text-sm text-gray-600 font-medium mt-1">
-              {filteredData.length} payments found
-            </p>
-          </div>
+    return (
+        <div className="bg-white rounded-2xl md:rounded-3xl shadow-xl border border-gray-100 hover:shadow-2xl transition-shadow duration-300">
+
+            {/* HEADER */}
+            <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 p-5 md:p-6 border-b-2 border-gray-100 bg-gradient-to-r from-purple-50 to-indigo-50">
+                <div className="flex items-center gap-4">
+                    <div className="bg-gradient-to-br from-purple-600 to-indigo-600 text-white p-4 rounded-2xl shadow-lg">
+                        <DollarSign size={24} />
+                    </div>
+                    <div>
+                        <h2 className="text-xl md:text-2xl font-bold bg-gradient-to-r from-purple-600 to-indigo-600 bg-clip-text text-transparent">
+                            Client Payment
+                        </h2>
+                        <p className="text-sm text-gray-600 font-medium mt-1">
+                            {filteredData.length} payments found
+                        </p>
+                    </div>
+                </div>
+
+                {/* SEARCH */}
+                <div className="relative w-full md:w-80">
+                    <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
+                    <input
+                        type="text"
+                        placeholder="Search payments, clients..."
+                        className="w-full pl-12 pr-4 py-2.5 md:py-3 border-2 border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
+                        value={search}
+                        onChange={(e) => setSearch(e.target.value)}
+                    />
+                </div>
+            </div>
+
+            {/* TABLE */}
+            <div className="overflow-x-auto max-h-[420px] overflow-y-auto">
+                <table className="min-w-[1100px] w-full text-sm">
+                    <thead className="sticky top-0 bg-gradient-to-r from-purple-50 to-indigo-50 z-10 border-b-2 border-gray-200">
+                        <tr className="text-left">
+                            <th className="p-4 font-bold text-gray-700">ID</th>
+                            <th className="p-4 font-bold text-gray-700">Client</th>
+                            <th className="p-4 font-bold text-gray-700">Invoice</th>
+                            <th className="p-4 font-bold text-gray-700">Date</th>
+                            <th className="p-4 font-bold text-gray-700">Amount</th>
+                            <th className="p-4 font-bold text-gray-700">Tax</th>
+                            <th className="p-4 font-bold text-gray-700">Discount</th>
+                            <th className="p-4 font-bold text-gray-700">Total</th>
+                            <th className="p-4 font-bold text-gray-700">Method</th>
+                            <th className="p-4 font-bold text-gray-700">Status</th>
+                        </tr>
+                    </thead>
+
+                    <tbody className="divide-y divide-gray-100">
+                        {filteredData.map((item, i) => (
+                            <tr
+                                key={i}
+                                className="border-b border-gray-100 hover:bg-purple-50/50 transition-colors"
+                            >
+                                <td className="p-4">
+                                    <span className="text-purple-600 font-bold">{item.id}</span>
+                                </td>
+
+                                <td className="p-4">
+                                    <p className="font-semibold text-gray-800">{item.client}</p>
+                                    <p className="text-xs text-gray-500 mt-0.5">{item.clientId}</p>
+                                </td>
+
+                                <td className="p-4">
+                                    <div className="flex items-center gap-2 text-purple-600">
+                                        <FileText size={16} />
+                                        <span className="font-medium">{item.invoice}</span>
+                                    </div>
+                                </td>
+
+                                <td className="p-4 font-medium text-gray-700">{item.date}</td>
+                                <td className="p-4">
+                                    <span className="font-bold text-gray-800">${item.amount}</span>
+                                </td>
+                                <td className="p-4 text-gray-600">${item.tax}</td>
+                                <td className="p-4 text-gray-600">${item.discount}</td>
+                                <td className="p-4">
+                                    <span className="font-extrabold text-gray-800">${item.total}</span>
+                                </td>
+
+                                <td className="p-4">
+                                    <span className="px-3 py-1.5 rounded-lg bg-gray-100 text-gray-700 text-xs font-semibold">
+                                        {item.method}
+                                    </span>
+                                </td>
+
+                                <td className="p-4">
+                                    <span
+                                        className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold ${statusStylee[item.status]
+                                            }`}
+                                    >
+                                        {item.status === "Completed" ? (
+                                            <CheckCircle size={14} />
+                                        ) : (
+                                            <Clock size={14} />
+                                        )}
+                                        {item.status}
+                                    </span>
+                                </td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            </div>
         </div>
-
-        {/* SEARCH */}
-        <div className="relative w-full md:w-80">
-          <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
-          <input
-            type="text"
-            placeholder="Search payments, clients..."
-            className="w-full pl-12 pr-4 py-2.5 md:py-3 border-2 border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-          />
-        </div>
-      </div>
-
-      {/* TABLE */}
-      <div className="overflow-x-auto max-h-[420px] overflow-y-auto">
-        <table className="min-w-[1100px] w-full text-sm">
-          <thead className="sticky top-0 bg-gradient-to-r from-purple-50 to-indigo-50 z-10 border-b-2 border-gray-200">
-            <tr className="text-left">
-              <th className="p-4 font-bold text-gray-700">ID</th>
-              <th className="p-4 font-bold text-gray-700">Client</th>
-              <th className="p-4 font-bold text-gray-700">Invoice</th>
-              <th className="p-4 font-bold text-gray-700">Date</th>
-              <th className="p-4 font-bold text-gray-700">Amount</th>
-              <th className="p-4 font-bold text-gray-700">Tax</th>
-              <th className="p-4 font-bold text-gray-700">Discount</th>
-              <th className="p-4 font-bold text-gray-700">Total</th>
-              <th className="p-4 font-bold text-gray-700">Method</th>
-              <th className="p-4 font-bold text-gray-700">Status</th>
-            </tr>
-          </thead>
-
-          <tbody className="divide-y divide-gray-100">
-            {filteredData.map((item, i) => (
-              <tr
-                key={i}
-                className="border-b border-gray-100 hover:bg-purple-50/50 transition-colors"
-              >
-                <td className="p-4">
-                  <span className="text-purple-600 font-bold">{item.id}</span>
-                </td>
-
-                <td className="p-4">
-                  <p className="font-semibold text-gray-800">{item.client}</p>
-                  <p className="text-xs text-gray-500 mt-0.5">{item.clientId}</p>
-                </td>
-
-                <td className="p-4">
-                  <div className="flex items-center gap-2 text-purple-600">
-                    <FileText size={16} />
-                    <span className="font-medium">{item.invoice}</span>
-                  </div>
-                </td>
-
-                <td className="p-4 font-medium text-gray-700">{item.date}</td>
-                <td className="p-4">
-                  <span className="font-bold text-gray-800">${item.amount}</span>
-                </td>
-                <td className="p-4 text-gray-600">${item.tax}</td>
-                <td className="p-4 text-gray-600">${item.discount}</td>
-                <td className="p-4">
-                  <span className="font-extrabold text-gray-800">${item.total}</span>
-                </td>
-
-                <td className="p-4">
-                  <span className="px-3 py-1.5 rounded-lg bg-gray-100 text-gray-700 text-xs font-semibold">
-                    {item.method}
-                  </span>
-                </td>
-
-                <td className="p-4">
-                  <span
-                    className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold ${
-                      statusStylee[item.status]
-                    }`}
-                  >
-                    {item.status === "Completed" ? (
-                      <CheckCircle size={14} />
-                    ) : (
-                      <Clock size={14} />
-                    )}
-                    {item.status}
-                  </span>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-    </div>
-  );
+    );
 };
 
 

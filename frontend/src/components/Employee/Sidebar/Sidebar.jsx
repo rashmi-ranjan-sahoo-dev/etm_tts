@@ -8,7 +8,7 @@ import EmployeeProfileModal from "./EmployeeProfileModal";
 
 const Sidebar = ({ isSidebarOpen = true, setIsSidebarOpen = () => { } }) => {
   const [openAccounts, setOpenAccounts] = useState(false);
-  const [openProjects, setOpenProjects] = useState(false);
+  // const [openProjects, setOpenProjects] = useState(false);
   const [openTasks, setOpenTasks] = useState(false);
   const [activeRoute, setActiveRoute] = useState(window.location.pathname);
   const [isProfileModalOpen, setIsProfileModalOpen] = useState(false);
@@ -23,8 +23,14 @@ const Sidebar = ({ isSidebarOpen = true, setIsSidebarOpen = () => { } }) => {
     { name: "My Tasks", icon: CheckSquare, to: "/employee/myTasks" },
     // { name: "Tasks", icon: CheckSquare, to: "/employee/ProjectManagerTasks" },
     { name: "Settings", icon: Settings, to: "/employee/settings" },
+<<<<<<< HEAD
     { name: "LeadTickets", icon: Ticket, to: "/employee/lead-issue-tracker" },
     { name: "ManagerTickets", icon: Ticket, to: "/employee/issue-tracker" },
+=======
+    { name: "LeadTickets", icon:Ticket, to: "/employee/lead-issue-tracker" },
+    { name: "ManagerTickets", icon:Ticket, to: "/employee/issue-tracker" },
+    {name: "Projects" , icon:FileText, to:"/employee/projectmanager/projects"}
+>>>>>>> 9b8685f001d3f75f547ca1d4a1d33805ee0e99e5
   ];
 
   return (
@@ -125,6 +131,7 @@ const Sidebar = ({ isSidebarOpen = true, setIsSidebarOpen = () => { } }) => {
               );
             })}
 
+<<<<<<< HEAD
             {/* Projects Section */}
             <button
               onClick={() => setOpenProjects(!openProjects)}
@@ -175,6 +182,8 @@ const Sidebar = ({ isSidebarOpen = true, setIsSidebarOpen = () => { } }) => {
               </Link>
             </div>
 
+=======
+>>>>>>> 9b8685f001d3f75f547ca1d4a1d33805ee0e99e5
 
             {/* Accounts Section */}
             <button

@@ -1,22 +1,8 @@
+/* eslint-disable react-hooks/set-state-in-effect */
 
 import { useState, useEffect } from "react";
 import {
-  Plus,
-  Search,
-  CheckCircle2,
-  Clock,
-  AlertCircle,
-  X,
-  User,
-  Calendar,
-  MessageSquare,
-  Send,
-  ArrowRight,
-  TrendingUp,
-  FileText,
-  Download,
-  Paperclip,
-  Pencil,
+  Plus, Search, CheckCircle2, Clock, AlertCircle, X, User, Calendar, MessageSquare, Send, ArrowRight, TrendingUp, FileText, Download, Paperclip, Pencil,
 } from "lucide-react";
 
 // Modal to add/edit a new issue (Team Lead/Employee tickets only)
@@ -27,6 +13,11 @@ const IssueModal = ({ close, save, editData = null }) => {
     priority: "Medium",
     description: "",
     project: "",
+    employeeId: "",
+    employeeName: "",
+    department: "",
+    role: "",
+    attachment: null,
   });
 
   // Populate form when editing
@@ -38,136 +29,197 @@ const IssueModal = ({ close, save, editData = null }) => {
         priority: editData.priority || "Medium",
         description: editData.description || "",
         project: editData.project || "",
+        employeeId: editData.employeeId || "",
+        employeeName: editData.employeeName || "",
+        department: editData.department || "",
+        role: editData.role || "",
+        attachment: editData.attachment || null,
       });
     }
   }, [editData]);
 
-
   const handleSubmit = () => {
-    // Team Lead/Employee ticket validation
-    if (!formData.title.trim()) return alert("Issue title is required");
-    if (!formData.description.trim()) return alert("Description is required");
-    if (!formData.project.trim()) return alert("Project is required");
-    
-    save({
-      ...formData,
-      id: editData?.id || Date.now(),
-      status: editData?.status || "Open",
-      raisedDate: editData?.raisedDate || new Date().toISOString().split("T")[0],
-      comments: editData?.comments || [],
-      source: "employee",
-      raisedBy: editData?.raisedBy,
-      assignedTo: editData?.assignedTo,
-    }, editData?.id);
+    if (!formData.employeeId.trim()) return alert("Employee ID is required");
+    if (!formData.employeeName.trim()) return alert("Employee Name is required");
+    if (!formData.department) return alert("Department is required");
+    if (!formData.role) return alert("Role is required");
+
+    save(
+      {
+        ...formData,
+        id: editData?.id || Date.now(),
+        status: editData?.status || "Open",
+        raisedDate:
+          editData?.raisedDate || new Date().toISOString().split("T")[0],
+        comments: editData?.comments || [],
+        source: "employee",
+        raisedBy: editData?.raisedBy,
+        assignedTo: editData?.assignedTo,
+      },
+      editData?.id
+    );
   };
 
   return (
     <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4">
       <div className="bg-white rounded-2xl shadow-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto">
+        {/* Header */}
         <div className="sticky top-0 bg-gradient-to-r from-rose-600 to-pink-600 p-6 rounded-t-2xl flex justify-between items-center">
           <div>
             <h3 className="text-2xl font-bold text-white">
               {editData ? "Edit Issue" : "Raise New Issue"}
             </h3>
             <p className="text-rose-100 text-sm mt-1">
-              {editData ? "Update issue information" : "Report a problem or request"}
+              {editData
+                ? "Update issue information"
+                : "Report a problem or request"}
             </p>
           </div>
           <button onClick={close} className="text-white/80 hover:text-white">
             <X className="w-6 h-6" />
           </button>
         </div>
+
+        {/* Body */}
         <div className="p-6 space-y-4">
-          {/* Issue Title */}
-          <div>
-            <label className="block text-sm font-semibold text-gray-700 mb-2">
-              Issue Title *
-            </label>
+          {/* Employee Details */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <input
               type="text"
-              value={formData.title}
+              placeholder="Employee ID *"
+              value={formData.employeeId}
               onChange={(e) =>
-                setFormData({ ...formData, title: e.target.value })
+                setFormData({ ...formData, employeeId: e.target.value })
               }
               className="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:border-rose-500 focus:outline-none"
-              placeholder="Brief description of the issue"
             />
+
+            <input
+              type="text"
+              placeholder="Employee Name *"
+              value={formData.employeeName}
+              onChange={(e) =>
+                setFormData({ ...formData, employeeName: e.target.value })
+              }
+              className="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:border-rose-500 focus:outline-none"
+            />
+
+            {/* <select
+              value={formData.department}
+              onChange={(e) =>
+                setFormData({ ...formData, department: e.target.value })
+              }
+              className="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:border-rose-500 focus:outline-none"
+            >
+              <option value="">Select Department *</option>
+              <option>Engineering</option>
+              <option>HR</option>
+              <option>Finance</option>
+              <option>Support</option>
+            </select>
+
+            <select
+              value={formData.role}
+              onChange={(e) =>
+                setFormData({ ...formData, role: e.target.value })
+              }
+              className="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:border-rose-500 focus:outline-none"
+            >
+              <option value="">Select Role *</option>
+              <option>Employee</option>
+              <option>Team Lead</option>
+              <option>Manager</option>
+            </select> */}
+
+          </div>
+            <input
+            type="text"
+            placeholder="Project Name *"
+            value={formData.project}
+            onChange={(e) =>
+              setFormData({ ...formData, project: e.target.value })
+            }
+            className="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:border-rose-500 focus:outline-none"
+          />
+          
+          {/* Category & Priority */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <select
+              value={formData.category}
+              onChange={(e) =>
+                setFormData({ ...formData, category: e.target.value })
+              }
+              className="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:border-rose-500 focus:outline-none"
+            >
+              <option>Bug</option>
+              <option>Feature Request</option>
+              <option>Technical Issue</option>
+              <option>Access Issue</option>
+              <option>Performance</option>
+              <option>Other</option>
+            </select>
+
+            <select
+              value={formData.priority}
+              onChange={(e) =>
+                setFormData({ ...formData, priority: e.target.value })
+              }
+              className="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:border-rose-500 focus:outline-none"
+            >
+              <option>Low</option>
+              <option>Medium</option>
+              <option>High</option>
+              <option>Critical</option>
+            </select>
           </div>
 
-          {/* Category & Priority */}
-          <div className="grid grid-cols-2 gap-4">
-            <div>
-              <label className="block text-sm font-semibold text-gray-700 mb-2">
-                Category *
-              </label>
-              <select
-                value={formData.category}
-                onChange={(e) =>
-                  setFormData({ ...formData, category: e.target.value })
-                }
-                className="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:border-rose-500 focus:outline-none"
-              >
-                <option>Bug</option>
-                <option>Feature Request</option>
-                <option>Technical Issue</option>
-                <option>Access Issue</option>
-                <option>Performance</option>
-                <option>Other</option>
-              </select>
-            </div>
-            <div>
-              <label className="block text-sm font-semibold text-gray-700 mb-2">
-                Priority *
-              </label>
-              <select
-                value={formData.priority}
-                onChange={(e) =>
-                  setFormData({ ...formData, priority: e.target.value })
-                }
-                className="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:border-rose-500 focus:outline-none"
-              >
-                <option>Low</option>
-                <option>Medium</option>
-                <option>High</option>
-                <option>Critical</option>
-              </select>
-            </div>
-          </div>
+          {/* Issue Title */}
+          <input
+            type="text"
+            placeholder="Issue Title *"
+            value={formData.title}
+            onChange={(e) =>
+              setFormData({ ...formData, title: e.target.value })
+            }
+            className="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:border-rose-500 focus:outline-none"
+          />
 
           {/* Project */}
-          <div>
-            <label className="block text-sm font-semibold text-gray-700 mb-2">
-              Project *
-            </label>
-            <input
-              type="text"
-              value={formData.project}
-              onChange={(e) =>
-                setFormData({ ...formData, project: e.target.value })
-              }
-              className="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:border-rose-500 focus:outline-none"
-              placeholder="Enter project name"
-            />
-          </div>
+
 
           {/* Description */}
-          <div>
-            <label className="block text-sm font-semibold text-gray-700 mb-2">
-              Description *
+          <textarea
+            rows="4"
+            placeholder="Issue Description *"
+            value={formData.description}
+            onChange={(e) =>
+              setFormData({ ...formData, description: e.target.value })
+            }
+            className="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:border-rose-500 focus:outline-none resize-none"
+          />
+
+          {/* Attachment */}
+          <div className="border-2 border-dashed border-gray-300 rounded-xl p-4">
+            <label className="text-sm font-semibold text-gray-700 mb-2 block">
+              Attachment
             </label>
-            <textarea
-              rows="4"
-              value={formData.description}
+            <input
+              type="file"
+              accept=".pdf,.png,.jpg,.jpeg,.doc,.docx"
               onChange={(e) =>
-                setFormData({ ...formData, description: e.target.value })
+                setFormData({ ...formData, attachment: e.target.files[0] })
               }
-              className="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:border-rose-500 focus:outline-none resize-none"
-              placeholder="Detailed description of the issue..."
+              className="w-full text-sm"
             />
+            {formData.attachment && (
+              <p className="text-xs text-green-600 mt-2">
+                Selected: {formData.attachment.name}
+              </p>
+            )}
           </div>
 
           {/* Buttons */}
-          <div className="flex gap-3 pt-4">
+          <div className="flex flex-col sm:flex-row gap-3 pt-4">
             <button
               onClick={handleSubmit}
               className="flex-1 bg-gradient-to-r from-rose-600 to-pink-600 text-white px-6 py-3 rounded-xl hover:from-rose-700 hover:to-pink-700 shadow-lg font-semibold"
@@ -186,6 +238,7 @@ const IssueModal = ({ close, save, editData = null }) => {
     </div>
   );
 };
+
 
 // Modal to view issue details & comments
 const IssueDetailModal = ({ issue, close, onAddComment, currentUser, onEdit, canEdit }) => {
@@ -248,26 +301,24 @@ const IssueDetailModal = ({ issue, close, onAddComment, currentUser, onEdit, can
             </h3>
             <div className="flex flex-wrap gap-2">
               <span
-                className={`px-3 py-1.5 rounded-lg text-xs font-bold ${
-                  issue.status === "Open"
+                className={`px-3 py-1.5 rounded-lg text-xs font-bold ${issue.status === "Open"
                     ? "bg-emerald-100 text-emerald-700"
                     : issue.status === "In Progress"
-                    ? "bg-blue-100 text-blue-700"
-                    : "bg-gray-100 text-gray-700"
-                }`}
+                      ? "bg-blue-100 text-blue-700"
+                      : "bg-gray-100 text-gray-700"
+                  }`}
               >
                 {issue.status}
               </span>
               <span
-                className={`px-3 py-1.5 rounded-lg text-xs font-bold ${
-                  issue.priority === "Critical"
+                className={`px-3 py-1.5 rounded-lg text-xs font-bold ${issue.priority === "Critical"
                     ? "bg-red-100 text-red-700"
                     : issue.priority === "High"
-                    ? "bg-orange-100 text-orange-700"
-                    : issue.priority === "Medium"
-                    ? "bg-yellow-100 text-yellow-700"
-                    : "bg-blue-100 text-blue-700"
-                }`}
+                      ? "bg-orange-100 text-orange-700"
+                      : issue.priority === "Medium"
+                        ? "bg-yellow-100 text-yellow-700"
+                        : "bg-blue-100 text-blue-700"
+                  }`}
               >
                 {issue.priority}
               </span>
@@ -353,8 +404,8 @@ const IssueDetailModal = ({ issue, close, onAddComment, currentUser, onEdit, can
                   {issue.attachment instanceof File
                     ? issue.attachment.name
                     : typeof issue.attachment === "string"
-                    ? "View File"
-                    : "Download Attachment"}
+                      ? "View File"
+                      : "Download Attachment"}
                 </span>
                 <Download className="w-4 h-4" />
               </button>
@@ -496,6 +547,7 @@ export default function EmployeeIssueTracker() {
   // Can edit tickets that are:
   // 1. Raised by them
   // 2. Assigned to them (for client tickets)
+
   const canEditTicket = (issue) => {
     return (
       issue.raisedBy === currentUser ||
@@ -550,7 +602,7 @@ export default function EmployeeIssueTracker() {
     if (filter === "Assigned to Me")
       // Show tickets assigned to current employee OR raised by client
       return matchesSearch && (
-        issue.assignedTo?.includes("EMP2015") || 
+        issue.assignedTo?.includes("EMP2015") ||
         issue.source === "client"
       );
     if (filter === "Pending")
@@ -563,7 +615,7 @@ export default function EmployeeIssueTracker() {
   const stats = {
     total: issues.length,
     raisedByMe: issues.filter((i) => i.raisedBy === currentUser).length,
-    assignedToMe: issues.filter((i) => 
+    assignedToMe: issues.filter((i) =>
       i.assignedTo?.includes("EMP2015") || i.source === "client"
     ).length,
     pending: issues.filter((i) => i.status !== "Resolved" && i.status !== "Closed").length,
@@ -679,11 +731,10 @@ export default function EmployeeIssueTracker() {
               <button
                 key={f}
                 onClick={() => setFilter(f)}
-                className={`px-4 py-2 rounded-xl font-medium text-sm ${
-                  filter === f
+                className={`px-4 py-2 rounded-xl font-medium text-sm ${filter === f
                     ? "bg-indigo-600 text-white"
                     : "bg-gray-100 text-gray-700 hover:bg-gray-200"
-                }`}
+                  }`}
               >
                 {f}
               </button>
@@ -705,7 +756,7 @@ export default function EmployeeIssueTracker() {
                 className="bg-white rounded-2xl shadow-md border border-gray-200 p-6 hover:shadow-lg transition-all"
               >
                 <div className="flex items-start justify-between gap-4">
-                  <div 
+                  <div
                     className="flex-1 cursor-pointer"
                     onClick={() => setViewIssue(issue)}
                   >
@@ -748,7 +799,7 @@ export default function EmployeeIssueTracker() {
                         <span>Has Attachment</span>
                       </div>
                     )}
-                    <ArrowRight 
+                    <ArrowRight
                       className="w-5 h-5 text-indigo-600 cursor-pointer"
                       onClick={() => setViewIssue(issue)}
                     />
@@ -761,7 +812,7 @@ export default function EmployeeIssueTracker() {
       </div>
 
       {showModal && (
-        <IssueModal 
+        <IssueModal
           close={() => {
             setShowModal(false);
             setEditData(null);

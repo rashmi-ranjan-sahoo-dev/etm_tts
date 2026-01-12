@@ -1,66 +1,24 @@
+/* eslint-disable no-unused-vars */
 import React from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, useLocation } from "react-router-dom";
 import { ArrowLeft, Mail, Phone, MapPin, Calendar, User, FileText, Edit, Trash2, Eye } from "lucide-react";
 
 const AdminDetail = () => {
   const { id } = useParams();
   const navigate = useNavigate();
+  const location = useLocation();
 
-  // Sample admin data - same as Admin.jsx
-  const adminsData = [
-    {
-      id: 1,
-      adminId: "AD-0001",
-      name: "Ashton Cox",
-      avatar: "https://i.pravatar.cc/150?u=101",
-      mobile: "1234567890",
-      email: "admin1@example.com",
-      position: "Senior Admin",
-      status: "Active",
-      address: "123 Main St, New York, NY 10001",
-      joinDate: "2023-01-15",
-      permissions: ["User Management", "System Settings", "Reports", "Dashboard Access"],
-      documents: [
-        { id: 1, name: "ID Proof.pdf", type: "PDF", size: "2.5 MB", uploadDate: "2023-01-10" },
-        { id: 2, name: "Contract.pdf", type: "PDF", size: "1.8 MB", uploadDate: "2023-01-12" }
-      ],
-      activities: [
-        { id: 1, action: "Created new user account", date: "2024-01-15", time: "10:30 AM" },
-        { id: 2, action: "Updated system settings", date: "2024-01-14", time: "2:15 PM" },
-        { id: 3, action: "Generated monthly report", date: "2024-01-13", time: "9:45 AM" }
-      ]
-    },
-    {
-      id: 2,
-      adminId: "AD-0002",
-      name: "Sarah Smith",
-      avatar: "https://i.pravatar.cc/150?u=102",
-      mobile: "1234567890",
-      email: "admin2@example.com",
-      position: "Junior Admin",
-      status: "Inactive",
-      address: "456 Elm St, Boston, MA 02101",
-      joinDate: "2023-03-20",
-      permissions: ["User Management", "Reports"],
-      documents: [
-        { id: 1, name: "Resume.pdf", type: "PDF", size: "1.2 MB", uploadDate: "2023-03-15" }
-      ],
-      activities: [
-        { id: 1, action: "Logged into system", date: "2024-01-10", time: "8:00 AM" },
-        { id: 2, action: "Viewed user reports", date: "2024-01-09", time: "11:20 AM" }
-      ]
-    }
-  ];
+  // Get admin data from location state (passed from Admin.jsx list)
+  // Fallback to empty object if no data is passed
+  const adminData = location.state?.adminData || {};
 
-  const adminData = adminsData.find(admin => admin.id === parseInt(id));
-
-  if (!adminData) {
+  if (!adminData || !adminData.name) {
     return (
       <div className="min-h-screen bg-slate-50 p-6">
         <div className="max-w-4xl mx-auto">
           <div className="bg-white rounded-lg shadow-sm p-8 text-center">
             <h2 className="text-2xl font-bold text-slate-800 mb-4">Admin Not Found</h2>
-            <p className="text-slate-600 mb-6">The admin you're looking for doesn't exist.</p>
+            <p className="text-slate-600 mb-6">The admin you're looking for doesn't exist or no data was provided.</p>
             <button
               onClick={() => navigate('/super-admin/admin')}
               className="bg-indigo-600 text-white px-6 py-2 rounded-lg hover:bg-indigo-700 transition-colors"
@@ -78,6 +36,81 @@ const AdminDetail = () => {
       ? "bg-green-50 text-green-700 border-green-200"
       : "bg-red-50 text-red-700 border-red-200";
   };
+
+  //   const handleViewDoc = (doc) => {
+  //   let url;
+
+  //   if (typeof doc === "string") {
+  //     url = doc;
+  //   } else {
+  //     url = URL.createObjectURL(doc);
+  //   }
+
+  //   window.open(url, "_blank");
+
+  //   if (typeof doc !== "string") {
+  //     setTimeout(() => URL.revokeObjectURL(url), 5000);
+  //   }
+  // };
+
+  // const handleDownloadDoc = (doc, index) => {
+  //   let url;
+  //   let filename;
+
+  //   if (typeof doc === "string") {
+  //     url = doc;
+  //     filename = `document_${index + 1}`;
+  //   } else {
+  //     url = URL.createObjectURL(doc);
+  //     filename = doc.name;
+  //   }
+
+  //   const link = document.createElement("a");
+  //   link.href = url;
+  //   link.download = filename;
+  //   document.body.appendChild(link);
+  //   link.click();
+  //   document.body.removeChild(link);
+
+  //   if (typeof doc !== "string") {
+  //     URL.revokeObjectURL(url);
+  //   }
+  // };
+
+  const formatFileSize = (size) => {
+    if (!size) return "—";
+    const kb = size / 1024;
+    if (kb < 1024) return `${kb.toFixed(1)} KB`;
+    return `${(kb / 1024).toFixed(1)} MB`;
+  };
+
+  const handleViewDoc = (doc) => {
+    let url = typeof doc === "string" ? doc : URL.createObjectURL(doc);
+    window.open(url, "_blank");
+
+    if (typeof doc !== "string") {
+      setTimeout(() => URL.revokeObjectURL(url), 5000);
+    }
+  };
+
+  const handleDownloadDoc = (doc, index) => {
+    const url = typeof doc === "string" ? doc : URL.createObjectURL(doc);
+    const filename =
+      typeof doc === "string" ? `document_${index + 1}` : doc.name;
+
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = filename;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+
+    if (typeof doc !== "string") {
+      URL.revokeObjectURL(url);
+    }
+  };
+
+
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 p-4 md:p-8">
@@ -104,15 +137,6 @@ const AdminDetail = () => {
                 <p className="text-gray-600">{adminData.position}</p>
                 <p className="text-sm text-gray-500">ID: {adminData.adminId}</p>
               </div>
-            </div>
-            <div className="flex items-center gap-3">
-              <span className={`px-4 py-2 text-sm rounded-full font-semibold border ${getStatusColor(adminData.status)}`}>
-                {adminData.status}
-              </span>
-              <button className="bg-indigo-600 text-white px-4 py-2 rounded-lg font-semibold hover:bg-indigo-700 transition-colors flex items-center gap-2">
-                <Edit className="w-4 h-4" />
-                Edit
-              </button>
             </div>
           </div>
         </div>
@@ -162,25 +186,6 @@ const AdminDetail = () => {
                 </div>
               </div>
             </div>
-
-            {/* Permissions */}
-            <div className="bg-white rounded-2xl shadow-lg p-6 border border-gray-100">
-              <h2 className="text-xl font-bold text-gray-800 mb-6">Permissions & Access</h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                {adminData.permissions.map((permission, index) => (
-                  <div key={index} className="flex items-center gap-3 p-3 bg-gradient-to-r from-indigo-50 to-blue-50 rounded-lg border border-indigo-100">
-                    <div className="w-2 h-2 bg-indigo-500 rounded-full"></div>
-                    <span className="text-gray-700 font-medium">{permission}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Notes */}
-            <div className="bg-white rounded-2xl shadow-lg p-6 border border-gray-100">
-              <h2 className="text-xl font-bold text-gray-800 mb-4">Notes</h2>
-              <p className="text-gray-700 leading-relaxed">{adminData.notes}</p>
-            </div>
           </div>
 
           {/* Right Column - Additional Info */}
@@ -189,73 +194,124 @@ const AdminDetail = () => {
             <div className="bg-white rounded-2xl shadow-lg p-6 border border-gray-100">
               <h2 className="text-xl font-bold text-gray-800 mb-6">Quick Stats</h2>
               <div className="space-y-4">
-                <div className="flex justify-between items-center">
-                  <span className="text-gray-600">Last Login</span>
-                  <span className="font-semibold text-gray-800">{new Date(adminData.lastLogin).toLocaleDateString()}</span>
-                </div>
-                <div className="flex justify-between items-center">
-                  <span className="text-gray-600">Documents</span>
-                  <span className="font-semibold text-gray-800">{adminData.documents.length}</span>
-                </div>
-                <div className="flex justify-between items-center">
-                  <span className="text-gray-600">Permissions</span>
-                  <span className="font-semibold text-gray-800">{adminData.permissions.length}</span>
-                </div>
+                {adminData.position && (
+                  <div className="flex justify-between items-center">
+                    <span className="text-gray-600">Position</span>
+                    <span className="font-semibold text-gray-800">{adminData.position}</span>
+                  </div>
+                )}
+                {adminData.status && (
+                  <div className="flex justify-between items-center">
+                    <span className="text-gray-600">Status</span>
+                    <span className={`px-3 py-1 rounded-full text-sm font-semibold ${adminData.status === 'Active' ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}`}>{adminData.status}</span>
+                  </div>
+                )}
+                {adminData.documents && adminData.documents.length > 0 && (
+                  <div className="flex justify-between items-center">
+                    <span className="text-gray-600">Documents</span>
+                    <span className="font-semibold text-gray-800">{adminData.documents.length}</span>
+                  </div>
+                )}
               </div>
             </div>
 
             {/* Documents */}
-            <div className="bg-white rounded-2xl shadow-lg p-6 border border-gray-100">
-              <h2 className="text-xl font-bold text-gray-800 mb-6 flex items-center gap-2">
-                <FileText className="w-5 h-5 text-indigo-600" />
-                Documents
-              </h2>
-              <div className="space-y-3">
-                {adminData.documents.map((doc, index) => (
-                  <div key={index} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg border border-gray-200">
-                    <div className="flex items-center gap-3">
-                      <FileText className="w-5 h-5 text-gray-500" />
-                      <div>
-                        <p className="font-medium text-gray-800">{doc.name}</p>
-                        <p className="text-sm text-gray-500">{doc.size}</p>
+            {/* {adminData.documents && adminData.documents.length > 0 && (
+              <div className="bg-white rounded-2xl shadow-lg p-6 border border-gray-100">
+                <h2 className="text-xl font-bold text-gray-800 mb-6 flex items-center gap-2">
+                  <FileText className="w-5 h-5 text-indigo-600" />
+                  Documents
+                </h2>
+                <div className="space-y-3">
+                  {adminData.documents.map((doc, index) => (
+                    <div key={index} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg border border-gray-200">
+                      <div className="flex items-center gap-3">
+                        <FileText className="w-5 h-5 text-gray-500" />
+                        <div>
+                          <p className="font-medium text-gray-800">{doc.name}</p>
+                          <p className="text-sm text-gray-500">{doc.size}</p>
+                        </div>
+                      </div>
+                      <button className="text-indigo-600 hover:text-indigo-800">
+                        <Eye className="w-5 h-5" />
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )} */}
+
+            {adminData.documents && adminData.documents.length > 0 && (
+              <div className="bg-white rounded-2xl shadow-lg p-4 sm:p-6 border border-gray-100">
+                <h2 className="text-lg sm:text-xl font-bold text-gray-800 mb-4 flex items-center gap-2">
+                  <FileText className="w-5 h-5 text-indigo-600" />
+                  Attachments
+                </h2>
+
+                <div className="space-y-3">
+                  {adminData.documents.map((doc, index) => (
+                    <div
+                      key={index}
+                      className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 p-3 bg-gray-50 rounded-xl border"
+                    >
+                      {/* File Info */}
+                      <div className="flex items-center gap-3">
+                        <FileText className="w-5 h-5 text-gray-500" />
+                        <div>
+                          <p className="text-sm font-medium text-gray-800 truncate max-w-[180px] sm:max-w-[260px]">
+                            {typeof doc === "string" ? `Document ${index + 1}` : doc.name}
+                          </p>
+                          <p className="text-xs text-gray-500">
+                            {typeof doc === "string"
+                              ? "Online File"
+                              : formatFileSize(doc.size)}
+                          </p>
+                        </div>
+                      </div>
+
+                      {/* Actions */}
+                      <div className="flex items-center gap-2 justify-end">
+                        <button
+                          onClick={() => handleViewDoc(doc)}
+                          className="p-2 rounded-lg bg-indigo-50 text-indigo-600 hover:bg-indigo-600 hover:text-white transition"
+                          title="View"
+                        >
+                          <Eye className="w-4 h-4" />
+                        </button>
+
+                        <button
+                          onClick={() => handleDownloadDoc(doc, index)}
+                          className="p-2 rounded-lg bg-emerald-50 text-emerald-600 hover:bg-emerald-600 hover:text-white transition"
+                          title="Download"
+                        >
+                          <FileText className="w-4 h-4" />
+                        </button>
                       </div>
                     </div>
-                    <button className="text-indigo-600 hover:text-indigo-800">
-                      <Eye className="w-5 h-5" />
-                    </button>
-                  </div>
-                ))}
+                  ))}
+                </div>
               </div>
-            </div>
+            )}
+
 
             {/* Recent Activities */}
-            <div className="bg-white rounded-2xl shadow-lg p-6 border border-gray-100">
-              <h2 className="text-xl font-bold text-gray-800 mb-6">Recent Activities</h2>
-              <div className="space-y-4">
-                {adminData.activities.slice(0, 5).map((activity, index) => (
-                  <div key={index} className="flex items-start gap-3 pb-3 border-b border-gray-100 last:border-b-0 last:pb-0">
-                    <div className="w-2 h-2 bg-indigo-500 rounded-full mt-2"></div>
-                    <div className="flex-1">
-                      <p className="text-gray-800 font-medium">{activity.action}</p>
-                      <p className="text-sm text-gray-500">{activity.date} at {activity.time}</p>
+            {adminData.activities && adminData.activities.length > 0 && (
+              <div className="bg-white rounded-2xl shadow-lg p-6 border border-gray-100">
+                <h2 className="text-xl font-bold text-gray-800 mb-6">Recent Activities</h2>
+                <div className="space-y-4">
+                  {adminData.activities.slice(0, 5).map((activity, index) => (
+                    <div key={index} className="flex items-start gap-3 pb-3 border-b border-gray-100 last:border-b-0 last:pb-0">
+                      <div className="w-2 h-2 bg-indigo-500 rounded-full mt-2"></div>
+                      <div className="flex-1">
+                        <p className="text-gray-800 font-medium">{activity.action}</p>
+                        <p className="text-sm text-gray-500">{activity.date} at {activity.time}</p>
+                      </div>
                     </div>
-                  </div>
-                ))}
+                  ))}
+                </div>
               </div>
-            </div>
+            )}
           </div>
-        </div>
-
-        {/* Action Buttons */}
-        <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-end">
-          <button className="bg-red-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-red-700 transition-colors flex items-center justify-center gap-2">
-            <Trash2 className="w-5 h-5" />
-            Delete Admin
-          </button>
-          <button className="bg-indigo-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-indigo-700 transition-colors flex items-center justify-center gap-2">
-            <Edit className="w-5 h-5" />
-            Edit Details
-          </button>
         </div>
       </div>
     </div>
