@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { LayoutDashboard, FileText, CheckSquare, Settings, MessageSquare, ChevronDown, X, Sparkles, } from "lucide-react";
+import { LayoutDashboard, FileText, CheckSquare, Settings, MessageSquare, ChevronDown, X, Sparkles, Lock } from "lucide-react";
 import { Link } from "react-router-dom";
 import { LogOut } from "lucide-react";
 import { Ticket } from "lucide-react";
@@ -8,7 +8,7 @@ import EmployeeProfileModal from "./EmployeeProfileModal";
 
 const Sidebar = ({ isSidebarOpen = true, setIsSidebarOpen = () => { } }) => {
   const [openAccounts, setOpenAccounts] = useState(false);
-  // const [openProjects, setOpenProjects] = useState(false);
+  const [openProjects, setOpenProjects] = useState(false);
   const [openTasks, setOpenTasks] = useState(false);
   const [activeRoute, setActiveRoute] = useState(window.location.pathname);
   const [isProfileModalOpen, setIsProfileModalOpen] = useState(false);
@@ -22,10 +22,16 @@ const Sidebar = ({ isSidebarOpen = true, setIsSidebarOpen = () => { } }) => {
     { name: "My Leaves", icon: FileText, to: "/employee/myLeaves" },
     { name: "My Tasks", icon: CheckSquare, to: "/employee/myTasks" },
     // { name: "Tasks", icon: CheckSquare, to: "/employee/ProjectManagerTasks" },
+<<<<<<< HEAD
     { name: "Settings", icon: Settings, to: "/employee/settings" },
     { name: "LeadTickets", icon:Ticket, to: "/employee/lead-issue-tracker" },
     { name: "ManagerTickets", icon:Ticket, to: "/employee/issue-tracker" },
     {name: "Projects" , icon:FileText, to:"/employee/projectmanager/projects"}
+=======
+    { name: "Security", icon: Lock, to: "/employee/security" },
+    { name: "LeadTickets", icon: Ticket, to: "/employee/lead-issue-tracker" },
+    { name: "ManagerTickets", icon: Ticket, to: "/employee/issue-tracker" },
+>>>>>>> fe34168313fd07bc5b74abfa63f3b2118cb4b699
   ];
 
   return (
@@ -126,6 +132,58 @@ const Sidebar = ({ isSidebarOpen = true, setIsSidebarOpen = () => { } }) => {
               );
             })}
 
+<<<<<<< HEAD
+=======
+            {/* Projects Section */}
+            <button
+              onClick={() => setOpenProjects(!openProjects)}
+              className={`group flex items-center justify-between w-full px-4 py-3.5 rounded-xl font-medium transition-all duration-200 text-gray-700
+    ${openProjects ? "bg-white/80 shadow-md" : "hover:bg-white/80 hover:shadow-md"}`}
+            >
+              <div className="flex items-center gap-3">
+                <div className="group-hover:scale-110 transition-transform">
+                  <CheckSquare size={20} />
+                </div>
+                <span className="text-sm">Projects</span>
+              </div>
+
+              <div className={`transition-transform duration-300 ${openProjects ? "rotate-180" : ""}`}>
+                <ChevronDown size={18} />
+              </div>
+            </button>
+
+            {/* Projects Submenu */}
+            <div
+              className={`ml-4 space-y-1 overflow-hidden transition-all duration-300 ease-in-out
+  ${openProjects ? "max-h-40 opacity-100 mt-2" : "max-h-0 opacity-0"}`}
+            >
+              <Link
+                to="/employee/projectmanager/projects"
+                onClick={() => setActiveRoute("/employee/projectmanager/projects")}
+                className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm transition-all duration-200 w-full text-left
+      ${activeRoute === "/employee/projectmanager/projects"
+                    ? "bg-gradient-to-r from-indigo-500 to-purple-500 text-white shadow-md"
+                    : "hover:bg-white/80 hover:shadow-sm text-gray-600 hover:text-gray-900"
+                  }`}
+              >
+                <div className="w-1.5 h-1.5 rounded-full bg-current"></div>
+                All Projects
+              </Link>
+
+              <Link
+                to="/employee/projectmanager/tasks"
+                onClick={() => setActiveRoute("/employee/projectmanager/tasks")}
+                className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm transition-all duration-200 w-full text-left
+      ${activeRoute === "/employee/projectmanager/tasks"
+                    ? "bg-gradient-to-r from-indigo-500 to-purple-500 text-white shadow-md"
+                    : "hover:bg-white/80 hover:shadow-sm text-gray-600 hover:text-gray-900"
+                  }`}
+              >
+                <div className="w-1.5 h-1.5 rounded-full bg-current"></div>
+                Add Project
+              </Link>
+            </div>
+>>>>>>> fe34168313fd07bc5b74abfa63f3b2118cb4b699
 
             {/* Accounts Section */}
             <button

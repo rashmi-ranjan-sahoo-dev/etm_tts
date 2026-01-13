@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import { Plus, Search, CheckCircle2, XCircle, Clock, Calendar, AlertCircle, Check, X } from "lucide-react";
 
 const formatDate = (dateStr) => {
@@ -387,7 +388,8 @@ const AdminLeaves = () => {
 
   const [openModal, setOpenModal] = useState(false);
   const [editData, setEditData] = useState(null);
-  const [search, setSearch] = useState("");
+  const location = useLocation();
+  const [search, setSearch] = useState(location.state?.leaveType || "");
 
   const handleAdd = () => {
     setEditData(null);

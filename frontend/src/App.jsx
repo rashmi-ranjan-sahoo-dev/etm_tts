@@ -16,6 +16,7 @@ import SuperAdminEarningsDetail from './pages/SuperAdmin/EarningsDetail.jsx'
 import AdminDetail from './pages/SuperAdmin/AdminDetail.jsx'
 import ClientDetail from './pages/SuperAdmin/ClientDetail.jsx'
 import SuperAdminNotice from './pages/SuperAdmin/Notice.jsx'
+import SuperAdminSecurity from './pages/SuperAdmin/Security.jsx'
 
 
 import AdminLayout from './layout/AdminLayout.jsx'
@@ -29,13 +30,14 @@ import AdminLeaveBalances from './pages/Admin/Leaves/LeaveBalances.jsx'
 import AdminLeaveRequests from './pages/Admin/Leaves/LeaveRequests.jsx'
 import AdminLeaveTypes from './pages/Admin/Leaves/LeaveTypes.jsx'
 import AdminLeaveDetails from './pages/Admin/AdminLeaveDetails.jsx'
-import AdminLeaveSetting from './pages/Admin/Leaves/LeaveSetting.jsx'
-import AdminLeave from './pages/Admin/Leaves/AdminLeave.jsx'
+// import AdminLeaveSetting from './pages/Admin/Leaves/LeaveSetting.jsx'
+// import AdminLeave from './pages/Admin/Leaves/AdminLeave.jsx'
 import AdminLeader from './pages/Admin/Leader.jsx'
 import AdminTrainingList from './pages/Admin/Training/TrainingList.jsx'
 import AdminTrainers from './pages/Admin/Training/Trainers.jsx'
 import AdminTrainingType from './pages/Admin/Training/TrainingType.jsx'
 import AdminAllTrainees from './pages/Admin/Training/AllTrainees.jsx'
+import AdminTraineeDetails from './pages/Admin/Training/TraineeDetails.jsx'
 import AdminHoliday from './pages/Admin/Holiday.jsx'
 import AdminNotice from './pages/Admin/Notice.jsx'
 import AdminProjectDetails from './pages/Admin/ProjectDetails.jsx'
@@ -56,7 +58,9 @@ import ProjectManagerAllProjects from './pages/Employee/ProjectManager/ProjectMa
 import ProjectDetailsPage from './pages/Employee/ProjectManager/ProjectDetailsPage.jsx'
 import MyTask from './pages/Employee/EmployeeTask.jsx'
 import ClientPayments from "./pages/Employee/Accounts/Client/ClientPayment.jsx"
+
 import Expense from "./pages/Employee/Accounts/OtherExpenses/Expense.jsx"
+import EmployeeSecurity from './pages/Employee/Security.jsx'
 import Projects from './pages/Client/Projects.jsx'
 import ClientProjectDetailsPage from './pages/Client/ClientProjectDetailsPage.jsx'
 import Supports from './pages/Client/Supports.jsx'
@@ -66,6 +70,7 @@ import BillingDetailsPage from './pages/Client/BillingDetailsPage.jsx'
 import AssignedEmployees from './pages/Client/AssignedEmployees.jsx'
 import PojectManagerTickets from './pages/Employee/ProjectManagerIssueTracker.jsx'
 import LeadTickets from './pages/Employee/EmployeeIssueTracker.jsx'
+import ClientSecurity from './pages/Client/Security.jsx'
 
 
 
@@ -102,7 +107,7 @@ const App = () => {
           <Route path="admin" element={<SuperAdminAdminPage />} />
           <Route path="admin/:id" element={<AdminDetail />} />
           <Route path='notice' element={<SuperAdminNotice />} />
-          <Route path="setting" element={<Settings />} />
+          <Route path="security" element={<SuperAdminSecurity />} />
         </Route>
 
         <Route path='/admin' element={<AdminLayout />}>
@@ -116,9 +121,9 @@ const App = () => {
           <Route path='leave-types' element={<AdminLeaveTypes />} />
           <Route path='all-employees-leave' element={<AdminLeaveDetails />} />
           <Route path='managerleave' element={<AdminManagerLeave />} />
-          <Route path='leave-setting' element={<AdminLeaveSetting />} />
+          {/* <Route path='leave-setting' element={<AdminLeaveSetting />} /> */}
           <Route path='notice' element={<AdminNotice />} />
-          <Route path='adminleave' element={<AdminLeave />} />
+          {/* <Route path='adminleave' element={<AdminLeave />} /> */}
           <Route path='project-details' element={<AdminProjectDetails />} />
 
 
@@ -131,6 +136,7 @@ const App = () => {
           <Route path='trainers' element={<AdminTrainers />} />
           <Route path='training-type' element={<AdminTrainingType />} />
           <Route path='all-trainees' element={<AdminAllTrainees />} />
+          <Route path='trainee/:id' element={<AdminTraineeDetails />} />
           <Route path="settings" element={<Settings />} />
           <Route path="profile" element={<AdminProfile />} />
           <Route path="security" element={<AdminSecurity />} />
@@ -149,7 +155,7 @@ const App = () => {
           <Route path="myTasks" element={<MyTask />} />
           <Route path="lead-issue-tracker" element={<LeadTickets />} />
           <Route path="issue-tracker" element={<PojectManagerTickets />} />
-          <Route path="settings" element={<Settings />} />
+          <Route path="security" element={<EmployeeSecurity />} />
           <Route path="accounts/client-payments" element={<ClientPayments />} />
           <Route path="accounts/other-payments" element={<Expense />} />
         </Route>
@@ -165,7 +171,7 @@ const App = () => {
           <Route path="supports/:id" element={<TicketDetailsPage />} />
           <Route path="billing" element={<Billing />} />
           <Route path="billing/:id" element={<BillingDetailsPage />} />
-          <Route path="settings" element={<Settings />} />
+          <Route path="security" element={<ClientSecurity />} />
         </Route>
 
 

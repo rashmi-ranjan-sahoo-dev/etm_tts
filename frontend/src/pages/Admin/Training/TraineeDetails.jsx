@@ -16,7 +16,7 @@ const TraineeDetails = () => {
     }, [location.state]);
 
     if (!trainee) {
-        return <Navigate to="/all-trainees" replace />;
+        return <Navigate to="/admin/all-trainees" replace />;
     }
 
     const handleUpdateTrainee = (updatedData) => {
@@ -63,7 +63,7 @@ const TraineeDetails = () => {
                                 {/* Name, Role, and Badge */}
                                 <div className="mb-1 flex-1 flex justify-between items-end mt-11">
                                     <div>
-                                        <h1 className="text-4xl font-extrabold text-gray-900 leading-[0.9] tracking-tight">
+                                        <h1 className="text-3xl font-extrabold text-gray-900 leading-[0.9] mt-10 tracking-tight">
                                             {trainee.name.split(" ").map((n, i) => (
                                                 <div key={i}>{n}</div>
                                             ))}

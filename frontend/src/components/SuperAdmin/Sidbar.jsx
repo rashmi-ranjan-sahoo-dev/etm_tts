@@ -1,7 +1,7 @@
 
 import React, { useState } from "react";
 import {
-  LayoutDashboard, Users, FolderKanban, ShieldCheck, BarChart3, Settings, LogOut, X, Crown, CheckSquare, ChevronDown
+  LayoutDashboard, Users, FolderKanban, ShieldCheck, BarChart3, Settings, LogOut, X, Crown, CheckSquare, ChevronDown, Lock
 } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 
@@ -23,7 +23,7 @@ const SuperAdminSidebar = ({ isSidebarOpen = true, setIsSidebarOpen = () => { } 
     { name: "Dashboard", icon: LayoutDashboard, to: "/super-admin/dashboard" },
     { name: "Client", icon: Users, to: "/super-admin/client" },
     { name: "Admin", icon: ShieldCheck, to: "/super-admin/admin" },
-    { name: "Setting", icon: Settings, to: "/super-admin/setting" },
+    { name: "Security", icon: Lock, to: "/super-admin/security" },
     { name: "Projects", icon: FolderKanban, to: "/super-admin/projects"}
   ];
 

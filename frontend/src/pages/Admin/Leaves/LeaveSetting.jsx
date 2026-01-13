@@ -1,10 +1,11 @@
+/*
 import React from 'react';
 import { Home } from 'lucide-react';
 
 const LeaveSetting = () => {
     return (
         <div className="p-6 bg-[#f8f9fe] min-h-screen">
-            {/* Header / Breadcrumb */}
+            
             <div className="flex justify-between items-center mb-6">
                 <h1 className="text-2xl font-bold text-[#333]">Leave Settings</h1>
                 <div className="flex items-center text-sm text-gray-500">
@@ -16,12 +17,12 @@ const LeaveSetting = () => {
                 </div>
             </div>
 
-            {/* Main Card */}
+          
             <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
                 <h2 className="text-lg font-semibold text-[#333] mb-6 border-b pb-4">Leave Settings</h2>
 
                 <form className="space-y-6">
-                    {/* Row 1 */}
+                    
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div className="relative">
                             <input
@@ -57,7 +58,7 @@ const LeaveSetting = () => {
                         </div>
                     </div>
 
-                    {/* Row 2 */}
+                    
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div className="relative">
                             <input
@@ -90,7 +91,7 @@ const LeaveSetting = () => {
                         </div>
                     </div>
 
-                    {/* Row 3 */}
+                    
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div className="relative">
                             <input
@@ -127,7 +128,7 @@ const LeaveSetting = () => {
                         </div>
                     </div>
 
-                    {/* Row 4 */}
+                   
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div className="relative">
                             <select
@@ -147,11 +148,11 @@ const LeaveSetting = () => {
                                 Leave Approval Workflow
                             </label>
                         </div>
-                        {/* Empty div for spacing/grid balance if needed, or leave blank as in design */}
+                   
                         <div></div>
                     </div>
 
-                    {/* Row 5 - Notes */}
+                  
                     <div className="relative">
                         <div className="absolute top-3 left-3 text-gray-500 pointer-events-none">
                             Notes (Optional)
@@ -162,7 +163,7 @@ const LeaveSetting = () => {
                         ></textarea>
                     </div>
 
-                    {/* Row 6 - Checkboxes */}
+                  
                     <div className="space-y-4 mt-4">
                         <div className="flex items-center">
                             <input
@@ -186,7 +187,7 @@ const LeaveSetting = () => {
                         </div>
                     </div>
 
-                    {/* Footer Button */}
+                   
                     <div className="mt-8">
                         <button
                             type="button"
@@ -203,3 +204,4 @@ const LeaveSetting = () => {
 };
 
 export default LeaveSetting;
+*/
