@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+
 import { useNavigate } from "react-router-dom";
 import { DollarSign, Search, ArrowLeft, TrendingUp, TrendingDown, Calendar, BarChart3, PieChart, Filter, Download } from "lucide-react";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart as RechartsPieChart, Pie, Cell, LineChart, Line } from "recharts";
 
 const EarningsDetail = () => {
   const navigate = useNavigate();
-  const [timeFilter, setTimeFilter] = useState("month");
+  // const [timeFilter, setTimeFilter] = useState("month");
 
   // Sample earnings data with comprehensive financial information
   const earningsData = [
@@ -43,58 +43,58 @@ const EarningsDetail = () => {
     { category: "Miscellaneous", amount: 15000, percentage: 15 }
   ];
 
-  const recentTransactions = [
-    {
-      id: 1,
-      client: "ABC Pvt Ltd",
-      project: "E-commerce Website",
-      amount: 8500,
-      date: "2024-01-20",
-      status: "Completed",
-      paymentMethod: "Bank Transfer",
-      invoice: "INV-2024-001"
-    },
-    {
-      id: 2,
-      client: "XYZ Solutions",
-      project: "Mobile App Development",
-      amount: 12000,
-      date: "2024-01-18",
-      status: "Completed",
-      paymentMethod: "Credit Card",
-      invoice: "INV-2024-002"
-    },
-    {
-      id: 3,
-      client: "TechCorp Inc",
-      project: "Data Dashboard",
-      amount: 6500,
-      date: "2024-01-16",
-      status: "Pending",
-      paymentMethod: "Check",
-      invoice: "INV-2024-003"
-    },
-    {
-      id: 4,
-      client: "Global Enterprises",
-      project: "ERP Integration",
-      amount: 9500,
-      date: "2024-01-14",
-      status: "Completed",
-      paymentMethod: "Wire Transfer",
-      invoice: "INV-2024-004"
-    },
-    {
-      id: 5,
-      client: "StartupHub",
-      project: "UI Redesign",
-      amount: 4800,
-      date: "2024-01-12",
-      status: "Overdue",
-      paymentMethod: "Bank Transfer",
-      invoice: "INV-2024-005"
-    }
-  ];
+  // const recentTransactions = [
+  //   {
+  //     id: 1,
+  //     client: "ABC Pvt Ltd",
+  //     project: "E-commerce Website",
+  //     amount: 8500,
+  //     date: "2024-01-20",
+  //     status: "Completed",
+  //     paymentMethod: "Bank Transfer",
+  //     invoice: "INV-2024-001"
+  //   },
+  //   {
+  //     id: 2,
+  //     client: "XYZ Solutions",
+  //     project: "Mobile App Development",
+  //     amount: 12000,
+  //     date: "2024-01-18",
+  //     status: "Completed",
+  //     paymentMethod: "Credit Card",
+  //     invoice: "INV-2024-002"
+  //   },
+  //   {
+  //     id: 3,
+  //     client: "TechCorp Inc",
+  //     project: "Data Dashboard",
+  //     amount: 6500,
+  //     date: "2024-01-16",
+  //     status: "Pending",
+  //     paymentMethod: "Check",
+  //     invoice: "INV-2024-003"
+  //   },
+  //   {
+  //     id: 4,
+  //     client: "Global Enterprises",
+  //     project: "ERP Integration",
+  //     amount: 9500,
+  //     date: "2024-01-14",
+  //     status: "Completed",
+  //     paymentMethod: "Wire Transfer",
+  //     invoice: "INV-2024-004"
+  //   },
+  //   {
+  //     id: 5,
+  //     client: "StartupHub",
+  //     project: "UI Redesign",
+  //     amount: 4800,
+  //     date: "2024-01-12",
+  //     status: "Overdue",
+  //     paymentMethod: "Bank Transfer",
+  //     invoice: "INV-2024-005"
+  //   }
+  // ];
 
   const totalEarnings = earningsData.reduce((sum, item) => sum + item.earnings, 0);
   const totalProjects = earningsData.reduce((sum, item) => sum + item.projects, 0);
@@ -117,7 +117,7 @@ const EarningsDetail = () => {
             Back to Dashboard
           </button>
 
-          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+          {/* <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
             <div>
               <h1 className="text-4xl font-bold text-gray-800 mb-2">Earnings Overview</h1>
               <p className="text-gray-600">Detailed financial performance and revenue analytics</p>
@@ -137,7 +137,7 @@ const EarningsDetail = () => {
                 Export
               </button>
             </div>
-          </div>
+          </div> */}
         </div>
 
         {/* Key Metrics */}
@@ -313,7 +313,7 @@ const EarningsDetail = () => {
         </div>
 
         {/* Recent Transactions */}
-        <div className="bg-white rounded-2xl shadow-lg border border-gray-100">
+        {/* <div className="bg-white rounded-2xl shadow-lg border border-gray-100">
           <div className="p-6 border-b border-gray-100">
             <h3 className="text-xl font-bold text-gray-800">Recent Transactions</h3>
           </div>
@@ -361,7 +361,7 @@ const EarningsDetail = () => {
               </tbody>
             </table>
           </div>
-        </div>
+        </div> */}
       </div>
     </div>
   );
