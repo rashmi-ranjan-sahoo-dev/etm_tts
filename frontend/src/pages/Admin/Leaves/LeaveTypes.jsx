@@ -1,7 +1,9 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Settings, Plus, Edit2, Trash2, Check, X, Menu } from 'lucide-react';
 
 const LeaveTypes = () => {
+  const navigate = useNavigate();
   const [leaves, setLeaves] = useState([
     {
       id: 1,
@@ -603,7 +605,10 @@ const LeaveTypes = () => {
                     )}
                     {visibleColumns.name && (
                       <td className="px-6 py-4">
-                        <div className="flex items-center gap-2 text-orange-600 font-semibold">
+                        <div 
+                          className="flex items-center gap-2 text-orange-600 font-semibold cursor-pointer hover:text-orange-800"
+                          onClick={() => navigate('/admin/leaverequest', { state: { leaveType: leave.name } })}
+                        >
                           <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                           </svg>

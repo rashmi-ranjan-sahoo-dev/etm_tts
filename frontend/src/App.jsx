@@ -30,8 +30,8 @@ import AdminLeaveBalances from './pages/Admin/Leaves/LeaveBalances.jsx'
 import AdminLeaveRequests from './pages/Admin/Leaves/LeaveRequests.jsx'
 import AdminLeaveTypes from './pages/Admin/Leaves/LeaveTypes.jsx'
 import AdminLeaveDetails from './pages/Admin/AdminLeaveDetails.jsx'
-import AdminLeaveSetting from './pages/Admin/Leaves/LeaveSetting.jsx'
-import AdminLeave from './pages/Admin/Leaves/AdminLeave.jsx'
+// import AdminLeaveSetting from './pages/Admin/Leaves/LeaveSetting.jsx'
+// import AdminLeave from './pages/Admin/Leaves/AdminLeave.jsx'
 import AdminLeader from './pages/Admin/Leader.jsx'
 import AdminTrainingList from './pages/Admin/Training/TrainingList.jsx'
 import AdminTrainers from './pages/Admin/Training/Trainers.jsx'
@@ -121,9 +121,9 @@ const App = () => {
           <Route path='leave-types' element={<AdminLeaveTypes />} />
           <Route path='all-employees-leave' element={<AdminLeaveDetails />} />
           <Route path='managerleave' element={<AdminManagerLeave />} />
-          <Route path='leave-setting' element={<AdminLeaveSetting />} />
+          {/* <Route path='leave-setting' element={<AdminLeaveSetting />} /> */}
           <Route path='notice' element={<AdminNotice />} />
-          <Route path='adminleave' element={<AdminLeave />} />
+          {/* <Route path='adminleave' element={<AdminLeave />} /> */}
           <Route path='project-details' element={<AdminProjectDetails />} />
 
 
