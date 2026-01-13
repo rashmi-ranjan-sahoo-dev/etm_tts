@@ -724,7 +724,8 @@ const EmployeeDetail = () => {
         include: "Current Employees Only",
         role: "",
         dept: "",
-        type: ""
+        type: "",
+        gender: ""
     });
 
     useEffect(() => {
@@ -831,6 +832,7 @@ const EmployeeDetail = () => {
             role: user.role,
             dept: user.dept,
             status: user.status,
+            gender: user.gender,
         });
         setFilterSuggestions([]);
         setShowFilterSuggestions(false);
@@ -844,11 +846,12 @@ const EmployeeDetail = () => {
             const matchesRole = searchForm.role ? emp.role === searchForm.role : true;
             const matchesDept = searchForm.dept ? emp.dept === searchForm.dept : true;
             const matchesType = searchForm.type ? emp.employeeType === searchForm.type : true;
+            const matchesGender = searchForm.gender ? emp.gender === searchForm.gender : true;
 
             // Logic for "Include" - assuming "Current" means Active
             const matchesInclude = searchForm.include === "Current Employees Only" ? emp.status === "Active" : true;
 
-            return matchesName && matchesId && matchesStatus && matchesRole && matchesDept && matchesInclude && matchesType;
+            return matchesName && matchesId && matchesStatus && matchesRole && matchesDept && matchesInclude && matchesType && matchesGender;
         });
         setFilteredEmployees(filtered);
     };
@@ -861,7 +864,8 @@ const EmployeeDetail = () => {
             include: "Current Employees Only",
             role: "",
             dept: "",
-            type: ""
+            type: "",
+            gender: ""
         });
         setFilteredEmployees(null);
     };
@@ -1023,6 +1027,20 @@ const EmployeeDetail = () => {
                                 <option value="Finance">Finance</option>
                                 <option value="Operations">Operations</option>
                                 <option value="Others">Others</option>
+                            </select>
+                        </div>
+                        <div className="flex flex-col gap-2">
+                            <label className="text-sm font-semibold text-gray-700">Gender</label>
+                            <select
+                                name="gender"
+                                value={searchForm.gender}
+                                onChange={handleSearchChange}
+                                className="px-4 py-2.5 rounded-lg border border-gray-200 outline-none focus:border-blue-500 bg-white"
+                            >
+                                <option value="">-- Select --</option>
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                                <option value="Other">Other</option>
                             </select>
                         </div>
                     </div>

@@ -36,16 +36,16 @@ const DeleteConfirmModal = ({ close, confirm, traineeName }) => {
 
 // Mock trainees list
 const AVAILABLE_TRAINEES = [
-    { id: 1, name: "John Doe", traineeId: "0001", role: "Software Engineer", trainingType: "Web Development", status: "Active", type: "Full Time", gender: "Male" },
-    { id: 2, name: "Alice Smith", traineeId: "0002", role: "UI/UX Designer", trainingType: "Design Fundamentals", status: "Active", type: "Full Time", gender: "Female" },
-    { id: 3, name: "Bob Brown", traineeId: "0003", role: "Product Manager", trainingType: "Product Management", status: "Inactive", type: "Full Time", gender: "Male" },
-    { id: 4, name: "Jane Smith", traineeId: "0004", role: "Data Scientist", trainingType: "Data Analytics", status: "Active", type: "Full Time", gender: "Female" },
-    { id: 5, name: "Mike Ross", traineeId: "0005", role: "DevOps Engineer", trainingType: "Cloud Architecture", status: "Active", type: "Full Time", gender: "Male" },
-    { id: 6, name: "Sarah Connor", traineeId: "0006", role: "Security Analyst", trainingType: "Cybersecurity", status: "Active", type: "Full Time", gender: "Female" },
-    { id: 7, name: "Tom Hardy", traineeId: "0007", role: "Backend Developer", trainingType: "Backend Development", status: "Inactive", type: "Full Time", gender: "Male" },
-    { id: 8, name: "Emma Wilson", traineeId: "0008", role: "Product Designer", trainingType: "UX/UI Design", status: "Active", type: "Full Time", gender: "Female" },
-    { id: 9, name: "Chris Evans", traineeId: "0009", role: "QA Engineer", trainingType: "Testing & QA", status: "Active", type: "Full Time", gender: "Male" },
-    { id: 10, name: "Diana Prince", traineeId: "0010", role: "Project Manager", trainingType: "Agile & Scrum", status: "Active", type: "Full Time", gender: "Female" },
+    { id: 1, name: "John Doe", traineeId: "0001", role: "Software Engineer", trainingType: "Web Development", status: "Active", type: "Full Time", gender: "Male", joiningDate: "2023-01-15" },
+    { id: 2, name: "Alice Smith", traineeId: "0002", role: "UI/UX Designer", trainingType: "Design Fundamentals", status: "Active", type: "Full Time", gender: "Female", joiningDate: "2023-02-20" },
+    { id: 3, name: "Bob Brown", traineeId: "0003", role: "Product Manager", trainingType: "Product Management", status: "Inactive", type: "Full Time", gender: "Male", joiningDate: "2023-03-10" },
+    { id: 4, name: "Jane Smith", traineeId: "0004", role: "Data Scientist", trainingType: "Data Analytics", status: "Active", type: "Full Time", gender: "Female", joiningDate: "2023-04-05" },
+    { id: 5, name: "Mike Ross", traineeId: "0005", role: "DevOps Engineer", trainingType: "Cloud Architecture", status: "Active", type: "Full Time", gender: "Male", joiningDate: "2023-05-12" },
+    { id: 6, name: "Sarah Connor", traineeId: "0006", role: "Security Analyst", trainingType: "Cybersecurity", status: "Active", type: "Full Time", gender: "Female", joiningDate: "2023-06-18" },
+    { id: 7, name: "Tom Hardy", traineeId: "0007", role: "Backend Developer", trainingType: "Backend Development", status: "Inactive", type: "Full Time", gender: "Male", joiningDate: "2023-07-22" },
+    { id: 8, name: "Emma Wilson", traineeId: "0008", role: "Product Designer", trainingType: "UX/UI Design", status: "Active", type: "Full Time", gender: "Female", joiningDate: "2023-08-30" },
+    { id: 9, name: "Chris Evans", traineeId: "0009", role: "QA Engineer", trainingType: "Testing & QA", status: "Active", type: "Full Time", gender: "Male", joiningDate: "2023-09-14" },
+    { id: 10, name: "Diana Prince", traineeId: "0010", role: "Project Manager", trainingType: "Agile & Scrum", status: "Active", type: "Full Time", gender: "Female", joiningDate: "2023-10-01" },
 ];
 
 import { useLocation, useNavigate } from "react-router-dom";
@@ -66,7 +66,8 @@ const AllTrainees = () => {
         status: "",
         include: "current",
         role: "",
-        trainingType: location.state?.trainingType || ""
+        trainingType: location.state?.trainingType || "",
+        gender: ""
     });
 
     // Filter trainees based on search criteria
@@ -76,8 +77,9 @@ const AllTrainees = () => {
         const matchesStatus = !filters.status || trainee.status === filters.status;
         const matchesRole = !filters.role || trainee.role === filters.role;
         const matchesTrainingType = !filters.trainingType || trainee.trainingType === filters.trainingType;
+        const matchesGender = !filters.gender || trainee.gender === filters.gender;
 
-        return matchesName && matchesId && matchesStatus && matchesRole && matchesTrainingType;
+        return matchesName && matchesId && matchesStatus && matchesRole && matchesTrainingType && matchesGender;
     });
 
     const getTrainingTypeBadgeColor = (type) => {
@@ -103,7 +105,8 @@ const AllTrainees = () => {
             status: "",
             include: "current",
             role: "",
-            trainingType: ""
+            trainingType: "",
+            gender: ""
         });
     };
 
@@ -225,6 +228,21 @@ const AllTrainees = () => {
                                         <option value="Design Fundamentals">Design Fundamentals</option>
                                         <option value="Product Management">Product Management</option>
                                         <option value="Data Analytics">Data Analytics</option>
+                                    </select>
+                                </div>
+
+                                {/* Gender */}
+                                <div>
+                                    <label className="block text-sm font-medium text-gray-700 mb-2">Gender</label>
+                                    <select
+                                        value={filters.gender}
+                                        onChange={(e) => setFilters({ ...filters, gender: e.target.value })}
+                                        className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white"
+                                    >
+                                        <option value="">-- Select --</option>
+                                        <option value="Male">Male</option>
+                                        <option value="Female">Female</option>
+                                        <option value="Other">Other</option>
                                     </select>
                                 </div>
                             </div>

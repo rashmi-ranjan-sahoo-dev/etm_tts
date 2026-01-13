@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/purity */
 /* eslint-disable no-unused-vars */
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
     ClipboardList,
@@ -162,8 +162,26 @@ const Leader = () => {
         role: "",
         mobile: "",
         email: "",
-        projects: []
+        projects: [],
+        avatar: null
     });
+
+    const fileInputRef = useRef(null);
+
+    const handleImageChange = (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                setNewLeader({ ...newLeader, avatar: reader.result });
+            };
+            reader.readAsDataURL(file);
+        }
+    };
+
+    const triggerFileInput = () => {
+        fileInputRef.current.click();
+    };
 
     // Mock Database for Auto-fill
     const mockDatabase = [
@@ -226,7 +244,7 @@ const Leader = () => {
             id: Date.now(),
             ...newLeader,
             project: projectString,
-            avatar: "https://cdn-icons-png.flaticon.com/512/3135/3135768.png" // Default logo as profile picture
+            avatar: newLeader.avatar || "https://cdn-icons-png.flaticon.com/512/3135/3135768.png" // Use uploaded or default
         };
 
         setLeaders([...leaders, newEntry]);
@@ -237,7 +255,8 @@ const Leader = () => {
             role: "",
             mobile: "",
             email: "",
-            projects: []
+            projects: [],
+            avatar: null
         });
         setSuggestions([]);
     };
@@ -439,8 +458,27 @@ const Leader = () => {
                     <div className="bg-white w-[900px] max-w-[95%] rounded-lg overflow-hidden shadow-2xl flex flex-col max-h-[90vh]">
                         <div className="flex justify-between items-center px-[25px] py-5 border-b border-[#f0f0f0] bg-white relative">
                             <div className="flex items-center gap-[15px]">
-                                <img src="https://cdn-icons-png.flaticon.com/512/3135/3135768.png" alt="New Lead" className="w-10 h-10 rounded-full object-cover" />
-                                <h3 className="m-0 text-[16px] font-semibold text-[#333]">New Leads</h3>
+                                <div className="relative cursor-pointer group" onClick={triggerFileInput}>
+                                    <img
+                                        src={newLeader.avatar || "https://cdn-icons-png.flaticon.com/512/3135/3135768.png"}
+                                        alt="New Lead"
+                                        className="w-16 h-16 rounded-full object-cover border-2 border-dashed border-gray-300 group-hover:border-purple-500 transition-colors"
+                                    />
+                                    <div className="absolute inset-0 bg-black/40 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                                        <Plus className="text-white" size={24} />
+                                    </div>
+                                    <input
+                                        type="file"
+                                        ref={fileInputRef}
+                                        onChange={handleImageChange}
+                                        accept="image/*"
+                                        className="hidden"
+                                    />
+                                </div>
+                                <div>
+                                    <h3 className="m-0 text-[16px] font-semibold text-[#333]">New Leads</h3>
+                                    <p className="text-[12px] text-gray-500 m-0">Click image to upload photo</p>
+                                </div>
                             </div>
                             <button className="bg-transparent border-none cursor-pointer text-[#666] p-[5px] absolute right-[25px] top-5" onClick={() => setShowModal(false)}>
                                 <X size={20} />
