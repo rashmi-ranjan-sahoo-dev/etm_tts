@@ -252,7 +252,7 @@ const ProjectDetails = () => {
         </div>
 
         {/* Stats Cards */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+        {/* <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
           <div className="bg-gradient-to-br from-emerald-50 to-green-100 rounded-2xl p-6 shadow-lg border border-emerald-200">
             <div className="flex items-center justify-between mb-3">
               <DollarSign className="w-8 h-8 text-emerald-600" />
@@ -290,7 +290,7 @@ const ProjectDetails = () => {
             </div>
             <div className="text-sm font-medium text-amber-600">Days Left</div>
           </div>
-        </div>
+        </div> */}
 
         {/* Progress Bar */}
         <div className="bg-white rounded-2xl p-6 shadow-lg border border-gray-200 mb-8">

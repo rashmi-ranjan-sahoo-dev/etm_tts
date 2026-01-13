@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 import React from "react";
 import { useParams, useNavigate, useLocation } from "react-router-dom";
-import { ArrowLeft, Mail, Phone, MapPin, Calendar, Building, User, FileText, Edit, Trash2, Eye, DollarSign, Briefcase } from "lucide-react";
+import { ArrowLeft, Mail, Phone, MapPin, Calendar, Building, User, FileText, Eye,Briefcase, Download} from "lucide-react";
 
 const ClientDetail = () => {
   const { id } = useParams();
@@ -189,53 +189,54 @@ const ClientDetail = () => {
             </div>
 
             {/* Attachments */}
+            {/* Attachment */}
             <div className="bg-white rounded-2xl shadow-lg p-6 border border-gray-100">
-              <h2 className="text-xl font-bold text-gray-800 mb-6 flex items-center gap-2">
+              <h2 className="text-xl font-bold text-gray-800 mb-4 flex items-center gap-2">
                 <FileText className="w-5 h-5 text-green-600" />
-                Attachments
+                Contract Document
               </h2>
 
               {clientData.contractDocument ? (
-                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 p-4 bg-gray-50 rounded-xl border border-gray-200">
-                  {/* File Info */}
-                  <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 flex items-center justify-center rounded-lg bg-indigo-100 text-indigo-600">
-                      <FileText />
-                    </div>
-                    <div className="max-w-[200px] sm:max-w-xs">
-                      <p className="font-semibold text-gray-800 truncate">
-                        {typeof clientData.contractDocument === "string"
-                          ? "Contract Document"
-                          : clientData.contractDocument.name}
-                      </p>
-                      <p className="text-xs text-gray-500">
-                        Click view or download
-                      </p>
-                    </div>
+                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                  <div>
+                    <p className="font-semibold text-gray-800">
+                      {clientData.contractDocument.name}
+                    </p>
+                    <p className="text-sm text-gray-500">
+                      Uploaded on{" "}
+                      {new Date(
+                        clientData.contractDocument.uploadedAt
+                      ).toLocaleDateString()}
+                    </p>
                   </div>
 
-                  {/* Actions */}
-                  <div className="flex items-center gap-3">
+                  <div className="flex gap-2">
                     <button
-                      onClick={() => handleViewAttachment(clientData.contractDocument)}
-                      className="inline-flex items-center gap-2 px-4 py-2 text-sm rounded-lg bg-amber-100 text-amber-700 hover:bg-amber-200 transition"
+                      onClick={() =>
+                        handleViewAttachment(clientData.contractDocument.file)
+                      }
+                      className="flex items-center gap-1 px-4 py-2 text-sm rounded-lg bg-indigo-600 text-white hover:bg-indigo-700"
                     >
                       <Eye className="w-4 h-4" />
                       View
                     </button>
 
                     <button
-                      onClick={() => handleDownloadAttachment(clientData.contractDocument)}
-                      className="inline-flex items-center gap-2 px-4 py-2 text-sm rounded-lg bg-emerald-100 text-emerald-700 hover:bg-emerald-200 transition"
+                      onClick={() =>
+                        handleDownloadAttachment(clientData.contractDocument.file)
+                      }
+                      className="flex items-center gap-1 px-4 py-2 text-sm rounded-lg bg-emerald-600 text-white hover:bg-emerald-700"
                     >
-                      ⬇ Download
+                      <Download className="w-4 h-4" />
+                      Download
                     </button>
                   </div>
                 </div>
               ) : (
-                <p className="text-sm text-gray-500">No attachments uploaded</p>
+                <p className="text-sm text-gray-500">No contract uploaded</p>
               )}
             </div>
+
 
 
             {/* Projects */}

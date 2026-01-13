@@ -307,7 +307,7 @@ const Client = () => {
     status: "Active",
     address: "",
     notes: "",
-    contractDocument: "",
+    contractDocuments: "",
   });
 
   const itemsPerPage = 10;
@@ -387,11 +387,21 @@ const Client = () => {
   };
 
   const handleFileChange = (e) => {
-    const file = e.target.files && e.target.files[0];
-    if (file) {
-      setFormData((prev) => ({ ...prev, contractDocument: file }));
-    }
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    setFormData((prev) => ({
+      ...prev,
+      contractDocument: {
+        file,
+        name: file.name,
+        size: file.size,
+        type: file.type,
+        uploadedAt: new Date().toISOString(),
+      },
+    }));
   };
+
 
   const handleSave = () => {
     if (!formData.name || !formData.email || !formData.company || !formData.mobile) return;
@@ -403,6 +413,7 @@ const Client = () => {
             ? {
               ...c,
               ...formData,
+              contractDocument: formData.contractDocument || null,
             }
             : c
         )
@@ -538,11 +549,6 @@ const Client = () => {
                       </td>
                       <td className="px-4 py-3">
                         <div className="flex items-center gap-3">
-                          {/* <img
-                            src={client.avatar}
-                            alt={client.name}
-                            className="w-9 h-9 rounded-full border border-slate-200 object-cover"
-                          /> */}
                           <span
                             className="font-semibold text-slate-800 hover:text-indigo-600 transition-colors"
                           >
@@ -584,22 +590,27 @@ const Client = () => {
                       <td className="px-4 py-3">
                         <span
                           className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold ${client.status === "Active"
-                              ? "bg-emerald-100 text-emerald-700"
-                              : "bg-amber-100 text-amber-700"
+                            ? "bg-emerald-100 text-emerald-700"
+                            : "bg-amber-100 text-amber-700"
                             }`}
                         >
                           {client.status}
                         </span>
                       </td>
                       <td className="px-4 py-3 text-center" onClick={(e) => e.stopPropagation()}>
-                        <button
-                          className="inline-flex items-center justify-center rounded-lg bg-amber-100 text-amber-700 px-3 py-2 text-xs font-semibold hover:bg-amber-200 transition"
-                          title="View Contract"
-                          onClick={() => handleViewDocument(client.contractDocument)}
-                        >
-                          <FileTextIcon />
-                        </button>
+                        {client.contractDocument ? (
+                          <button
+                            className="inline-flex items-center gap-1 rounded-lg bg-emerald-100 text-emerald-700 px-3 py-1.5 text-xs font-semibold hover:bg-emerald-200 transition"
+                            onClick={() => handleViewDocument(client.contractDocument.file)}
+                          >
+                            <FileTextIcon />
+                            View
+                          </button>
+                        ) : (
+                          <span className="text-xs text-slate-400">No File</span>
+                        )}
                       </td>
+
                       <td className="px-4 py-3">
                         <div className="flex items-center gap-2 text-slate-600">
                           <span className="text-indigo-500">
@@ -666,8 +677,8 @@ const Client = () => {
                   <button
                     key={page}
                     className={`px-3 py-1.5 text-xs sm:text-sm rounded-lg border ${currentPage === page
-                        ? "bg-indigo-500 border-indigo-500 text-white"
-                        : "bg-white border-slate-300 text-slate-700 hover:border-indigo-500 hover:text-indigo-600"
+                      ? "bg-indigo-500 border-indigo-500 text-white"
+                      : "bg-white border-slate-300 text-slate-700 hover:border-indigo-500 hover:text-indigo-600"
                       }`}
                     onClick={() => handlePageChange(page)}
                   >

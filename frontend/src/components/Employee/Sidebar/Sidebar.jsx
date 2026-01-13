@@ -23,14 +23,9 @@ const Sidebar = ({ isSidebarOpen = true, setIsSidebarOpen = () => { } }) => {
     { name: "My Tasks", icon: CheckSquare, to: "/employee/myTasks" },
     // { name: "Tasks", icon: CheckSquare, to: "/employee/ProjectManagerTasks" },
     { name: "Settings", icon: Settings, to: "/employee/settings" },
-<<<<<<< HEAD
-    { name: "LeadTickets", icon: Ticket, to: "/employee/lead-issue-tracker" },
-    { name: "ManagerTickets", icon: Ticket, to: "/employee/issue-tracker" },
-=======
     { name: "LeadTickets", icon:Ticket, to: "/employee/lead-issue-tracker" },
     { name: "ManagerTickets", icon:Ticket, to: "/employee/issue-tracker" },
     {name: "Projects" , icon:FileText, to:"/employee/projectmanager/projects"}
->>>>>>> 9b8685f001d3f75f547ca1d4a1d33805ee0e99e5
   ];
 
   return (
@@ -131,59 +126,6 @@ const Sidebar = ({ isSidebarOpen = true, setIsSidebarOpen = () => { } }) => {
               );
             })}
 
-<<<<<<< HEAD
-            {/* Projects Section */}
-            <button
-              onClick={() => setOpenProjects(!openProjects)}
-              className={`group flex items-center justify-between w-full px-4 py-3.5 rounded-xl font-medium transition-all duration-200 text-gray-700
-    ${openProjects ? "bg-white/80 shadow-md" : "hover:bg-white/80 hover:shadow-md"}`}
-            >
-              <div className="flex items-center gap-3">
-                <div className="group-hover:scale-110 transition-transform">
-                  <CheckSquare size={20} />
-                </div>
-                <span className="text-sm">Projects</span>
-              </div>
-
-              <div className={`transition-transform duration-300 ${openProjects ? "rotate-180" : ""}`}>
-                <ChevronDown size={18} />
-              </div>
-            </button>
-
-            {/* Projects Submenu */}
-            <div
-              className={`ml-4 space-y-1 overflow-hidden transition-all duration-300 ease-in-out
-  ${openProjects ? "max-h-40 opacity-100 mt-2" : "max-h-0 opacity-0"}`}
-            >
-              <Link
-                to="/employee/projectmanager/projects"
-                onClick={() => setActiveRoute("/employee/projectmanager/projects")}
-                className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm transition-all duration-200 w-full text-left
-      ${activeRoute === "/employee/projectmanager/projects"
-                    ? "bg-gradient-to-r from-indigo-500 to-purple-500 text-white shadow-md"
-                    : "hover:bg-white/80 hover:shadow-sm text-gray-600 hover:text-gray-900"
-                  }`}
-              >
-                <div className="w-1.5 h-1.5 rounded-full bg-current"></div>
-                All Projects
-              </Link>
-
-              <Link
-                to="/employee/projectmanager/tasks"
-                onClick={() => setActiveRoute("/employee/projectmanager/tasks")}
-                className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm transition-all duration-200 w-full text-left
-      ${activeRoute === "/employee/projectmanager/tasks"
-                    ? "bg-gradient-to-r from-indigo-500 to-purple-500 text-white shadow-md"
-                    : "hover:bg-white/80 hover:shadow-sm text-gray-600 hover:text-gray-900"
-                  }`}
-              >
-                <div className="w-1.5 h-1.5 rounded-full bg-current"></div>
-                Add Project
-              </Link>
-            </div>
-
-=======
->>>>>>> 9b8685f001d3f75f547ca1d4a1d33805ee0e99e5
 
             {/* Accounts Section */}
             <button
